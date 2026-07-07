@@ -42,8 +42,12 @@ public final class Provenance {
     private static String gitHead(Path root) {
         try {
             Process p = new ProcessBuilder("git", "-C", root.toString(), "rev-parse", "HEAD").start();
-            return new String(p.getInputStream().readAllBytes()).trim();
-        } catch (IOException | InterruptedException e) {
+            String out = new String(p.getInputStream().readAllBytes()).trim();
+            p.waitFor();
+            return out;
+        } catch (IOException e) {
+            return "unknown";
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return "unknown";
         }
@@ -52,8 +56,12 @@ public final class Provenance {
     private static boolean gitDirty(Path root) {
         try {
             Process p = new ProcessBuilder("git", "-C", root.toString(), "status", "--porcelain").start();
-            return !new String(p.getInputStream().readAllBytes()).trim().isEmpty();
-        } catch (IOException | InterruptedException e) {
+            boolean dirty = !new String(p.getInputStream().readAllBytes()).trim().isEmpty();
+            p.waitFor();
+            return dirty;
+        } catch (IOException e) {
+            return false;
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return false;
         }
