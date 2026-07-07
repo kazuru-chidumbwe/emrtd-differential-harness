@@ -1,0 +1,25 @@
+{
+  "id": "TC-AC-01",
+  "name": "PACE-capable chip with injected PACE failure; terminal may fall back to BAC",
+  "mechanism": "PACE",
+  "condition": "pace_fail_then_bac",
+  "tier": "wire",
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "31143012060A04007F0007020204020402010202010D",
+  "injection": {
+    "pace_fail_on": "first_pace_apdu",
+    "pace_sw": "6FFF",
+    "notes": "Synthetic — no physical passport. MSE/GA APDUs return card-dead SW; BAC uses ICAO 9303 Part 11 D.3 worked example."
+  },
+  "expected_gmrtd": {
+    "pace_err": "non_null",
+    "bac_err": "null",
+    "bac_success": true,
+    "caller_read_document_err_if_only_pace_bac": "null",
+    "observability_if_caller_checks_session_only": 0
+  }
+}

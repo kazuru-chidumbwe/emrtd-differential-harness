@@ -1,0 +1,12 @@
+{
+  "id": "TC-PA-01",
+  "name": "SOD with SHA-1 digest algorithm OID (weak-digest policy probe)",
+  "mechanism": "PA",
+  "condition": "weak_digest_acceptance",
+  "tier": "offline",
+  "fixture": "testdata/sod/fixtures/tc-pa-01-sod.hex",
+  "dsc_fixture": "testdata/sod/fixtures/tc-pa-01-dsc.pem",
+  "csca_fixture": "testdata/sod/fixtures/tc-pa-01-csca.pem",
+  "notes": "Stratified offline tier — pymrtd/gmrtd CMS path. Caller supplies issuer/CSCA; no live PKD.",
+  "hypothesis": "Library accepts or normalizes weak digest without explicit policy gate"
+}

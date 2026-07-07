@@ -1,0 +1,27 @@
+# Build outputs
+drivers/jmrtd/target/
+*.jar
+!drivers/jmrtd/pom.xml
+
+# Go
+/bin/
+*.exe
+*.test
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Run output
+logs/
+*.log
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Vendor (cloned by scripts/bootstrap-vendor.sh)
+../_vendor/

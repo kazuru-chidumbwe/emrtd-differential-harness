@@ -1,0 +1,13 @@
+{
+  "id": "TC-PA-03",
+  "name": "Structurally valid DSC chain with expired document signer",
+  "mechanism": "PA",
+  "condition": "expired_dsc_acceptance",
+  "tier": "offline",
+  "fixture": "testdata/sod/fixtures/tc-pa-03-sod.hex",
+  "dsc_fixture": "testdata/sod/fixtures/tc-pa-03-dsc-expired.pem",
+  "csca_fixture": "testdata/sod/fixtures/tc-pa-03-csca.pem",
+  "inspection_date": "2026-07-07",
+  "notes": "Models offline verification when caller skips validity window check.",
+  "hypothesis": "verify() succeeds if isValidOn not enforced by integrator"
+}

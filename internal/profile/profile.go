@@ -1,0 +1,72 @@
+package profile
+
+import (
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"os"
+	"strings"
+)
+
+type MRZ struct {
+	DocumentNumber string `json:"document_number"`
+	DateOfBirth    string `json:"date_of_birth"`
+	DateOfExpiry   string `json:"date_of_expiry"`
+}
+
+type Injection struct {
+	PaceFailOn string `json:"pace_fail_on"`
+	PaceSW     string `json:"pace_sw"`
+	Notes      string `json:"notes"`
+}
+
+type CAInjection struct {
+	CaFailOn string `json:"ca_fail_on"`
+	CaSW     string `json:"ca_sw"`
+	Notes    string `json:"notes"`
+}
+
+type Profile struct {
+	ID            string       `json:"id"`
+	Name          string       `json:"name"`
+	Mechanism     string       `json:"mechanism"`
+	Condition     string       `json:"condition"`
+	Tier          string       `json:"tier"`
+	MRZ           MRZ          `json:"mrz"`
+	CardAccessHex string       `json:"card_access_hex"`
+	Dg14HexPath   string       `json:"dg14_hex_path,omitempty"`
+	Injection     Injection    `json:"injection,omitempty"`
+	CAInjection   CAInjection  `json:"ca_injection,omitempty"`
+}
+
+func Load(path string) (*Profile, error) {
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("read profile: %w", err)
+	}
+	var p Profile
+	if err := json.Unmarshal(raw, &p); err != nil {
+		return nil, fmt.Errorf("parse profile: %w", err)
+	}
+	if p.ID == "" || p.MRZ.DocumentNumber == "" {
+		return nil, fmt.Errorf("profile missing required fields (id, mrz)")
+	}
+	if p.CardAccessHex == "" && p.Dg14HexPath == "" {
+		return nil, fmt.Errorf("profile needs card_access_hex and/or dg14_hex_path")
+	}
+	return &p, nil
+}
+
+func LoadHexFile(path string) ([]byte, error) {
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	s := strings.Map(func(r rune) rune {
+		if r == ' ' || r == '\n' || r == '\r' || r == '\t' {
+			return -1
+		}
+		return r
+	}, string(raw))
+	return hex.DecodeString(s)
+}
