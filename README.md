@@ -5,6 +5,16 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
   
 **Synthetic only:** no physical passport, no NFC hardware required for smoke tests.
 
+## Related publication
+
+**Jul 2026 — case study (DEV Community):** [Differential Testing Revealed What Conformance Testing Missed: A Case Study with Open-Source eMRTD Libraries](https://dev.to/kazuru_73322ef9a7d6ed2b18/differential-testing-revealed-what-conformance-testing-missed-a-case-study-with-open-source-emrtd-1nie)
+
+The essay’s reproducibility claims match tag **`blog-b10-2026-07`** (`ef15b10`). `main` may advance for paper/suite work without changing what the post describes.
+
+```bash
+git checkout blog-b10-2026-07   # blog reproduction pin
+```
+
 ---
 
 ## Quick start
