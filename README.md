@@ -2,7 +2,7 @@
 
 Differential test harness for open-source eMRTD (electronic passport) reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or downgrades reach a typical application caller.
 
-**Author:** Kazuru  
+  
 **Synthetic only:** no physical passport, no NFC hardware required for smoke tests.
 
 ---
