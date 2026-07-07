@@ -26,6 +26,30 @@ Expected output includes `logs/suite-*/artifact-manifest.json` — the **canonic
 
 ---
 
+## Blog reproduction anchor (B10)
+
+The Dev.to essay (*Differential Testing Revealed What Conformance Testing Missed…*) reproduces **TC-AC-01 smoke** (N=1 per library) at:
+
+| Field | Value |
+| --- | --- |
+| Tag | [`blog-b10-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/blog-b10-2026-07) |
+| Commit | `ef15b10` |
+| Profile | `profiles/pace-then-bac-downgrade.json` |
+| Libraries | gmrtd + JMRTD (baseline drivers only) |
+
+```bash
+git clone https://github.com/kazuru-chidumbwe/emrtd-differential-harness.git
+cd emrtd-differential-harness
+git checkout blog-b10-2026-07
+bash scripts/bootstrap-vendor.sh
+export GOTOOLCHAIN=auto
+make smoke
+```
+
+Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade N=100 manifests use `make suite` / `make paper` on `main` (manifest freeze at `e31d945`).
+
+---
+
 ## Middleware (§VIII contribution)
 
 `middleware/` enforces explicit-reject on PACE→BAC downgrade (and EAC-CA failure). Mitigated drivers:
