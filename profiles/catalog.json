@@ -1,5 +1,6 @@
 {
   "catalog_version": 1,
+  "profile_format_version": 1,
   "default_seed": 1,
   "profiles": [
     {

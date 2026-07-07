@@ -139,8 +139,11 @@ def main() -> int:
             else:
                 raise SystemExit(f"unknown driver: {driver}")
 
-    skip = {"summary-", "artifact-", "environment"}
-    actual = len([p for p in log_dir.glob("*.json") if not any(p.name.startswith(s) for s in skip)])
+    skip_names = {"artifact-manifest.json", "environment.json"}
+    actual = len([
+        p for p in log_dir.glob("*.json")
+        if p.name not in skip_names and not p.name.startswith("summary-")
+    ])
     if actual != expected:
         print(f"error: expected {expected} artifacts, found {actual}", file=sys.stderr)
         return 1
@@ -161,7 +164,11 @@ def main() -> int:
         cwd=ROOT,
         check=False,
     )
-    return 0 if agg.returncode == 0 else agg.returncode
+    if agg.returncode != 0:
+        return agg.returncode
+
+    print(f"SUITE OK — {actual} runs under {log_dir}/")
+    return 0
 
 
 if __name__ == "__main__":

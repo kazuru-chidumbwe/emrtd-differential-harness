@@ -1,4 +1,4 @@
-.PHONY: smoke suite suite-paper repro test test-middleware
+.PHONY: smoke suite suite-paper paper repro test test-middleware verify-manifest
 
 smoke:
 	bash scripts/quick_test.sh
@@ -8,6 +8,9 @@ suite:
 
 suite-paper:
 	MANIFEST=suites/paper-matrix.json bash scripts/run_suite.sh
+
+paper:
+	bash scripts/paper.sh
 
 repro:
 	bash scripts/independent-repro.sh
@@ -20,3 +23,7 @@ test-middleware:
 	go test ./middleware/...
 
 test: test-classifier test-middleware
+
+verify-manifest:
+	@test -n "$(LOG_DIR)" || (echo "usage: make verify-manifest LOG_DIR=logs/suite-..." && exit 1)
+	python3 classifier/verify_manifest.py "$(LOG_DIR)" --manifest suites/ac-01-wire.json

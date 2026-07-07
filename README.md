@@ -19,10 +19,10 @@ export GOTOOLCHAIN=auto
 make smoke          # single-run smoke gate
 make suite          # AC-01 wire manifest, N=100 + provenance-linked summary
 make suite-paper    # full paper matrix manifest
-make test           # classifier + middleware tests
+make paper          # CI: tests → smoke → suite → verify → artifacts/
 ```
 
-Expected smoke output ends with `SMOKE OK`. Suite output: `logs/suite-{id}-{timestamp}/summary-*.md` with `figure_id` columns tied to `artifact-manifest-*.json`.
+Expected output includes `logs/suite-*/artifact-manifest.json` — the **canonical** published object. Cite `FIG-01`…`FIG-04` (not manuscript figure numbers). Derived `summary-*.md` tables reference the manifest.
 
 ---
 
@@ -42,7 +42,7 @@ Before/after comparison is a diff of run artifacts, not a rewritten test.
 
 This harness replays **synthetic chip profiles** through in-process APDU transceivers. It does **not** exercise physical NFC hardware, real eMRTD silicon, or live PKD/CRL infrastructure.
 
-- **Deterministic N=100:** fixed profile → reproducibility proof, not input-population variance.
+- **N=100 repetitions:** Repeating each deterministic profile N=100 demonstrates harness stability and result reproducibility rather than estimating behavioural variance.
 - **Blog scope:** `make suite` (TC-AC-01 wire tier).
 - **Paper scope:** `make suite-paper` (adds TC-CA-01, offline PA scaffold).
 
@@ -67,11 +67,13 @@ simulator/    APDU transceivers
 cmd/          Go drivers (baseline + mitigated)
 middleware/   §VIII explicit-reject (PACE + CA)
 drivers/      JMRTD Java drivers; pymrtd offline
-classifier/   Score contract, run_suite.py, aggregate.py
-scripts/      bootstrap-vendor.sh, quick_test.sh, run_suite.sh, independent-repro.sh
-docs/         ARCHITECTURE.md, PROVENANCE.md
+classifier/   manifest.py (canonical), run_suite.py, aggregate.py, verify_manifest.py
+scripts/      bootstrap-vendor.sh, quick_test.sh, run_suite.sh, paper.sh, independent-repro.sh
+docs/         SCHEMA.md, ARCHITECTURE.md, PROVENANCE.md
+schemas/      Frozen v1 schema docs
+artifacts/    Verified manifest copies from `make paper` (gitignored except .gitkeep)
 logs/         Run output (gitignored)
-Makefile      smoke | suite | suite-paper | repro | test
+Makefile      smoke | suite | suite-paper | paper | repro | test
 ```
 
 ---

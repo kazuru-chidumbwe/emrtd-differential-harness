@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from enum import IntEnum
 from typing import Optional
 
+from constants import FINDING_THRESHOLD_PCT, SUITE_N_DEFAULT
+
 
 class ObservabilityScore(IntEnum):
     SILENT = 0
@@ -59,6 +61,3 @@ def consistency_pct(scores: list[ObservabilityScore | int], target: Observabilit
     matches = sum(1 for s in scores if int(s) == int(target))
     return 100.0 * matches / len(scores)
 
-
-FINDING_THRESHOLD_PCT = 95.0
-SUITE_N_DEFAULT = 100

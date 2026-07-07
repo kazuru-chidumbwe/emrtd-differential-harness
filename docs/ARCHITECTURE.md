@@ -1,36 +1,36 @@
 # Harness architecture
 
 ```
-profiles/ + suites/*.json manifests
-        ↓
-classifier/run_suite.py → drivers (baseline + mitigated)
-        ↓
-middleware/ (§VIII explicit-reject) — contribution layer
-        ↓
-logs/{run_id}.json  (provenance block per run)
-        ↓
-classifier/aggregate.py → summary + artifact-manifest
-        ↓
-Published figure_id → artifact_refs (SHA-256 linked)
+Scenario (suite manifest)
+    ↓
+Execution (drivers + middleware policy)
+    ↓
+Observation (classifier → score 0/1/2)
+    ↓
+Finding (≥95% over N=100)
+    ↓
+Artifact (artifact-manifest.json — canonical)
 ```
 
-## Middleware first
+See [SCHEMA.md](SCHEMA.md) for frozen v1 schemas and figure ID rules (`FIG-01`, not “Figure 2”).
 
-The harness separates **observation** (baseline drivers) from **mitigation** (`middleware/` + mitigated drivers). Baseline proves silent downgrade; mitigated proves the fix surfaces failure (score 0→2).
+## Canonical artifact
 
-See [`middleware/README.md`](../middleware/README.md).
+**`artifact-manifest.json`** is the primary published object. Each `FIG-xx` entry bundles scenario, execution, observation, finding, `artifact_refs`, and `bundle_sha256`. `TABLE-01` and `SUMMARY-01` are derived views.
 
-## Suite manifests
+## Middleware (contribution layer)
 
-| Manifest | Scope | Command |
-| --- | --- | --- |
-| `suites/ac-01-wire.json` | Blog wire tier (AC-01 × gmrtd/jmrtd × baseline/mitigated) | `make suite` |
-| `suites/paper-matrix.json` | Paper matrix (+ CA, offline PA) | `make suite-paper` |
+Baseline drivers observe library behaviour. Mitigated drivers apply `middleware/` explicit-reject policy. Compare artifacts — not rewritten tests.
 
-## Observability Score
+## Commands
 
-Scored per `(test_case × library × variant)`; never mean-aggregated across libraries. Finding threshold: **≥95% over N=100** (deterministic fixed profile = reproducibility proof).
+| Command | Purpose |
+| --- | --- |
+| `make smoke` | Single-run gate |
+| `make suite` | Blog wire manifest (`FIG-01`…`FIG-04`) |
+| `make suite-paper` | Full paper matrix |
+| `make paper` | CI pipeline — fails if tests/smoke/suite incomplete |
 
-## Provenance
+## Methodology (frozen)
 
-Every run records commit, profile SHA-256, suite seed, driver, variant. See [`docs/PROVENANCE.md`](PROVENANCE.md).
+Repeating each deterministic profile N=100 demonstrates harness stability and result reproducibility rather than estimating behavioural variance.
