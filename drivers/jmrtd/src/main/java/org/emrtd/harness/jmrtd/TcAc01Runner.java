@@ -27,11 +27,14 @@ public final class TcAc01Runner {
     public static void main(String[] args) throws Exception {
         Path profilePath = Path.of("profiles/pace-then-bac-downgrade.json");
         Path logDir = Path.of("logs");
+        String variant = "baseline";
         for (int i = 0; i < args.length; i++) {
             if ("-profile".equals(args[i]) && i + 1 < args.length) {
                 profilePath = Path.of(args[++i]);
             } else if ("-log-dir".equals(args[i]) && i + 1 < args.length) {
                 logDir = Path.of(args[++i]);
+            } else if ("-variant".equals(args[i]) && i + 1 < args.length) {
+                variant = args[++i];
             }
         }
 
@@ -74,25 +77,16 @@ public final class TcAc01Runner {
             bacErr = e.getMessage();
         }
 
-        int obs;
-        String obsMeaning;
-        if (paceThrown && bacSuccess && bacErr.isEmpty()) {
-            // Naive integrator: catch PACEException and continue without rethrowing.
-            obs = 0;
-            obsMeaning = "silent — PACEException caught by harness integrator pattern; BAC succeeded without surfacing PACE failure upstream";
-        } else if (paceThrown) {
-            obs = 2;
-            obsMeaning = "surfaced — PACEException thrown at API boundary";
-        } else if (!paceErr.isEmpty()) {
-            obs = 1;
-            obsMeaning = "logged — PACE error recorded";
-        } else {
-            obs = 2;
-            obsMeaning = "surfaced — explicit outcome";
-        }
+        // Integrator pattern: catch PACEException locally; not surfaced upstream unless rethrown.
+        int obs = Observability.classifyTcAc01(new Observability.TCAC01Outcome(
+                paceThrown || !paceErr.isEmpty(),
+                bacSuccess,
+                bacErr,
+                false));
+        String obsMeaning = Observability.meaningTcAc01(obs);
 
-        String runId = profile.id + "-jmrtd-" + DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
-                .withZone(ZoneOffset.UTC).format(Instant.now());
+        String runId = profile.id + "-jmrtd-" + DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss.SSSSSS'Z'")
+                .withZone(ZoneOffset.UTC).format(Instant.now()) + "-" + System.nanoTime();
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("run_id", runId);
@@ -100,6 +94,7 @@ public final class TcAc01Runner {
         result.put("library", "jmrtd");
         result.put("mechanism", profile.mechanism);
         result.put("condition", profile.condition);
+        result.put("variant", variant);
         result.put("pace_err", paceErr);
         result.put("pace_exception_thrown", paceThrown);
         result.put("bac_err", bacErr);

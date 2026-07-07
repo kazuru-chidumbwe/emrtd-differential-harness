@@ -16,12 +16,26 @@ git clone https://github.com/kazuru-chidumbwe/emrtd-differential-harness.git
 cd emrtd-differential-harness
 bash scripts/bootstrap-vendor.sh
 export GOTOOLCHAIN=auto
-bash scripts/quick_test.sh
+make smoke          # single-run smoke gate
+make suite          # N=100 wire-tier suite + summary table (SUITE_N=100 default)
+make test-classifier
 ```
 
-Expected output ends with `SMOKE OK — traces written under logs/`. JSON traces include `run_id`, `observability_score`, and full APDU arrays.
+Expected smoke output ends with `SMOKE OK — traces written under logs/`. JSON traces include `run_id`, `observability_score`, `variant`, and full APDU arrays.
 
 First JMRTD run builds `jmrtd-0.5.2` from vendor sources (`scripts/install-jmrtd-local.sh`) because the Maven Central artifact is empty.
+
+---
+
+## Limitations (simulator, not silicon)
+
+This harness replays **synthetic chip profiles** through in-process APDU transceivers. It does **not** exercise physical NFC hardware, real eMRTD silicon, or live PKD/CRL infrastructure.
+
+- **Deterministic N=100 runs:** the default TC-AC-01 profile uses fixed MRZ/RND keys. Repeating N=100 proves harness reproducibility and stable classification — not statistical variance across document populations.
+- **Wire tier only in blog scope:** TC-AC-01 (PACE→BAC downgrade) is fully exercised for gmrtd and JMRTD. TC-CA/PA tiers and the full library×mechanism matrix are scaffolded for the paper track.
+- **Middleware (§VIII):** gmrtd-only explicit-reject wrapper; JMRTD mitigation is not implemented here.
+
+See `docs/ARCHITECTURE.md` for the finding threshold (≥95% over N=100) and aggregation flow.
 
 ---
 
@@ -38,12 +52,14 @@ The synthetic chip advertises PACE, returns `6FFF` on the first PACE APDU, and k
 ```
 profiles/     Chip behaviour definitions (JSON)
 simulator/    APDU transceivers for synthetic profiles
-cmd/          Go drivers (tc-ac-01, tc-ca-01)
+cmd/          Go drivers (tc-ac-01, tc-ac-01-mitigated, tc-ca-01)
+middleware/   §VIII explicit-reject wrapper (gmrtd)
 drivers/      JMRTD Java driver; pymrtd offline scaffold
-classifier/   Trace → Observability Score (0/1/2)
-scripts/      bootstrap-vendor.sh, quick_test.sh, install-jmrtd-local.sh
+classifier/   Shared Observability Score + aggregate.py
+scripts/      bootstrap-vendor.sh, quick_test.sh, run_suite.sh, sponsor-repro.sh
 testdata/     Synthetic EF/DG/SOD fixtures
 logs/         Run output (gitignored)
+Makefile      smoke | suite | repro | test-classifier
 ```
 
 ---

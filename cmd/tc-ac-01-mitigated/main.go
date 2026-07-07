@@ -1,4 +1,4 @@
-// TC-AC-01 smoke run: PACE failure recorded on session, BAC proceeds (gmrtd wire tier).
+// TC-AC-01 mitigated run: middleware §VIII explicit-reject on PACE failure (no silent BAC fallback).
 package main
 
 import (
@@ -8,15 +8,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gmrtd/gmrtd/bac"
 	"github.com/gmrtd/gmrtd/document"
 	"github.com/gmrtd/gmrtd/iso7816"
 	"github.com/gmrtd/gmrtd/password"
-	"github.com/gmrtd/gmrtd/pace"
 	"github.com/gmrtd/gmrtd/utils"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/classifier"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/profile"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/runid"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/middleware"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/simulator"
 )
 
@@ -37,7 +36,7 @@ type smokeResult struct {
 	PaceErr         string       `json:"pace_err"`
 	BacErr          string       `json:"bac_err"`
 	BacSuccess      bool         `json:"bac_success"`
-	StepErr         string       `json:"step_err,omitempty"`
+	MiddlewareErr   string       `json:"middleware_err,omitempty"`
 	Observability   int          `json:"observability_score"`
 	ObservabilityMe string       `json:"observability_meaning"`
 	Trace           []traceEntry `json:"trace"`
@@ -46,7 +45,6 @@ type smokeResult struct {
 func main() {
 	profilePath := flag.String("profile", "profiles/pace-then-bac-downgrade.json", "synthetic chip profile JSON")
 	logDir := flag.String("log-dir", "logs", "output directory for run traces")
-	variant := flag.String("variant", "baseline", "run variant label (baseline|mitigated)")
 	flag.Parse()
 
 	p, err := profile.Load(*profilePath)
@@ -73,36 +71,30 @@ func main() {
 		fatal("card access", err)
 	}
 
-	docEx := &document.DocumentEx{Document: *doc}
+	sess := middleware.NegotiatePACEBAC(nfc, doc, pass, middleware.Options{AllowBACFallback: false})
 
-	docEx.Session.PaceResult, docEx.Session.PaceCamResult, docEx.Session.PaceErr =
-		pace.NewPace(nfc, doc, pass).DoPACE()
-
-	if nfc.SM() == nil {
-		docEx.Session.BacResult, docEx.Session.BacErr = bac.NewBAC(nfc, doc, pass).DoBAC()
-	}
-
-	paceErrStr := errString(docEx.Session.PaceErr)
-	bacErrStr := errString(docEx.Session.BacErr)
-	bacOK := docEx.Session.BacResult != nil && docEx.Session.BacResult.Success
+	paceErrStr := errString(sess.PaceErr)
+	bacErrStr := errString(sess.BacErr)
+	mwErrStr := errString(sess.SurfacedError)
 	obs, obsMeaning := classifier.ClassifyTCAC01(classifier.TCAC01Input{
-		PaceFailed:           paceErrStr != "",
-		BacSuccess:           bacOK,
+		PaceFailed:           paceErrStr != "" || mwErrStr != "",
+		BacSuccess:           sess.BacSuccess,
 		BacErr:               bacErrStr,
-		PaceSurfacedToCaller: false,
+		PaceSurfacedToCaller: mwErrStr != "",
 	})
 
-	runID := runid.New(fmt.Sprintf("%s-gmrtd", p.ID))
+	runID := runid.New(fmt.Sprintf("%s-gmrtd-mitigated", p.ID))
 	result := smokeResult{
 		RunID:           runID,
 		TestCase:        p.ID,
 		Library:         "gmrtd",
 		Mechanism:       p.Mechanism,
 		Condition:       p.Condition,
-		Variant:         *variant,
+		Variant:         "mitigated",
 		PaceErr:         paceErrStr,
 		BacErr:          bacErrStr,
-		BacSuccess:      bacOK,
+		BacSuccess:      sess.BacSuccess,
+		MiddlewareErr:   mwErrStr,
 		Observability:   obs.Int(),
 		ObservabilityMe: obsMeaning,
 		Trace:           buildTrace(nfc.ApduLog()),
@@ -116,8 +108,8 @@ func main() {
 	enc.SetIndent("", "  ")
 	_ = enc.Encode(result)
 
-	if paceErrStr == "" || !bacOK {
-		fmt.Fprintf(os.Stderr, "TC-AC-01 gate failed: pace_err=%q bac_success=%v\n", paceErrStr, bacOK)
+	if paceErrStr == "" || mwErrStr == "" {
+		fmt.Fprintf(os.Stderr, "TC-AC-01 mitigated gate failed: pace_err=%q middleware_err=%q\n", paceErrStr, mwErrStr)
 		os.Exit(1)
 	}
 }
