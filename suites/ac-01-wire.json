@@ -1,0 +1,51 @@
+{
+  "suite_id": "ac-01-wire",
+  "description": "TC-AC-01 wire tier — blog scope (baseline + gmrtd/jmrtd mitigation)",
+  "seed": 1,
+  "n": 100,
+  "profile": "profiles/pace-then-bac-downgrade.json",
+  "entries": [
+    {
+      "test_case": "TC-AC-01",
+      "library": "gmrtd",
+      "mechanism": "PACE",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "go",
+      "command": "tc-ac-01",
+      "figure_id": "fig-ac01-gmrtd-baseline"
+    },
+    {
+      "test_case": "TC-AC-01",
+      "library": "gmrtd",
+      "mechanism": "PACE",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "go",
+      "command": "tc-ac-01-mitigated",
+      "middleware": "explicit-reject-pace",
+      "figure_id": "fig-ac01-gmrtd-mitigated"
+    },
+    {
+      "test_case": "TC-AC-01",
+      "library": "jmrtd",
+      "mechanism": "PACE",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "figure_id": "fig-ac01-jmrtd-baseline"
+    },
+    {
+      "test_case": "TC-AC-01",
+      "library": "jmrtd",
+      "mechanism": "PACE",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "middleware": "rethrow-pace-exception",
+      "figure_id": "fig-ac01-jmrtd-mitigated"
+    }
+  ]
+}

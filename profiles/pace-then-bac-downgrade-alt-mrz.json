@@ -1,0 +1,19 @@
+{
+  "id": "TC-AC-01",
+  "name": "PACE-capable chip with injected PACE failure (alternate MRZ)",
+  "mechanism": "PACE",
+  "condition": "pace_fail_then_bac",
+  "tier": "wire",
+  "seed": 2,
+  "mrz": {
+    "document_number": "P1234567",
+    "date_of_birth": "800101",
+    "date_of_expiry": "301231"
+  },
+  "card_access_hex": "31143012060A04007F0007020204020402010202010D",
+  "injection": {
+    "pace_fail_on": "first_pace_apdu",
+    "pace_sw": "6FFF",
+    "notes": "Synthetic — alternate MRZ; same PACE-fail/BAC-ok semantics as primary TC-AC-01 profile."
+  }
+}

@@ -1,4 +1,3 @@
-// TC-AC-01 smoke run: PACE failure recorded on session, BAC proceeds (gmrtd wire tier).
 package main
 
 import (
@@ -6,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/gmrtd/gmrtd/bac"
 	"github.com/gmrtd/gmrtd/document"
@@ -15,7 +13,9 @@ import (
 	"github.com/gmrtd/gmrtd/pace"
 	"github.com/gmrtd/gmrtd/utils"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/classifier"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/output"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/profile"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/provenance"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/runid"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/simulator"
 )
@@ -28,28 +28,52 @@ type traceEntry struct {
 }
 
 type smokeResult struct {
-	RunID           string       `json:"run_id"`
-	TestCase        string       `json:"test_case"`
-	Library         string       `json:"library"`
-	Mechanism       string       `json:"mechanism"`
-	Condition       string       `json:"condition"`
-	Variant         string       `json:"variant"`
+	output.Meta
 	PaceErr         string       `json:"pace_err"`
 	BacErr          string       `json:"bac_err"`
 	BacSuccess      bool         `json:"bac_success"`
-	StepErr         string       `json:"step_err,omitempty"`
 	Observability   int          `json:"observability_score"`
 	ObservabilityMe string       `json:"observability_meaning"`
 	Trace           []traceEntry `json:"trace"`
 }
 
-func main() {
+type suiteFlags struct {
+	profilePath string
+	logDir      string
+	variant     string
+	suiteID     string
+	suiteSeed   int
+	suiteN      int
+	runIndex    int
+	figureID    string
+}
+
+func parseFlags() suiteFlags {
 	profilePath := flag.String("profile", "profiles/pace-then-bac-downgrade.json", "synthetic chip profile JSON")
 	logDir := flag.String("log-dir", "logs", "output directory for run traces")
-	variant := flag.String("variant", "baseline", "run variant label (baseline|mitigated)")
+	variant := flag.String("variant", "baseline", "run variant label")
+	suiteID := flag.String("suite-id", "", "suite manifest id")
+	suiteSeed := flag.Int("suite-seed", 1, "suite PRNG seed (metadata)")
+	suiteN := flag.Int("suite-n", 1, "suite repetition count (metadata)")
+	runIndex := flag.Int("run-index", 0, "1-based run index within suite entry")
+	figureID := flag.String("figure-id", "", "published figure identifier")
 	flag.Parse()
+	return suiteFlags{
+		profilePath: *profilePath,
+		logDir:      *logDir,
+		variant:     *variant,
+		suiteID:     *suiteID,
+		suiteSeed:   *suiteSeed,
+		suiteN:      *suiteN,
+		runIndex:    *runIndex,
+		figureID:    *figureID,
+	}
+}
 
-	p, err := profile.Load(*profilePath)
+func main() {
+	flags := parseFlags()
+
+	p, err := profile.Load(flags.profilePath)
 	if err != nil {
 		fatal("profile", err)
 	}
@@ -74,7 +98,6 @@ func main() {
 	}
 
 	docEx := &document.DocumentEx{Document: *doc}
-
 	docEx.Session.PaceResult, docEx.Session.PaceCamResult, docEx.Session.PaceErr =
 		pace.NewPace(nfc, doc, pass).DoPACE()
 
@@ -92,14 +115,32 @@ func main() {
 		PaceSurfacedToCaller: false,
 	})
 
+	prov, err := provenance.Collect(provenance.Options{
+		ProfilePath: flags.profilePath,
+		SuiteID:     flags.suiteID,
+		SuiteSeed:   flags.suiteSeed,
+		SuiteN:      flags.suiteN,
+		RunIndex:    flags.runIndex,
+		Driver:      "go/tc-ac-01",
+		Variant:     flags.variant,
+	})
+	if err != nil {
+		fatal("provenance", err)
+	}
+
 	runID := runid.New(fmt.Sprintf("%s-gmrtd", p.ID))
 	result := smokeResult{
-		RunID:           runID,
-		TestCase:        p.ID,
-		Library:         "gmrtd",
-		Mechanism:       p.Mechanism,
-		Condition:       p.Condition,
-		Variant:         *variant,
+		Meta: output.Meta{
+			RunID:      runID,
+			TestCase:   p.ID,
+			Library:    "gmrtd",
+			Mechanism:  p.Mechanism,
+			Condition:  p.Condition,
+			Tier:       p.Tier,
+			Variant:    flags.variant,
+			FigureID:   flags.figureID,
+			Provenance: prov,
+		},
 		PaceErr:         paceErrStr,
 		BacErr:          bacErrStr,
 		BacSuccess:      bacOK,
@@ -108,7 +149,7 @@ func main() {
 		Trace:           buildTrace(nfc.ApduLog()),
 	}
 
-	if err := writeResult(*logDir, runID, result); err != nil {
+	if err := output.WriteJSON(flags.logDir, runID, result); err != nil {
 		fatal("write log", err)
 	}
 
@@ -132,18 +173,6 @@ func errString(err error) string {
 		return ""
 	}
 	return err.Error()
-}
-
-func writeResult(logDir, runID string, result smokeResult) error {
-	if err := os.MkdirAll(logDir, 0o755); err != nil {
-		return err
-	}
-	outPath := filepath.Join(logDir, runID+".json")
-	raw, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(outPath, raw, 0o644)
 }
 
 func buildTrace(log *iso7816.ApduLog) []traceEntry {

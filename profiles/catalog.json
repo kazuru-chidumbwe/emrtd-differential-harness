@@ -1,0 +1,51 @@
+{
+  "catalog_version": 1,
+  "default_seed": 1,
+  "profiles": [
+    {
+      "id": "TC-AC-01",
+      "path": "profiles/pace-then-bac-downgrade.json",
+      "tier": "wire",
+      "mechanism": "PACE",
+      "condition": "pace_fail_then_bac",
+      "seed": 1,
+      "description": "PACE-capable chip; injected PACE failure; BAC fallback path"
+    },
+    {
+      "id": "TC-AC-01-alt-mrz",
+      "path": "profiles/pace-then-bac-downgrade-alt-mrz.json",
+      "tier": "wire",
+      "mechanism": "PACE",
+      "condition": "pace_fail_then_bac",
+      "seed": 2,
+      "description": "Alternate MRZ credentials — same injection semantics"
+    },
+    {
+      "id": "TC-CA-01",
+      "path": "profiles/ca-v1-v2-skew.json",
+      "tier": "wire",
+      "mechanism": "EAC-CA",
+      "condition": "ca_v2_chip_v1_terminal_skew",
+      "seed": 1,
+      "description": "DG14 CA advertised; MSE:Set AT fails at chip"
+    },
+    {
+      "id": "TC-CA-01-terminal-v1",
+      "path": "profiles/ca-v2-terminal-v1.json",
+      "tier": "wire",
+      "mechanism": "EAC-CA",
+      "condition": "ca_v2_chip_v1_terminal_skew",
+      "seed": 3,
+      "description": "Variant CA status word (6985) on skew proxy"
+    },
+    {
+      "id": "TC-FI-01",
+      "path": "profiles/fi-cardaccess-truncated.json",
+      "tier": "wire",
+      "mechanism": "FI",
+      "condition": "truncated_cardaccess",
+      "seed": 1,
+      "description": "Truncated EF.CardAccess parse probe (scaffold)"
+    }
+  ]
+}

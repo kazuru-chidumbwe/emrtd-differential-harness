@@ -1,0 +1,17 @@
+{
+  "id": "TC-FI-01",
+  "name": "Truncated EF.CardAccess — file structure parse probe",
+  "mechanism": "FI",
+  "condition": "truncated_cardaccess",
+  "tier": "wire",
+  "seed": 1,
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "3114301206",
+  "injection": {
+    "notes": "Scaffold — intentionally truncated CardAccess TLV for parse-failure observability (driver TBD)."
+  }
+}

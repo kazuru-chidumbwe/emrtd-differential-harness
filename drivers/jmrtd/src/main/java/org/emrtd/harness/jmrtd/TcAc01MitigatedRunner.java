@@ -1,6 +1,5 @@
 package org.emrtd.harness.jmrtd;
 
-import net.sf.scuba.smartcards.CardServiceException;
 import net.sf.scuba.util.Hex;
 import org.jmrtd.BACKey;
 import org.jmrtd.PACEException;
@@ -16,7 +15,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class TcAc01Runner {
+/** TC-AC-01 mitigated: PACE failure surfaces to caller (no catch-and-continue to BAC). */
+public final class TcAc01MitigatedRunner {
     public static void main(String[] args) throws Exception {
         RunnerArgs a = RunnerArgs.parse(args);
         Path root = Path.of(".").toAbsolutePath().normalize();
@@ -43,22 +43,15 @@ public final class TcAc01Runner {
             paceErr = e.getMessage();
         }
 
-        service.sendSelectApplet(false);
-
+        // Mitigated integrator: do not proceed to BAC after PACE failure
         boolean bacSuccess = false;
         String bacErr = "";
-        try {
-            service.doBAC(bacKey);
-            bacSuccess = true;
-        } catch (CardServiceException e) {
-            bacErr = e.getMessage();
-        }
 
         int obs = Observability.classifyTcAc01(new Observability.TCAC01Outcome(
-                paceThrown || !paceErr.isEmpty(), bacSuccess, bacErr, false));
+                paceThrown || !paceErr.isEmpty(), bacSuccess, bacErr, paceThrown));
 
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("run_id", RunIds.next(profile.id + "-jmrtd"));
+        result.put("run_id", RunIds.next(profile.id + "-jmrtd-mitigated"));
         result.put("test_case", profile.id);
         result.put("library", "jmrtd");
         result.put("mechanism", profile.mechanism);
@@ -73,7 +66,7 @@ public final class TcAc01Runner {
         result.put("observability_score", obs);
         result.put("observability_meaning", Observability.meaning(obs));
         result.put("provenance", Provenance.collect(root, a.profilePath, a.suiteId, a.suiteSeed, a.suiteN, a.runIndex,
-                "java/TcAc01Runner", a.variant, ""));
+                "java/TcAc01MitigatedRunner", a.variant, "rethrow-pace-exception"));
 
         List<Map<String, Object>> trace = new ArrayList<>();
         for (TcAc01CardService.TraceEntry e : card.trace()) {
@@ -88,8 +81,8 @@ public final class TcAc01Runner {
 
         Provenance.writeResult(a.logDir, (String) result.get("run_id"), result);
 
-        if (!paceThrown || !bacSuccess) {
-            System.err.printf("TC-AC-01 gate failed: pace_thrown=%s bac_success=%s%n", paceThrown, bacSuccess);
+        if (!paceThrown) {
+            System.err.println("TC-AC-01 mitigated gate failed: expected PACE failure");
             System.exit(1);
         }
     }

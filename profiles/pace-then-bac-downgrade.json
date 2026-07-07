@@ -4,6 +4,7 @@
   "mechanism": "PACE",
   "condition": "pace_fail_then_bac",
   "tier": "wire",
+  "seed": 1,
   "mrz": {
     "document_number": "L898902C",
     "date_of_birth": "690806",

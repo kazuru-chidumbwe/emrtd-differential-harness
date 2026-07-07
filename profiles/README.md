@@ -1,14 +1,15 @@
 # Simulator profiles
 
-One JSON/YAML file per test case ID from [`g1-static-scoping.md`](../../../private/notes/g1-static-scoping.md).
+Synthetic chip behaviour definitions — **no physical passport required.**
 
-**Dev.to requirement:** profiles must run **without physical hardware** — synthetic chip only. Blog copy: *"no physical passport required."*
+Catalog: [`catalog.json`](catalog.json) lists profile IDs, paths, seeds, and tiers.
 
-**Planned (W2 — blocking for Aug blog §4B):**
+| Profile | Test case | Tier | Status |
+| --- | --- | --- | --- |
+| `pace-then-bac-downgrade.json` | TC-AC-01 | wire | smoke + suite |
+| `pace-then-bac-downgrade-alt-mrz.json` | TC-AC-01 | wire | alternate MRZ |
+| `ca-v1-v2-skew.json` | TC-CA-01 | wire | gmrtd + jmrtd |
+| `ca-v2-terminal-v1.json` | TC-CA-01 | wire | variant SW 6985 |
+| `fi-cardaccess-truncated.json` | TC-FI-01 | wire | scaffold |
 
-- `pace-then-bac-downgrade.json` — **TC-AC-01** (smoke OK 2026-07-07, gmrtd + jmrtd)
-- `ca-v1-v2-skew.json` — **TC-CA-01** (EAC-CA MSE fail; gmrtd smoke scaffold)
-- `ca-v2-terminal-v1.json` — TC-CA-01
-- `fi-cardaccess-truncated.json` — TC-FI-01
-
-**Deliverable:** JMRTD passport applet simulator + profile loader + `scripts/quick_test.sh` (gmrtd path live).
+Offline PA fixtures live under `testdata/sod/` (pymrtd tier — stratified, not pooled with wire).

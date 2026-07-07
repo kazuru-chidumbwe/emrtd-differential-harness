@@ -1,0 +1,103 @@
+{
+  "suite_id": "paper-matrix-v1",
+  "description": "Full library × mechanism matrix for paper (wire + offline tiers)",
+  "seed": 1,
+  "n": 100,
+  "entries": [
+    {
+      "test_case": "TC-AC-01",
+      "library": "gmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "go",
+      "command": "tc-ac-01",
+      "profile": "profiles/pace-then-bac-downgrade.json",
+      "figure_id": "fig-ac01-gmrtd-baseline"
+    },
+    {
+      "test_case": "TC-AC-01",
+      "library": "gmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "go",
+      "command": "tc-ac-01-mitigated",
+      "profile": "profiles/pace-then-bac-downgrade.json",
+      "middleware": "explicit-reject-pace",
+      "figure_id": "fig-ac01-gmrtd-mitigated"
+    },
+    {
+      "test_case": "TC-AC-01",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/pace-then-bac-downgrade.json",
+      "figure_id": "fig-ac01-jmrtd-baseline"
+    },
+    {
+      "test_case": "TC-AC-01",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/pace-then-bac-downgrade.json",
+      "middleware": "rethrow-pace-exception",
+      "figure_id": "fig-ac01-jmrtd-mitigated"
+    },
+    {
+      "test_case": "TC-CA-01",
+      "library": "gmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "go",
+      "command": "tc-ca-01",
+      "profile": "profiles/ca-v1-v2-skew.json",
+      "figure_id": "fig-ca01-gmrtd-baseline"
+    },
+    {
+      "test_case": "TC-CA-01",
+      "library": "gmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "go",
+      "command": "tc-ca-01-mitigated",
+      "profile": "profiles/ca-v1-v2-skew.json",
+      "middleware": "explicit-reject-ca",
+      "figure_id": "fig-ca01-gmrtd-mitigated"
+    },
+    {
+      "test_case": "TC-CA-01",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcCa01Runner",
+      "profile": "profiles/ca-v1-v2-skew.json",
+      "figure_id": "fig-ca01-jmrtd-baseline"
+    },
+    {
+      "test_case": "TC-PA-01",
+      "library": "pymrtd",
+      "tier": "offline",
+      "variant": "baseline",
+      "driver": "python",
+      "script": "drivers/pymrtd-offline/run_case.py",
+      "fixture": "testdata/sod/tc-pa-01-weak-digest.json",
+      "n": 1,
+      "figure_id": "fig-pa01-pymrtd-baseline"
+    },
+    {
+      "test_case": "TC-PA-03",
+      "library": "pymrtd",
+      "tier": "offline",
+      "variant": "baseline",
+      "driver": "python",
+      "script": "drivers/pymrtd-offline/run_case.py",
+      "fixture": "testdata/sod/tc-pa-03-expired-dsc.json",
+      "n": 1,
+      "figure_id": "fig-pa03-pymrtd-baseline"
+    }
+  ]
+}

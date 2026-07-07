@@ -1,49 +1,28 @@
 package org.emrtd.harness.jmrtd;
 
 import net.sf.scuba.smartcards.CardServiceException;
-import net.sf.scuba.util.Hex;
+import net.sf.scuba.smartcards.CommandAPDU;
 import org.jmrtd.BACKey;
-import org.jmrtd.PACEException;
 import org.jmrtd.PassportService;
-import org.jmrtd.lds.CardAccessFile;
-import org.jmrtd.lds.PACEInfo;
 
-import java.io.ByteArrayInputStream;
 import java.nio.file.Path;
-import java.security.spec.AlgorithmParameterSpec;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class TcAc01Runner {
+public final class TcCa01Runner {
     public static void main(String[] args) throws Exception {
         RunnerArgs a = RunnerArgs.parse(args);
         Path root = Path.of(".").toAbsolutePath().normalize();
         HarnessProfile profile = HarnessProfile.load(a.profilePath);
-        String paceSw = profile.injection != null && profile.injection.paceSw != null
-                ? profile.injection.paceSw : "6FFF";
+        String caSw = profile.caInjection != null && profile.caInjection.caSw != null
+                ? profile.caInjection.caSw : "6FFF";
 
         BACKey bacKey = new BACKey(profile.mrz.documentNumber, profile.mrz.dateOfBirth, profile.mrz.dateOfExpiry);
-        TcAc01CardService card = new TcAc01CardService(bacKey, paceSw);
+        TcCa01CardService card = new TcCa01CardService(bacKey, caSw);
         PassportService service = new PassportService(card);
         service.open();
-
-        CardAccessFile cardAccess = new CardAccessFile(new ByteArrayInputStream(Hex.hexStringToBytes(profile.cardAccessHex)));
-        PACEInfo paceInfo = cardAccess.getPACEInfos().iterator().next();
-        String oid = paceInfo.getObjectIdentifier();
-        AlgorithmParameterSpec params = PACEInfo.toParameterSpec(paceInfo.getParameterId());
-
-        String paceErr = "";
-        boolean paceThrown = false;
-        try {
-            service.doPACE(bacKey, oid, params);
-        } catch (PACEException e) {
-            paceThrown = true;
-            paceErr = e.getMessage();
-        }
-
-        service.sendSelectApplet(false);
 
         boolean bacSuccess = false;
         String bacErr = "";
@@ -54,8 +33,19 @@ public final class TcAc01Runner {
             bacErr = e.getMessage();
         }
 
-        int obs = Observability.classifyTcAc01(new Observability.TCAC01Outcome(
-                paceThrown || !paceErr.isEmpty(), bacSuccess, bacErr, false));
+        String chipAuthErr = "";
+        boolean chipAuthSuccess = false;
+        if (bacSuccess) {
+            card.transmit(new CommandAPDU(0x00, 0x22, 0x41, 0xA4, new byte[0], 0));
+            chipAuthSuccess = card.trace().stream()
+                    .anyMatch(t -> t.label.equals("MSE:Set AT (CA)") && t.success);
+            if (!chipAuthSuccess) {
+                chipAuthErr = "CA MSE:Set AT failed (synthetic chip)";
+            }
+        }
+
+        int obs = Observability.classifyTcCa01(new Observability.TCCA01Outcome(
+                !chipAuthErr.isEmpty() || !chipAuthSuccess, chipAuthSuccess, false));
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("run_id", RunIds.next(profile.id + "-jmrtd"));
@@ -66,14 +56,14 @@ public final class TcAc01Runner {
         result.put("tier", profile.tier != null ? profile.tier : "wire");
         result.put("variant", a.variant);
         result.put("figure_id", a.figureId.isEmpty() ? null : a.figureId);
-        result.put("pace_err", paceErr);
-        result.put("pace_exception_thrown", paceThrown);
-        result.put("bac_err", bacErr);
+        result.put("chip_auth_err", chipAuthErr);
+        result.put("chip_auth_success", chipAuthSuccess);
         result.put("bac_success", bacSuccess);
+        result.put("bac_err", bacErr);
         result.put("observability_score", obs);
         result.put("observability_meaning", Observability.meaning(obs));
         result.put("provenance", Provenance.collect(root, a.profilePath, a.suiteId, a.suiteSeed, a.suiteN, a.runIndex,
-                "java/TcAc01Runner", a.variant, ""));
+                "java/TcCa01Runner", a.variant, ""));
 
         List<Map<String, Object>> trace = new ArrayList<>();
         for (TcAc01CardService.TraceEntry e : card.trace()) {
@@ -88,8 +78,8 @@ public final class TcAc01Runner {
 
         Provenance.writeResult(a.logDir, (String) result.get("run_id"), result);
 
-        if (!paceThrown || !bacSuccess) {
-            System.err.printf("TC-AC-01 gate failed: pace_thrown=%s bac_success=%s%n", paceThrown, bacSuccess);
+        if (!bacSuccess || chipAuthSuccess) {
+            System.err.printf("TC-CA-01 gate failed: bac_success=%s chip_auth_success=%s%n", bacSuccess, chipAuthSuccess);
             System.exit(1);
         }
     }

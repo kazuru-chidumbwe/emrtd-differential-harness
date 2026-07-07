@@ -18,6 +18,18 @@ public final class Observability {
         }
     }
 
+    public static final class TCCA01Outcome {
+        public final boolean chipAuthFailed;
+        public final boolean chipAuthSuccess;
+        public final boolean failureSurfacedToCaller;
+
+        public TCCA01Outcome(boolean chipAuthFailed, boolean chipAuthSuccess, boolean failureSurfacedToCaller) {
+            this.chipAuthFailed = chipAuthFailed;
+            this.chipAuthSuccess = chipAuthSuccess;
+            this.failureSurfacedToCaller = failureSurfacedToCaller;
+        }
+    }
+
     public static int classifyTcAc01(TCAC01Outcome o) {
         if (o.paceFailed && o.bacSuccess && o.bacErr.isEmpty() && !o.paceSurfacedToCaller) {
             return 0;
@@ -28,10 +40,20 @@ public final class Observability {
         return 2;
     }
 
-    public static String meaningTcAc01(int score) {
+    public static int classifyTcCa01(TCCA01Outcome o) {
+        if (o.chipAuthFailed && !o.chipAuthSuccess && !o.failureSurfacedToCaller) {
+            return 0;
+        }
+        if (o.chipAuthFailed && !o.failureSurfacedToCaller) {
+            return 1;
+        }
+        return 2;
+    }
+
+    public static String meaning(int score) {
         return switch (score) {
-            case 0 -> "silent — PACE failure not surfaced to caller; BAC succeeded";
-            case 1 -> "logged — PACE failure visible in session/trace only";
+            case 0 -> "silent — failure not surfaced to caller";
+            case 1 -> "logged — failure visible in session/trace only";
             default -> "surfaced — explicit error at caller boundary";
         };
     }

@@ -32,3 +32,21 @@ func ClassifyTCAC01(in TCAC01Input) (Score, string) {
 
 // Int returns the JSON-serializable score value.
 func (s Score) Int() int { return int(s) }
+
+// TCCA01Input is the shared outcome contract for TC-CA-01 wire-tier runs.
+type TCCA01Input struct {
+	ChipAuthFailed          bool
+	ChipAuthSuccess         bool
+	FailureSurfacedToCaller bool
+}
+
+// ClassifyTCCA01 scores whether an EAC-CA failure is visible to a naive caller.
+func ClassifyTCCA01(in TCCA01Input) (Score, string) {
+	if in.ChipAuthFailed && !in.ChipAuthSuccess && !in.FailureSurfacedToCaller {
+		return ScoreSilent, "silent — chip auth failure on session; step returns nil"
+	}
+	if in.ChipAuthFailed && !in.FailureSurfacedToCaller {
+		return ScoreLogged, "logged — chip auth failure visible in session/trace only"
+	}
+	return ScoreSurfaced, "surfaced — explicit error at caller boundary"
+}

@@ -1,6 +1,5 @@
 package org.emrtd.harness.jmrtd;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -11,10 +10,15 @@ public final class HarnessProfile {
     public String id;
     public String mechanism;
     public String condition;
+    public String tier;
     public Mrz mrz;
     @SerializedName("card_access_hex")
     public String cardAccessHex;
+    @SerializedName("dg14_hex_path")
+    public String dg14HexPath;
     public Injection injection;
+    @SerializedName("ca_injection")
+    public CaInjection caInjection;
 
     public static final class Mrz {
         @SerializedName("document_number")
@@ -30,10 +34,15 @@ public final class HarnessProfile {
         public String paceSw;
     }
 
+    public static final class CaInjection {
+        @SerializedName("ca_sw")
+        public String caSw;
+    }
+
     public static HarnessProfile load(Path path) throws IOException {
         String raw = Files.readString(path);
-        HarnessProfile profile = new Gson().fromJson(raw, HarnessProfile.class);
-        if (profile == null || profile.id == null || profile.mrz == null || profile.cardAccessHex == null) {
+        HarnessProfile profile = new com.google.gson.Gson().fromJson(raw, HarnessProfile.class);
+        if (profile == null || profile.id == null || profile.mrz == null) {
             throw new IOException("profile missing required fields");
         }
         return profile;

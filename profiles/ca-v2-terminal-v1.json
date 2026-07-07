@@ -1,0 +1,20 @@
+{
+  "id": "TC-CA-01",
+  "name": "DG14 EAC-CA; chip rejects CA MSE with SW 6985 (terminal v1 skew)",
+  "mechanism": "EAC-CA",
+  "condition": "ca_v2_chip_v1_terminal_skew",
+  "tier": "wire",
+  "seed": 3,
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "dg14_hex_path": "testdata/dg14/ca-v2-sample.hex",
+  "ca_injection": {
+    "ca_fail_on": "first_ca_mse_set_at",
+    "ca_sw": "6985",
+    "notes": "Synthetic — same skew model as ca-v1-v2-skew with different status word."
+  }
+}

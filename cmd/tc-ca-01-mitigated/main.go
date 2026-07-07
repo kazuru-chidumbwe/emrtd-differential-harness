@@ -1,4 +1,4 @@
-// TC-CA-01 smoke: BAC session then EAC-CA fails at MSE:Set AT; gmrtd records ChipAuthErr.
+// TC-CA-01 mitigated: middleware explicit-reject on chip authentication failure.
 package main
 
 import (
@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/gmrtd/gmrtd/bac"
-	"github.com/gmrtd/gmrtd/chipauth"
 	"github.com/gmrtd/gmrtd/document"
 	"github.com/gmrtd/gmrtd/iso7816"
 	"github.com/gmrtd/gmrtd/password"
@@ -18,6 +17,7 @@ import (
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/profile"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/provenance"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/runid"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/middleware"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/simulator"
 )
 
@@ -32,6 +32,7 @@ type smokeResult struct {
 	output.Meta
 	ChipAuthErr     string       `json:"chip_auth_err"`
 	ChipAuthSuccess bool         `json:"chip_auth_success"`
+	MiddlewareErr   string       `json:"middleware_err,omitempty"`
 	Observability   int          `json:"observability_score"`
 	ObservabilityMe string       `json:"observability_meaning"`
 	Trace           []traceEntry `json:"trace"`
@@ -40,7 +41,7 @@ type smokeResult struct {
 func main() {
 	profilePath := flag.String("profile", "profiles/ca-v1-v2-skew.json", "profile JSON")
 	logDir := flag.String("log-dir", "logs", "log directory")
-	variant := flag.String("variant", "baseline", "variant")
+	variant := flag.String("variant", "mitigated", "variant")
 	suiteID := flag.String("suite-id", "", "suite id")
 	suiteSeed := flag.Int("suite-seed", 1, "seed")
 	suiteN := flag.Int("suite-n", 1, "N")
@@ -78,31 +79,32 @@ func main() {
 		fatal("bac", err)
 	}
 
-	caResult, caErr := chipauth.NewChipAuth(nfc, doc).DoChipAuth()
-	chipErrStr := errString(caErr)
-	chipOK := caResult != nil && caResult.Success
+	ca := middleware.PerformChipAuth(nfc, doc, middleware.CAOptions{AllowContinue: false})
+	chipErrStr := errString(ca.ChipAuthErr)
+	mwErrStr := errString(ca.SurfacedError)
 	obs, obsMeaning := classifier.ClassifyTCCA01(classifier.TCCA01Input{
 		ChipAuthFailed:          chipErrStr != "",
-		ChipAuthSuccess:         chipOK,
-		FailureSurfacedToCaller: false,
+		ChipAuthSuccess:         ca.ChipAuthOK,
+		FailureSurfacedToCaller: mwErrStr != "",
 	})
 
 	prov, err := provenance.Collect(provenance.Options{
 		ProfilePath: *profilePath, SuiteID: *suiteID, SuiteSeed: *suiteSeed,
-		SuiteN: *suiteN, RunIndex: *runIndex, Driver: "go/tc-ca-01", Variant: *variant,
+		SuiteN: *suiteN, RunIndex: *runIndex, Driver: "go/tc-ca-01-mitigated",
+		Variant: *variant, Middleware: "explicit-reject-ca",
 	})
 	if err != nil {
 		fatal("provenance", err)
 	}
 
-	runID := runid.New(fmt.Sprintf("%s-gmrtd", p.ID))
+	runID := runid.New(fmt.Sprintf("%s-gmrtd-mitigated", p.ID))
 	result := smokeResult{
 		Meta: output.Meta{
 			RunID: runID, TestCase: p.ID, Library: "gmrtd",
 			Mechanism: p.Mechanism, Condition: p.Condition, Tier: p.Tier,
 			Variant: *variant, FigureID: *figureID, Provenance: prov,
 		},
-		ChipAuthErr: chipErrStr, ChipAuthSuccess: chipOK,
+		ChipAuthErr: chipErrStr, ChipAuthSuccess: ca.ChipAuthOK, MiddlewareErr: mwErrStr,
 		Observability: obs.Int(), ObservabilityMe: obsMeaning,
 		Trace: buildTrace(nfc.ApduLog()),
 	}
@@ -110,7 +112,7 @@ func main() {
 		fatal("write", err)
 	}
 	_ = json.NewEncoder(os.Stdout).Encode(result)
-	if chipErrStr == "" || chipOK {
+	if chipErrStr == "" || mwErrStr == "" {
 		os.Exit(1)
 	}
 }

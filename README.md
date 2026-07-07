@@ -17,13 +17,24 @@ cd emrtd-differential-harness
 bash scripts/bootstrap-vendor.sh
 export GOTOOLCHAIN=auto
 make smoke          # single-run smoke gate
-make suite          # N=100 wire-tier suite + summary table (SUITE_N=100 default)
-make test-classifier
+make suite          # AC-01 wire manifest, N=100 + provenance-linked summary
+make suite-paper    # full paper matrix manifest
+make test           # classifier + middleware tests
 ```
 
-Expected smoke output ends with `SMOKE OK — traces written under logs/`. JSON traces include `run_id`, `observability_score`, `variant`, and full APDU arrays.
+Expected smoke output ends with `SMOKE OK`. Suite output: `logs/suite-{id}-{timestamp}/summary-*.md` with `figure_id` columns tied to `artifact-manifest-*.json`.
 
-First JMRTD run builds `jmrtd-0.5.2` from vendor sources (`scripts/install-jmrtd-local.sh`) because the Maven Central artifact is empty.
+---
+
+## Middleware (§VIII contribution)
+
+`middleware/` enforces explicit-reject on PACE→BAC downgrade (and EAC-CA failure). Mitigated drivers:
+
+- `cmd/tc-ac-01-mitigated` (gmrtd)
+- `cmd/tc-ca-01-mitigated` (gmrtd)
+- `TcAc01MitigatedRunner` (JMRTD — no catch-and-continue)
+
+Before/after comparison is a diff of run artifacts, not a rewritten test.
 
 ---
 
@@ -31,11 +42,11 @@ First JMRTD run builds `jmrtd-0.5.2` from vendor sources (`scripts/install-jmrtd
 
 This harness replays **synthetic chip profiles** through in-process APDU transceivers. It does **not** exercise physical NFC hardware, real eMRTD silicon, or live PKD/CRL infrastructure.
 
-- **Deterministic N=100 runs:** the default TC-AC-01 profile uses fixed MRZ/RND keys. Repeating N=100 proves harness reproducibility and stable classification — not statistical variance across document populations.
-- **Wire tier only in blog scope:** TC-AC-01 (PACE→BAC downgrade) is fully exercised for gmrtd and JMRTD. TC-CA/PA tiers and the full library×mechanism matrix are scaffolded for the paper track.
-- **Middleware (§VIII):** gmrtd-only explicit-reject wrapper; JMRTD mitigation is not implemented here.
+- **Deterministic N=100:** fixed profile → reproducibility proof, not input-population variance.
+- **Blog scope:** `make suite` (TC-AC-01 wire tier).
+- **Paper scope:** `make suite-paper` (adds TC-CA-01, offline PA scaffold).
 
-See `docs/ARCHITECTURE.md` for the finding threshold (≥95% over N=100) and aggregation flow.
+See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`.
 
 ---
 
@@ -50,16 +61,17 @@ The synthetic chip advertises PACE, returns `6FFF` on the first PACE APDU, and k
 ## Layout
 
 ```
-profiles/     Chip behaviour definitions (JSON)
-simulator/    APDU transceivers for synthetic profiles
-cmd/          Go drivers (tc-ac-01, tc-ac-01-mitigated, tc-ca-01)
-middleware/   §VIII explicit-reject wrapper (gmrtd)
-drivers/      JMRTD Java driver; pymrtd offline scaffold
-classifier/   Shared Observability Score + aggregate.py
-scripts/      bootstrap-vendor.sh, quick_test.sh, run_suite.sh, sponsor-repro.sh
-testdata/     Synthetic EF/DG/SOD fixtures
+profiles/     Chip profiles + catalog.json
+suites/       Suite manifests (ac-01-wire, paper-matrix)
+simulator/    APDU transceivers
+cmd/          Go drivers (baseline + mitigated)
+middleware/   §VIII explicit-reject (PACE + CA)
+drivers/      JMRTD Java drivers; pymrtd offline
+classifier/   Score contract, run_suite.py, aggregate.py
+scripts/      bootstrap-vendor.sh, quick_test.sh, run_suite.sh, independent-repro.sh
+docs/         ARCHITECTURE.md, PROVENANCE.md
 logs/         Run output (gitignored)
-Makefile      smoke | suite | repro | test-classifier
+Makefile      smoke | suite | suite-paper | repro | test
 ```
 
 ---

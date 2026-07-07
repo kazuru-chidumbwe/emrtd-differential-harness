@@ -1,4 +1,4 @@
-// TC-AC-01 mitigated run: middleware §VIII explicit-reject on PACE failure (no silent BAC fallback).
+// TC-AC-01 mitigated: middleware §VIII explicit-reject on PACE failure.
 package main
 
 import (
@@ -6,14 +6,15 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/gmrtd/gmrtd/document"
 	"github.com/gmrtd/gmrtd/iso7816"
 	"github.com/gmrtd/gmrtd/password"
 	"github.com/gmrtd/gmrtd/utils"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/classifier"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/output"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/profile"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/provenance"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/runid"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/middleware"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/simulator"
@@ -27,12 +28,7 @@ type traceEntry struct {
 }
 
 type smokeResult struct {
-	RunID           string       `json:"run_id"`
-	TestCase        string       `json:"test_case"`
-	Library         string       `json:"library"`
-	Mechanism       string       `json:"mechanism"`
-	Condition       string       `json:"condition"`
-	Variant         string       `json:"variant"`
+	output.Meta
 	PaceErr         string       `json:"pace_err"`
 	BacErr          string       `json:"bac_err"`
 	BacSuccess      bool         `json:"bac_success"`
@@ -43,8 +39,14 @@ type smokeResult struct {
 }
 
 func main() {
-	profilePath := flag.String("profile", "profiles/pace-then-bac-downgrade.json", "synthetic chip profile JSON")
-	logDir := flag.String("log-dir", "logs", "output directory for run traces")
+	profilePath := flag.String("profile", "profiles/pace-then-bac-downgrade.json", "profile JSON")
+	logDir := flag.String("log-dir", "logs", "log directory")
+	variant := flag.String("variant", "mitigated", "variant label")
+	suiteID := flag.String("suite-id", "", "suite id")
+	suiteSeed := flag.Int("suite-seed", 1, "suite seed")
+	suiteN := flag.Int("suite-n", 1, "suite N")
+	runIndex := flag.Int("run-index", 0, "run index")
+	figureID := flag.String("figure-id", "", "figure id")
 	flag.Parse()
 
 	p, err := profile.Load(*profilePath)
@@ -62,9 +64,7 @@ func main() {
 		paceSW = "6FFF"
 	}
 
-	transceiver := simulator.NewTcAc01Transceiver(paceSW, pass)
-	nfc := iso7816.NewNfcSession(transceiver)
-
+	nfc := iso7816.NewNfcSession(simulator.NewTcAc01Transceiver(paceSW, pass))
 	doc := &document.Document{}
 	doc.Mf.CardAccess, err = document.NewCardAccess(utils.HexToBytes(p.CardAccessHex))
 	if err != nil {
@@ -83,33 +83,38 @@ func main() {
 		PaceSurfacedToCaller: mwErrStr != "",
 	})
 
+	prov, err := provenance.Collect(provenance.Options{
+		ProfilePath: *profilePath,
+		SuiteID:     *suiteID,
+		SuiteSeed:   *suiteSeed,
+		SuiteN:      *suiteN,
+		RunIndex:    *runIndex,
+		Driver:      "go/tc-ac-01-mitigated",
+		Variant:     *variant,
+		Middleware:  "explicit-reject-pace",
+	})
+	if err != nil {
+		fatal("provenance", err)
+	}
+
 	runID := runid.New(fmt.Sprintf("%s-gmrtd-mitigated", p.ID))
 	result := smokeResult{
-		RunID:           runID,
-		TestCase:        p.ID,
-		Library:         "gmrtd",
-		Mechanism:       p.Mechanism,
-		Condition:       p.Condition,
-		Variant:         "mitigated",
-		PaceErr:         paceErrStr,
-		BacErr:          bacErrStr,
-		BacSuccess:      sess.BacSuccess,
-		MiddlewareErr:   mwErrStr,
-		Observability:   obs.Int(),
-		ObservabilityMe: obsMeaning,
-		Trace:           buildTrace(nfc.ApduLog()),
+		Meta: output.Meta{
+			RunID: runID, TestCase: p.ID, Library: "gmrtd",
+			Mechanism: p.Mechanism, Condition: p.Condition, Tier: p.Tier,
+			Variant: *variant, FigureID: *figureID, Provenance: prov,
+		},
+		PaceErr: paceErrStr, BacErr: bacErrStr, BacSuccess: sess.BacSuccess,
+		MiddlewareErr: mwErrStr, Observability: obs.Int(), ObservabilityMe: obsMeaning,
+		Trace: buildTrace(nfc.ApduLog()),
 	}
 
-	if err := writeResult(*logDir, runID, result); err != nil {
-		fatal("write log", err)
+	if err := output.WriteJSON(*logDir, runID, result); err != nil {
+		fatal("write", err)
 	}
-
-	enc := json.NewEncoder(os.Stdout)
-	enc.SetIndent("", "  ")
-	_ = enc.Encode(result)
+	_ = json.NewEncoder(os.Stdout).Encode(result)
 
 	if paceErrStr == "" || mwErrStr == "" {
-		fmt.Fprintf(os.Stderr, "TC-AC-01 mitigated gate failed: pace_err=%q middleware_err=%q\n", paceErrStr, mwErrStr)
 		os.Exit(1)
 	}
 }
@@ -126,32 +131,14 @@ func errString(err error) string {
 	return err.Error()
 }
 
-func writeResult(logDir, runID string, result smokeResult) error {
-	if err := os.MkdirAll(logDir, 0o755); err != nil {
-		return err
-	}
-	outPath := filepath.Join(logDir, runID+".json")
-	raw, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(outPath, raw, 0o644)
-}
-
 func buildTrace(log *iso7816.ApduLog) []traceEntry {
 	if log == nil {
 		return nil
 	}
-	entries := log.AllEntries()
-	out := make([]traceEntry, 0, len(entries))
-	for _, e := range entries {
-		success := len(e.Rx) >= 2 && e.Rx[len(e.Rx)-2] == 0x90 && e.Rx[len(e.Rx)-1] == 0x00
-		out = append(out, traceEntry{
-			Label:   e.Desc,
-			CApdu:   utils.BytesToHex(e.Tx),
-			RApdu:   utils.BytesToHex(e.Rx),
-			Success: success,
-		})
+	out := make([]traceEntry, 0, len(log.AllEntries()))
+	for _, e := range log.AllEntries() {
+		ok := len(e.Rx) >= 2 && e.Rx[len(e.Rx)-2] == 0x90 && e.Rx[len(e.Rx)-1] == 0x00
+		out = append(out, traceEntry{e.Desc, utils.BytesToHex(e.Tx), utils.BytesToHex(e.Rx), ok})
 	}
 	return out
 }
