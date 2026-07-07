@@ -1,4 +1,4 @@
-# emrtd-differential-harness
+# EMRTD Differential Harness
 
 Differential test harness for open-source eMRTD (electronic passport) reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or downgrades reach a typical application caller.
 
