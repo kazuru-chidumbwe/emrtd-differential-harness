@@ -70,7 +70,7 @@ This harness replays **synthetic chip profiles** through in-process APDU transce
 - **Blog scope:** `make suite` (TC-AC-01 wire tier).
 - **Paper scope:** `make suite-paper` (adds TC-CA-01, offline PA scaffold).
 
-See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`.
+See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAGS.md`](docs/TAGS.md).
 
 ---
 
