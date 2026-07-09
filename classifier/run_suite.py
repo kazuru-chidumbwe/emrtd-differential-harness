@@ -22,10 +22,12 @@ def load_manifest(path: Path) -> dict:
 
 def ensure_jmrtd_jar(root: Path) -> Path:
     jar = root / "drivers/jmrtd/target/jmrtd-tc-ac-01-0.1.0.jar"
-    if jar.is_file():
-        return jar
-    subprocess.check_call(["bash", str(root / "scripts/install-jmrtd-local.sh")], cwd=root)
+    jmrtd_vendor = root.parent / "_vendor" / "JMRTD" / "jmrtd"
+    if not jmrtd_vendor.is_dir():
+        subprocess.check_call(["bash", str(root / "scripts/install-jmrtd-local.sh")], cwd=root)
     subprocess.check_call(["mvn", "-q", "-DskipTests", "package"], cwd=root / "drivers/jmrtd")
+    if not jar.is_file():
+        raise SystemExit(f"JMRTD driver jar not built: {jar}")
     return jar
 
 

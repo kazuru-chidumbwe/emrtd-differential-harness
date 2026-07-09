@@ -40,8 +40,8 @@ jobs:
       - name: Sanity check — CA mitigated runner compiles
         working-directory: drivers/jmrtd
         run: |
-          mvn -q -DskipTests compile
-          echo "compile OK"
+          mvn -q -DskipTests package
+          echo "package OK"
 
       - name: Sanity check — CA mitigated runner produces one valid run
         run: |

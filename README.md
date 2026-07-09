@@ -84,6 +84,25 @@ See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAG
 
 ---
 
+## JISA sweep (AC-01 profile grid, Jul 2026)
+
+**200-run wire-tier sweep** across 50 injection-point profiles, gmrtd + JMRTD, baseline + mitigated:
+
+| Library | Baseline (score 0) | Mitigated (score 2) |
+| --- | --- | --- |
+| gmrtd | 50 / 50 | 50 / 50 |
+| JMRTD | 50 / 50 | 50 / 50 |
+
+Lab-verified 2026-07-09 on `lab-host` (64 s). Manifest SHA-256: `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`. Details: [`artifacts/ac-01-sweep-full-20260709-lab/README.md`](artifacts/ac-01-sweep-full-20260709-lab/README.md).
+
+```bash
+python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json
+```
+
+CI: push to `jmrtd-sweep-*` or manual dispatch of workflow **JMRTD sweep and CA-mitigated verification**.
+
+---
+
 ## TC-AC-01 (smoke gate)
 
 Profile: `profiles/pace-then-bac-downgrade.json`

@@ -8,6 +8,7 @@ Annotated tags mark reproducible anchors. **`main` may advance** after a tag —
 | [`v0.1.0`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v0.1.0) | `ef15b10` | First public smoke-tier release (same tree as blog tag) |
 | [`paper-manifest-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07) | `e31d945` | **JISA paper artifact** — canonical `artifact-manifest.json`, FIG-xx IDs, `make paper` CI |
 | [`ac01-n100-lab`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/ac01-n100-lab) | `50154a7` | Lab-verified AC-01 wire suite N=100 (400 runs, 4 cells) |
+| `ac-01-sweep-full-2026-07-09` | *(pending tag)* | **JISA sweep** — 50 profiles × gmrtd + JMRTD × baseline + mitigated (200 runs); manifest `fa84b9cd…` |
 
 ## Quick checkout
 
