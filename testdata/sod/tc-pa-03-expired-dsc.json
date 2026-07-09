@@ -9,5 +9,6 @@
   "csca_fixture": "testdata/sod/fixtures/tc-pa-03-csca.pem",
   "inspection_date": "2026-07-07",
   "notes": "Models offline verification when caller skips validity window check.",
-  "hypothesis": "verify() succeeds if isValidOn not enforced by integrator"
+  "hypothesis": "verify() succeeds if isValidOn not enforced by integrator",
+  "expect_policy_rejection": true
 }

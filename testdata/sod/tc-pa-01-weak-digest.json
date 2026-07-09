@@ -7,6 +7,7 @@
   "fixture": "testdata/sod/fixtures/tc-pa-01-sod.hex",
   "dsc_fixture": "testdata/sod/fixtures/tc-pa-01-dsc.pem",
   "csca_fixture": "testdata/sod/fixtures/tc-pa-01-csca.pem",
-  "notes": "Stratified offline tier — pymrtd/gmrtd CMS path. Caller supplies issuer/CSCA; no live PKD.",
-  "hypothesis": "Library accepts or normalizes weak digest without explicit policy gate"
+  "notes": "Stratified offline tier \u2014 pymrtd/gmrtd CMS path. Caller supplies issuer/CSCA; no live PKD.",
+  "hypothesis": "Library accepts or normalizes weak digest without explicit policy gate",
+  "expect_policy_rejection": true
 }

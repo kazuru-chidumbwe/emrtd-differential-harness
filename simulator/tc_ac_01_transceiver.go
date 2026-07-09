@@ -11,18 +11,46 @@ import (
 )
 
 // TcAc01Transceiver: PACE APDUs fail with paceSW; BAC uses dynamic chip-side mutual auth.
+//
+// paceFailOn selects which PACE negotiation step returns paceSW:
+//   - "mse_set_at" (default): MSE:Set AT itself fails immediately — PACE never begins key
+//     agreement.
+//   - "general_authenticate": MSE:Set AT succeeds (returns 9000), but the first General
+//     Authenticate call (PACE step 1, encrypted-nonce exchange) fails instead. This models
+//     a chip that accepts the PACE mechanism selection but fails partway through the
+//     key-agreement handshake, rather than rejecting PACE outright.
+//
+// This is a deliberate two-point simplification of the real four-exchange PACE state
+// machine (MSE:Set AT, then General Authenticate steps 1-4: nonce, mapping, key agreement,
+// mutual auth). We do not simulate failure at each of the four GA sub-steps individually;
+// "general_authenticate" fails at the first GA call encountered. This bound is stated
+// explicitly here and must be stated explicitly in the paper's methodology section — it is
+// not a full injection-point sweep of the PACE protocol, only pre-GA vs. in-GA.
 type TcAc01Transceiver struct {
 	paceFailed bool
 	paceSW     []byte
+	paceFailOn string
 	pass       *password.Password
 	rndIcc     []byte
 }
 
 func NewTcAc01Transceiver(paceStatusWord string, pass *password.Password) *TcAc01Transceiver {
+	return NewTcAc01TransceiverWithInjection(paceStatusWord, "mse_set_at", pass)
+}
+
+func NewTcAc01TransceiverWithInjection(paceStatusWord string, paceFailOn string, pass *password.Password) *TcAc01Transceiver {
+	// Only "general_authenticate" selects the alternate injection point. Every other value —
+	// including the empty string and the published blog profile's "first_pace_apdu" — maps to
+	// the original, pinned behavior (fail at MSE:Set AT). This preserves byte-for-byte
+	// reproduction of tag blog-b10-2026-07 while adding a genuinely distinct second point.
+	if paceFailOn != "general_authenticate" {
+		paceFailOn = "mse_set_at"
+	}
 	return &TcAc01Transceiver{
-		paceSW: utils.HexToBytes(paceStatusWord),
-		pass:   pass,
-		rndIcc: utils.HexToBytes("4608F91988702212"), // ICAO 9303 Part 11 D.3
+		paceSW:     utils.HexToBytes(paceStatusWord),
+		paceFailOn: paceFailOn,
+		pass:       pass,
+		rndIcc:     utils.HexToBytes("4608F91988702212"), // ICAO 9303 Part 11 D.3
 	}
 }
 
@@ -30,9 +58,21 @@ var _ iso7816.Transceiver = (*TcAc01Transceiver)(nil)
 
 func (t *TcAc01Transceiver) Transceive(cla, ins, p1, p2 int, data []byte, le int, encodedData []byte) []byte {
 	switch byte(ins) {
-	case iso7816.INS_MANAGE_SE, iso7816.INS_GENERAL_AUTHENTICATE:
-		if !t.paceFailed {
+	case iso7816.INS_MANAGE_SE:
+		if t.paceFailOn == "mse_set_at" && !t.paceFailed {
 			t.paceFailed = true
+			return append([]byte(nil), t.paceSW...)
+		}
+		// paceFailOn == "general_authenticate": MSE:Set AT is accepted.
+		return []byte{0x90, 0x00}
+	case iso7816.INS_GENERAL_AUTHENTICATE:
+		if t.paceFailOn == "general_authenticate" && !t.paceFailed {
+			t.paceFailed = true
+			return append([]byte(nil), t.paceSW...)
+		}
+		if t.paceFailOn == "mse_set_at" {
+			// MSE:Set AT already failed; PACE should not reach GA in a correct client,
+			// but return the same rejection defensively if it does.
 			return append([]byte(nil), t.paceSW...)
 		}
 	case iso7816.INS_GET_CHALLENGE:

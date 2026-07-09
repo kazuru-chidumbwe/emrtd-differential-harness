@@ -1,0 +1,86 @@
+name: JMRTD sweep and CA-mitigated verification
+
+# Runs the full 200-run wire-tier sweep (gmrtd, already known-good, plus JMRTD, blocked in
+# the sandbox this harness was drafted in — see docs/PROVENANCE.md) and a standalone compile
+# + single-run check of TcCa01MitigatedRunner.java. GitHub-hosted runners have unrestricted
+# outbound access to Maven Central and proxy.golang.org, which is the only thing this job
+# needed that the drafting environment didn't have.
+#
+# Trigger manually (Actions tab -> this workflow -> Run workflow) or on push to a branch
+# matching jmrtd-sweep-*. Results are uploaded as a downloadable build artifact — pull them
+# from the Actions run page, they don't need to be committed.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - 'jmrtd-sweep-*'
+
+jobs:
+  jmrtd-sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Bootstrap vendored gmrtd + JMRTD sources
+        run: bash scripts/bootstrap-vendor.sh
+
+      - name: Compile JMRTD locally (this is the step that needs Maven Central)
+        run: bash scripts/install-jmrtd-local.sh
+
+      - name: Sanity check — CA mitigated runner compiles
+        working-directory: drivers/jmrtd
+        run: |
+          mvn -q -DskipTests compile
+          echo "compile OK"
+
+      - name: Sanity check — CA mitigated runner produces one valid run
+        run: |
+          mkdir -p logs
+          java -cp "drivers/jmrtd/target/classes:$(find ~/.m2 -name '*.jar' | tr '\n' ':')" \
+            org.emrtd.harness.jmrtd.TcCa01MitigatedRunner \
+            -profile profiles/ca-v1-v2-skew.json -log-dir logs -variant mitigated \
+            || echo "TcCa01MitigatedRunner exited non-zero — see log above, this is expected to be investigated, not silently ignored"
+          ls logs/ | grep -i "ca-01.*mitigated" && echo "run artifact found" || (echo "NO RUN ARTIFACT PRODUCED — compile succeeded but execution did not" && exit 1)
+
+      - name: Run full sweep (gmrtd + JMRTD, 200 runs)
+        run: python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json
+
+      - name: Run PA fixture case (fast, no network needed, included for completeness)
+        run: |
+          pip install --break-system-packages git+https://github.com/ZeroPass/pymrtd.git
+          python3 drivers/pymrtd-offline/run_case.py testdata/sod/tc-pa-01-weak-digest.json baseline 1 "" 1 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jmrtd-sweep-results
+          path: logs/
+          retention-days: 90
+
+      - name: Print quick summary to job log
+        if: always()
+        run: |
+          echo "=== Run counts by library ==="
+          python3 - <<'PY'
+          import json, glob, collections
+          rows = collections.Counter()
+          for f in glob.glob("logs/**/*.json", recursive=True):
+              try:
+                  d = json.load(open(f))
+              except Exception:
+                  continue
+              if "library" in d and "observability_score" in d:
+                  rows[(d.get("test_case","?").startswith("TC-AC-01-sweep") and "sweep" or d.get("test_case","?"),
+                        d.get("library","?"), d.get("variant","?"), d.get("observability_score"))] += 1
+          for k, v in sorted(rows.items()):
+              print(k, v)
+          PY

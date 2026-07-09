@@ -1,0 +1,526 @@
+{
+  "generator": "profiles/generate_sweep.py",
+  "generated_profile_count": 50,
+  "axes": {
+    "mrz_variants": [
+      "orig",
+      "alt1",
+      "alt2",
+      "alt3",
+      "alt4"
+    ],
+    "status_words": [
+      "6FFF",
+      "6300",
+      "6982",
+      "6A88",
+      "6A80"
+    ],
+    "injection_points": [
+      "mse_set_at",
+      "general_authenticate"
+    ]
+  },
+  "profiles": [
+    {
+      "id": "TC-AC-01-sweep-orig-6fff-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6fff-mse_set_at.json",
+      "sha256": "dbefa3d1aab040fc744ca4193cbb939366fddad7942b4fee7f63b252b56f3a7f",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6fff-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6fff-general_authenticate.json",
+      "sha256": "2ec18f9e49f3bd57e7c29f846e5c433c7a6ce46c0903e4cd2aa65fb23bd7aa4f",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6300-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6300-mse_set_at.json",
+      "sha256": "04ca070101f25b9306bf83e94a585ba217679a5de9e7340bf91031985b643886",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6300",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6300-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6300-general_authenticate.json",
+      "sha256": "c106cb01ec6f98aebe866434c912cc4248b0ef1cb71077d2d30b5832a144fcb7",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6300",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6982-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6982-mse_set_at.json",
+      "sha256": "fd4ff904098906e03c2fe7c159ced506d27655e60afb5ddf6b353e2598856830",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6982",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6982-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6982-general_authenticate.json",
+      "sha256": "ada80ac8282663bbd8903a9106e133fd3793f95b264b374f2517a1deaa70771d",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6982",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6a88-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6a88-mse_set_at.json",
+      "sha256": "db65981b17faedb341f8f8fb4bc3daf9e32d5d5bec09d64f640d03e98ca5e212",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6A88",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6a88-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6a88-general_authenticate.json",
+      "sha256": "2a0ce454d3f790d79acf2048724368c9a7410334879beeb1ce7cebfe9ba8a523",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6A88",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6a80-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6a80-mse_set_at.json",
+      "sha256": "3c01ad5a90605dae5f3f009fdf6f3b3dfd738b26ffe28c72b105f998871f353b",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6A80",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-orig-6a80-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-orig-6a80-general_authenticate.json",
+      "sha256": "e83a6afc776fddb771fc9d85ae6b93686a5bd637eafdfa5ffa142dc594e7dc3b",
+      "sweep_axes": {
+        "mrz_id": "orig",
+        "pace_sw": "6A80",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6fff-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6fff-mse_set_at.json",
+      "sha256": "7c09a31cd76006fe3a9b55338190e217a96521f589c05f50ca953621c99ed8a3",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6fff-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6fff-general_authenticate.json",
+      "sha256": "f0ea59b01de9998c97d970e1edff1e969aa13a7732023c4b07bd3140c622f29c",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6300-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6300-mse_set_at.json",
+      "sha256": "0668519b97d6a4f07e7f0f1598f403fa1198955fea9edfccda49f53945c59bbd",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6300",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6300-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6300-general_authenticate.json",
+      "sha256": "2286a41b12dfdae4057b24a2821c35b0ef2db26d452be31c83f90866400acaa3",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6300",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6982-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6982-mse_set_at.json",
+      "sha256": "cfccc34b4057060292ec37646b08bdc072dc7cbc1d79820f628051b1118ca183",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6982",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6982-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6982-general_authenticate.json",
+      "sha256": "6ae907632feaddab842701fbc230fe8e6aca9487e81bef28b3211d0703da3a41",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6982",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6a88-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6a88-mse_set_at.json",
+      "sha256": "972e41ca240df504f440cee00ec2c88e30456ddae31f08cfe896676519d05c34",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6A88",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6a88-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6a88-general_authenticate.json",
+      "sha256": "091b223e167509c57092c3282f564deb9ee90d6a4aba1dcb4b8b6d4056567647",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6A88",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6a80-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6a80-mse_set_at.json",
+      "sha256": "b5250d8f0ad9089cde84e73863eb66d7f98ffad2c8388a6d3c872840009a7fd9",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6A80",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt1-6a80-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt1-6a80-general_authenticate.json",
+      "sha256": "0de9f6026826d822097b9812476e0cbd11bb1b3a73d380a5a92ea92de7cfc824",
+      "sweep_axes": {
+        "mrz_id": "alt1",
+        "pace_sw": "6A80",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6fff-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6fff-mse_set_at.json",
+      "sha256": "2ef373c9a6b30e0e490b14fd8e6a632cee5dd5929b541db33e1d0ff4bdcdd996",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6fff-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6fff-general_authenticate.json",
+      "sha256": "dd0ca8af32bab822d971c8441c9635c3602b83a3e642db22727abf9dda59d346",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6300-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6300-mse_set_at.json",
+      "sha256": "606790afef7572e4417adae4b25d9d0c650ff77f56029f692b420c705a9b7b58",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6300",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6300-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6300-general_authenticate.json",
+      "sha256": "ab6af741ead12056270e0131e0663ede6ff34132874672d93d920e5430b60dc4",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6300",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6982-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6982-mse_set_at.json",
+      "sha256": "f279b135e4a2943b6c9e23679159345c0aa9f3a2fe6d4dbdd88d34de7dde9924",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6982",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6982-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6982-general_authenticate.json",
+      "sha256": "df21369c9413a36ffab768ea5f02e692fa69af767abba0dc16049245d328c24e",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6982",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6a88-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6a88-mse_set_at.json",
+      "sha256": "6ecbf016c7aa46ad48ce4e625d1932a672cbba9620c22efffe56d53c14413e6e",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6A88",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6a88-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6a88-general_authenticate.json",
+      "sha256": "7627a485b0b24b5ff1783686fd870ceec24e989c82e57ad3fb2081a537400b41",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6A88",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6a80-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6a80-mse_set_at.json",
+      "sha256": "3afa666e4d2e48a3eadc0c645245bc1c76755dc083c2b6cc828d860c15506836",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6A80",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt2-6a80-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt2-6a80-general_authenticate.json",
+      "sha256": "30841e564a5c38e6643f0f31edd07f9ff94f5a4ff598ea71e2af463c8424fd5f",
+      "sweep_axes": {
+        "mrz_id": "alt2",
+        "pace_sw": "6A80",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6fff-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6fff-mse_set_at.json",
+      "sha256": "a8690e2d60cc7c1f51644f997cb8b3cbc54d1f1bdf80d18049d683dad0333437",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6fff-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6fff-general_authenticate.json",
+      "sha256": "9a01d4538514f1dc8cf4c0f422155dba54311d81c10f35fc2aac5939f8521249",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6300-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6300-mse_set_at.json",
+      "sha256": "58924a1cd211575b9b4a30d4eced4032f1285b882059157f99f8b484625497dc",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6300",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6300-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6300-general_authenticate.json",
+      "sha256": "35ee87235edba21e448e94571efe6e45ec038135b6e92486ec57281324cad13d",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6300",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6982-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6982-mse_set_at.json",
+      "sha256": "a2c9a4827259c43f778f08c935985f39fb61555b13a6a07577a8aecbefc5ba6f",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6982",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6982-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6982-general_authenticate.json",
+      "sha256": "0852ba1e07149ab288e17092e6690f241895d6dd8c90ef53cdd2212a77d83129",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6982",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6a88-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6a88-mse_set_at.json",
+      "sha256": "4fe1cc4e8818b51e76ca5c36f0fc6570b1109f9c38cef33bc409a77a8db48069",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6A88",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6a88-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6a88-general_authenticate.json",
+      "sha256": "b30676f4f289a43065b04a2b1c4510dc6003e8a8f2ce5e3eebb833bd2fc0e9a0",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6A88",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6a80-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6a80-mse_set_at.json",
+      "sha256": "1b8d3045399334be85ab3d72f107adf0de83747be354fd1657539ed1ab854a2b",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6A80",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt3-6a80-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt3-6a80-general_authenticate.json",
+      "sha256": "67611fb5cf75db3ffb62c307a2bfe0ec9d9ad4c83c91be135cae14b0ab6cf0a0",
+      "sweep_axes": {
+        "mrz_id": "alt3",
+        "pace_sw": "6A80",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6fff-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6fff-mse_set_at.json",
+      "sha256": "78819a2a57be195c949726be0601f2ec32b49cfd05eea03e9f61131f8c5dd9e0",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6fff-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6fff-general_authenticate.json",
+      "sha256": "bccb515ab4f1b38b2cad45b9ceabcd40cc69c3e86eb55e8a103515c72db74b29",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6FFF",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6300-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6300-mse_set_at.json",
+      "sha256": "86917c5f752ce69a2541c3e26119fdebe2f012eecf4d08f17305268cb31c26f5",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6300",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6300-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6300-general_authenticate.json",
+      "sha256": "590fd60a5629ce6b708cd1771a565077468bbd091c7dcb74fae3c837809aaaac",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6300",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6982-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6982-mse_set_at.json",
+      "sha256": "867442f1973742719a026f4e65cb86d4e2bf55066a27273d9239de50c8c19319",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6982",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6982-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6982-general_authenticate.json",
+      "sha256": "6b79ad3358bc472c53f67c544f0820e811129b793f2b6ef11120b6050234b67e",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6982",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6a88-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6a88-mse_set_at.json",
+      "sha256": "b741d7751a8da0aaf7c7838b281a81ba3250a67698f4d4b1817f2aa3353f1e3e",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6A88",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6a88-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6a88-general_authenticate.json",
+      "sha256": "6ce2bcc6d890a02c6c07f599fea082192c2efa1cb451ec21a7dccc700f125ba4",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6A88",
+        "pace_fail_on": "general_authenticate"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6a80-mse_set_at",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6a80-mse_set_at.json",
+      "sha256": "6c2911a930d74b0eb1896900899aaea5954e9aac72a79d1fe2b807ec02abc807",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6A80",
+        "pace_fail_on": "mse_set_at"
+      }
+    },
+    {
+      "id": "TC-AC-01-sweep-alt4-6a80-general_authenticate",
+      "path": "profiles/sweep/TC-AC-01-sweep-alt4-6a80-general_authenticate.json",
+      "sha256": "f29c703bdbbfc812841d9b29f0eb98c9eb24ffddba79b38b6885eaa78a008ac5",
+      "sweep_axes": {
+        "mrz_id": "alt4",
+        "pace_sw": "6A80",
+        "pace_fail_on": "general_authenticate"
+      }
+    }
+  ]
+}

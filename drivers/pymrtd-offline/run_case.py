@@ -50,22 +50,54 @@ def try_pymrtd_verify(case: dict[str, Any]) -> tuple[bool, Optional[str]]:
     except ImportError:
         return False, "pymrtd not installed"
 
-    raw = (ROOT / case["fixture"]).read_bytes()
+    raw_text = (ROOT / case["fixture"]).read_text(encoding="utf-8").strip()
+    try:
+        raw = bytes.fromhex(raw_text)
+    except ValueError as exc:
+        # Placeholder fixtures are non-hex comment text ("# Placeholder ...") — this branch
+        # is what "fixture present but not real" looks like, distinct from a genuine parse
+        # or verification failure below.
+        return True, f"fixture content is not valid hex ({exc}) — placeholder, not a real fixture"
     try:
         sod = SOD.load(raw)
-        sod.verify()
+        # SOD.verify(si, dsc) requires the specific SignerInfo and its matching Document
+        # Signer Certificate — it is not a no-argument call. A previous version of this
+        # driver called sod.verify() with no arguments, which always raised a TypeError
+        # about missing arguments regardless of the fixture's actual content; that was
+        # misreported as a "surfaced" finding for the wrong reason (a driver bug, not a
+        # pymrtd digest-policy decision). Verify against every signer present.
+        errors = []
+        for si in sod.signers:
+            dsc = sod.getDscCertificate(si)
+            try:
+                sod.verify(si, dsc)
+            except Exception as verify_exc:  # noqa: BLE001
+                errors.append(str(verify_exc))
+        if errors:
+            return True, "; ".join(errors)
         return True, None
     except Exception as exc:  # noqa: BLE001
         return True, str(exc)
 
 
-def classify(case_id: str, verify_err: Optional[str], attempted: bool) -> tuple[int, str]:
+def classify(case: dict[str, Any], verify_err: Optional[str], attempted: bool) -> tuple[int, str]:
     if not attempted:
         return 1, "fixture scaffold — pymrtd verify not run"
     if verify_err:
         return 2, "surfaced — verify raised or returned error"
-    if case_id == "TC-PA-03":
-        return 0, "silent risk — verify succeeded without inspection-date policy"
+    if case.get("expect_policy_rejection"):
+        # verify() succeeded with no error, but this case's fixture was constructed
+        # specifically to violate a policy condition (weak digest, expired DSC, etc.) that
+        # a caller relying on verify() alone would want flagged. Silent success under these
+        # conditions is the same "green light with no built-in signal" pattern as a silent
+        # PACE-to-BAC downgrade — Observability Score 0, not a case-by-case exception.
+        # Fixed per reviewer ruling, round 3: this was previously a hardcoded
+        # `case_id == "TC-PA-03"` special case, which meant a structurally identical
+        # finding for TC-PA-01 fell through to a weaker "logged" score by omission, not by
+        # a considered classification rule. All future PA cases should set
+        # expect_policy_rejection explicitly in their case JSON rather than relying on a
+        # case-ID allowlist here.
+        return 0, "silent risk — verify succeeded with no policy-rejection signal"
     return 1, "logged — verify outcome requires policy comparison"
 
 
@@ -91,7 +123,7 @@ def main() -> int:
     else:
         verify_err = "fixture files pending"
 
-    obs, meaning = classify(case["id"], verify_err, attempted and ready)
+    obs, meaning = classify(case, verify_err, attempted and ready)
     run_id = f"{case['id']}-pymrtd-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')}-{run_index:06d}"
 
     prov = collect(

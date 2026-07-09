@@ -86,6 +86,19 @@
       "figure_id": "FIG-07"
     },
     {
+      "scenario_id": "SCN-CA-01-jmrtd-mitigated",
+      "test_case": "TC-CA-01",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcCa01MitigatedRunner",
+      "profile": "profiles/ca-v1-v2-skew.json",
+      "middleware": "explicit-reject-ca",
+      "figure_id": "FIG-07b",
+      "status": "draft — not yet compile-verified, see PR notes"
+    },
+    {
       "scenario_id": "SCN-PA-01-pymrtd-baseline",
       "test_case": "TC-PA-01",
       "library": "pymrtd",
