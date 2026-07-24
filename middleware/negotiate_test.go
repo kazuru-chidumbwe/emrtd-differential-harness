@@ -85,10 +85,11 @@ func TestNegotiatePACEBAC_paceSuccessNoFalsePositive(t *testing.T) {
 
 func TestNegotiatePACEBAC_bacOnlyNoFalsePositive(t *testing.T) {
 	pass := mustPassword(t)
-	nfc := iso7816.NewNfcSession(simulator.NewTcAc01Transceiver("6FFF", pass))
 	doc := &document.Document{} // no CardAccess → PACE not advertised
 
 	for _, allow := range []bool{false, true} {
+		// Fresh transceiver each pass — BAC mutual-auth state is single-use.
+		nfc := iso7816.NewNfcSession(simulator.NewTcAc01Transceiver("6FFF", pass))
 		sess := NegotiatePACEBAC(nfc, doc, pass, Options{AllowBACFallback: allow})
 		if sess.PaceOffered {
 			t.Fatalf("AllowBACFallback=%v: PaceOffered should be false", allow)
@@ -97,7 +98,7 @@ func TestNegotiatePACEBAC_bacOnlyNoFalsePositive(t *testing.T) {
 			t.Fatalf("AllowBACFallback=%v: false positive on BAC-only chip: %v", allow, sess.SurfacedError)
 		}
 		if !sess.BacSuccess {
-			t.Fatalf("AllowBACFallback=%v: expected BAC success on BAC-only chip", allow)
+			t.Fatalf("AllowBACFallback=%v: expected BAC success on BAC-only chip (bacErr=%v)", allow, sess.BacErr)
 		}
 	}
 }
