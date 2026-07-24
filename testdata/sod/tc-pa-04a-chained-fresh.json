@@ -1,0 +1,15 @@
+{
+  "id": "TC-PA-04a",
+  "name": "Offline CSCA→DSC chain with fresh document signer",
+  "mechanism": "PA",
+  "condition": "chained_fresh_dsc",
+  "tier": "offline",
+  "fixture": "testdata/sod/fixtures/tc-pa-04a-sod.hex",
+  "dsc_fixture": "testdata/sod/fixtures/tc-pa-04a-dsc.pem",
+  "csca_fixture": "testdata/sod/fixtures/tc-pa-04a-csca.pem",
+  "inspection_date": "2026-07-07",
+  "notes": "Minimal offline CSCA→DSC chain bridge. No live PKD/CRL. SOD signed by DSC; CSCA is distinct issuer.",
+  "hypothesis": "Naive sod.verify() without trust-store policy still succeeds when CMS signature validates",
+  "expect_policy_rejection": false,
+  "chain": "csca_to_dsc"
+}

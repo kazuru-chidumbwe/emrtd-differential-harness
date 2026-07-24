@@ -2,7 +2,7 @@
 
 **Suite:** `ac-01-sweep-full` (50 profiles × 2 libraries × 2 variants = **200 runs**)
 
-**Host:** `lab-host` (`lab-host`), Ubuntu, Go 1.25, Java 17, Maven 3.8.7
+**Host:** `test-server` (`lab-host`), Ubuntu, Go 1.25, Java 17, Maven 3.8.7
 
 **Wall clock:** 64.2 s (suite only)
 

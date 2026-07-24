@@ -1,0 +1,25 @@
+{
+  "id": "TC-AC-01-SP-BAC-ONLY",
+  "name": "BAC-only chip (no EF.CardAccess PACE params); success-path control",
+  "mechanism": "BAC",
+  "condition": "bac_only_success",
+  "tier": "wire",
+  "seed": 1,
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "injection": {
+    "pace_fail_on": "none",
+    "pace_sw": "",
+    "notes": "Synthetic BAC-only — no PACE advertisement. Success-path FP control for middleware."
+  },
+  "expected_middleware": {
+    "pace_offered": false,
+    "allow_bac_fallback_false": { "surfaced_error": false, "bac_success": true },
+    "allow_bac_fallback_true": { "surfaced_error": false, "bac_success": true }
+  },
+  "notes": "Success-path FP control. Reject-on-PACE-fail must not false-positive when PACE was never offered."
+}

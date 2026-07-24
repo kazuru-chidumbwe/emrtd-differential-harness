@@ -1,0 +1,15 @@
+{
+  "id": "TC-PA-04b",
+  "name": "Offline CSCA→DSC chain with expired document signer",
+  "mechanism": "PA",
+  "condition": "chained_expired_dsc",
+  "tier": "offline",
+  "fixture": "testdata/sod/fixtures/tc-pa-04b-sod.hex",
+  "dsc_fixture": "testdata/sod/fixtures/tc-pa-04b-dsc.pem",
+  "csca_fixture": "testdata/sod/fixtures/tc-pa-04b-csca.pem",
+  "inspection_date": "2026-07-07",
+  "notes": "Same CSCA→DSC shape as 04a; DSC notAfter before inspection_date. Contrasts TC-PA-03 self-signed expiry probe.",
+  "hypothesis": "Naive sod.verify() succeeds without inspection-date / chain-validity policy (score 0) unless caller enforces anchors",
+  "expect_policy_rejection": true,
+  "chain": "csca_to_dsc"
+}

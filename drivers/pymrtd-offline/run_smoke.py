@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[2]
 CASES = [
     ROOT / "testdata/sod/tc-pa-01-weak-digest.json",
     ROOT / "testdata/sod/tc-pa-03-expired-dsc.json",
+    ROOT / "testdata/sod/tc-pa-04a-chained-fresh.json",
+    ROOT / "testdata/sod/tc-pa-04b-chained-expired.json",
 ]
 
 
@@ -65,8 +67,10 @@ def classify(case_id: str, verify_err: Optional[str], attempted: bool) -> tuple[
         return 1, "fixture scaffold — pymrtd verify not run (install pymrtd to execute)"
     if verify_err:
         return 2, "surfaced — verify raised or returned error"
-    if case_id == "TC-PA-03":
-        return 0, "silent risk — verify succeeded without inspection-date policy in naive caller"
+    if case_id in ("TC-PA-03", "TC-PA-04b"):
+        return 0, "silent risk — verify succeeded without inspection-date / chain-validity policy in naive caller"
+    if case_id == "TC-PA-04a":
+        return 0, "chained fresh DSC — naive verify succeeded (CMS OK; trust-policy not applied)"
     return 1, "logged — verify outcome requires policy comparison"
 
 

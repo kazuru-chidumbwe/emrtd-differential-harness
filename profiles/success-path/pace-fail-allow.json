@@ -1,0 +1,24 @@
+{
+  "id": "TC-AC-01-SP-FAIL-ALLOW",
+  "name": "PACE fail then BAC with AllowBACFallback=true; policy-allow control",
+  "mechanism": "PACE",
+  "condition": "pace_fail_then_bac_allowed",
+  "tier": "wire",
+  "seed": 1,
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "31143012060A04007F0007020204020402010202010D",
+  "injection": {
+    "pace_fail_on": "mse_set_at",
+    "pace_sw": "6FFF",
+    "notes": "Same injection as TC-AC-01; middleware AllowBACFallback=true → no surface, BAC may complete."
+  },
+  "expected_middleware": {
+    "pace_offered": true,
+    "allow_bac_fallback_true": { "surfaced_error": false, "bac_success": true }
+  },
+  "notes": "Policy-allow path — not a false positive; BAC fallback explicitly opted in."
+}

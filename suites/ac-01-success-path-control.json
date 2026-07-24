@@ -1,0 +1,60 @@
+{
+  "suite_id": "ac-01-success-path-control",
+  "description": "RQ2 success-path / FP control (BAC-only + AllowBACFallback=true on fail). Full PACE-success chip sim remains unit-tested via runPace stub; lab pin for end-to-end PACE-OK when transceiver is available.",
+  "seed": 1,
+  "n": 8,
+  "table_id": "TABLE-SP-01",
+  "notes": "Run on test-server. Pair with middleware unit tests for PACE-success FP (stubbed DoPACE).",
+  "entries": [
+    {
+      "scenario_id": "SCN-SP-bac-only-gmrtd-allow-false",
+      "profile": "profiles/success-path/bac-only.json",
+      "library": "gmrtd",
+      "variant": "mitigated",
+      "allow_bac_fallback": false,
+      "command": "tc-ac-01-mitigated",
+      "expect_surfaced": false,
+      "expect_bac_success": true
+    },
+    {
+      "scenario_id": "SCN-SP-bac-only-gmrtd-allow-true",
+      "profile": "profiles/success-path/bac-only.json",
+      "library": "gmrtd",
+      "variant": "mitigated",
+      "allow_bac_fallback": true,
+      "command": "tc-ac-01-mitigated",
+      "expect_surfaced": false,
+      "expect_bac_success": true
+    },
+    {
+      "scenario_id": "SCN-SP-fail-allow-gmrtd",
+      "profile": "profiles/success-path/pace-fail-allow.json",
+      "library": "gmrtd",
+      "variant": "mitigated",
+      "allow_bac_fallback": true,
+      "command": "tc-ac-01-mitigated",
+      "expect_surfaced": false,
+      "expect_bac_success": true
+    },
+    {
+      "scenario_id": "SCN-SP-bac-only-jmrtd-allow-false",
+      "profile": "profiles/success-path/bac-only.json",
+      "library": "jmrtd",
+      "variant": "mitigated",
+      "allow_bac_fallback": false,
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "expect_surfaced": false,
+      "expect_bac_success": true
+    },
+    {
+      "scenario_id": "SCN-SP-fail-allow-jmrtd",
+      "profile": "profiles/success-path/pace-fail-allow.json",
+      "library": "jmrtd",
+      "variant": "mitigated",
+      "allow_bac_fallback": true,
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "expect_surfaced": false,
+      "expect_bac_success": true
+    }
+  ]
+}

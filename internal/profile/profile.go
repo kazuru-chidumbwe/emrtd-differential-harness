@@ -52,7 +52,10 @@ func Load(path string) (*Profile, error) {
 		return nil, fmt.Errorf("profile missing required fields (id, mrz)")
 	}
 	if p.CardAccessHex == "" && p.Dg14HexPath == "" {
-		return nil, fmt.Errorf("profile needs card_access_hex and/or dg14_hex_path")
+		// BAC-only success-path profiles intentionally omit CardAccess.
+		if p.Condition != "bac_only_success" && p.Mechanism != "BAC" {
+			return nil, fmt.Errorf("profile needs card_access_hex and/or dg14_hex_path")
+		}
 	}
 	return &p, nil
 }

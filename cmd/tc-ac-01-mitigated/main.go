@@ -47,6 +47,8 @@ func main() {
 	suiteN := flag.Int("suite-n", 1, "suite N")
 	runIndex := flag.Int("run-index", 0, "run index")
 	figureID := flag.String("figure-id", "", "figure id")
+	allowBAC := flag.Bool("allow-bac-fallback", false, "AllowBACFallback middleware option")
+	successPath := flag.Bool("success-path", false, "success-path FP control: expect no SurfacedError and BAC success")
 	flag.Parse()
 
 	p, err := profile.Load(*profilePath)
@@ -63,15 +65,19 @@ func main() {
 	if paceSW == "" {
 		paceSW = "6FFF"
 	}
+	paceFailOn := p.Injection.PaceFailOn
+	if paceFailOn == "" || paceFailOn == "none" {
+		paceFailOn = "mse_set_at"
+	}
 
-	nfc := iso7816.NewNfcSession(simulator.NewTcAc01TransceiverWithInjection(paceSW, p.Injection.PaceFailOn, pass))
+	nfc := iso7816.NewNfcSession(simulator.NewTcAc01TransceiverWithInjection(paceSW, paceFailOn, pass))
 	doc := &document.Document{}
 	doc.Mf.CardAccess, err = document.NewCardAccess(utils.HexToBytes(p.CardAccessHex))
 	if err != nil {
 		fatal("card access", err)
 	}
 
-	sess := middleware.NegotiatePACEBAC(nfc, doc, pass, middleware.Options{AllowBACFallback: false})
+	sess := middleware.NegotiatePACEBAC(nfc, doc, pass, middleware.Options{AllowBACFallback: *allowBAC})
 
 	paceErrStr := errString(sess.PaceErr)
 	bacErrStr := errString(sess.BacErr)
@@ -83,6 +89,14 @@ func main() {
 		PaceSurfacedToCaller: mwErrStr != "",
 	})
 
+	mwLabel := "explicit-reject-pace"
+	if *allowBAC {
+		mwLabel = "allow-bac-fallback"
+	}
+	if *successPath {
+		mwLabel += "+success-path"
+	}
+
 	prov, err := provenance.Collect(provenance.Options{
 		ProfilePath: *profilePath,
 		SuiteID:     *suiteID,
@@ -91,7 +105,7 @@ func main() {
 		RunIndex:    *runIndex,
 		Driver:      "go/tc-ac-01-mitigated",
 		Variant:     *variant,
-		Middleware:  "explicit-reject-pace",
+		Middleware:  mwLabel,
 	})
 	if err != nil {
 		fatal("provenance", err)
@@ -114,6 +128,14 @@ func main() {
 	}
 	_ = json.NewEncoder(os.Stdout).Encode(result)
 
+	if *successPath {
+		// FP control: must not surface; BAC should succeed.
+		if mwErrStr != "" || !sess.BacSuccess {
+			os.Exit(1)
+		}
+		return
+	}
+	// Default mitigated failure path: PACE failed and caller saw it.
 	if paceErrStr == "" || mwErrStr == "" {
 		os.Exit(1)
 	}
