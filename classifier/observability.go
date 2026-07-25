@@ -37,13 +37,15 @@ func (s Score) Int() int { return int(s) }
 type TCCA01Input struct {
 	ChipAuthFailed          bool
 	ChipAuthSuccess         bool
+	SessionContinueOK       bool // emergent: post-CA DG/session probe still succeeds
 	FailureSurfacedToCaller bool
 }
 
 // ClassifyTCCA01 scores whether an EAC-CA failure is visible to a naive caller.
+// Silent requires an emergent continue-check (SessionContinueOK), parallel to BacSuccess / ProtectedDGAccessible.
 func ClassifyTCCA01(in TCCA01Input) (Score, string) {
-	if in.ChipAuthFailed && !in.ChipAuthSuccess && !in.FailureSurfacedToCaller {
-		return ScoreSilent, "silent — chip auth failure on session; step returns nil"
+	if in.ChipAuthFailed && !in.ChipAuthSuccess && in.SessionContinueOK && !in.FailureSurfacedToCaller {
+		return ScoreSilent, "silent — chip auth failure; session/DG still usable without surfaced error"
 	}
 	if in.ChipAuthFailed && !in.FailureSurfacedToCaller {
 		return ScoreLogged, "logged — chip auth failure visible in session/trace only"

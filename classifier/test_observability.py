@@ -48,19 +48,19 @@ class TestClassifyTCAC01(unittest.TestCase):
 class TestClassifyTCCA01(unittest.TestCase):
     def test_silent(self) -> None:
         self.assertEqual(
-            classify_tc_ca_01(TCCA01Outcome(True, False, False)),
+            classify_tc_ca_01(TCCA01Outcome(True, False, True, False)),
             ObservabilityScore.SILENT,
         )
 
     def test_logged(self) -> None:
         self.assertEqual(
-            classify_tc_ca_01(TCCA01Outcome(True, True, False)),
+            classify_tc_ca_01(TCCA01Outcome(True, False, False, False)),
             ObservabilityScore.LOGGED,
         )
 
     def test_surfaced(self) -> None:
         self.assertEqual(
-            classify_tc_ca_01(TCCA01Outcome(True, False, True)),
+            classify_tc_ca_01(TCCA01Outcome(True, False, True, True)),
             ObservabilityScore.SURFACED,
         )
 

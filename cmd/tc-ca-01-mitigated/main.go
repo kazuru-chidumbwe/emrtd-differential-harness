@@ -30,12 +30,13 @@ type traceEntry struct {
 
 type smokeResult struct {
 	output.Meta
-	ChipAuthErr     string       `json:"chip_auth_err"`
-	ChipAuthSuccess bool         `json:"chip_auth_success"`
-	MiddlewareErr   string       `json:"middleware_err,omitempty"`
-	Observability   int          `json:"observability_score"`
-	ObservabilityMe string       `json:"observability_meaning"`
-	Trace           []traceEntry `json:"trace"`
+	ChipAuthErr       string       `json:"chip_auth_err"`
+	ChipAuthSuccess   bool         `json:"chip_auth_success"`
+	SessionContinueOK bool         `json:"session_continue_ok"`
+	MiddlewareErr     string       `json:"middleware_err,omitempty"`
+	Observability     int          `json:"observability_score"`
+	ObservabilityMe   string       `json:"observability_meaning"`
+	Trace             []traceEntry `json:"trace"`
 }
 
 func main() {
@@ -63,7 +64,8 @@ func main() {
 		caSW = "6FFF"
 	}
 
-	nfc := iso7816.NewNfcSession(simulator.NewTcCa01Transceiver(caSW, pass))
+	tr := simulator.NewTcCa01Transceiver(caSW, pass)
+	nfc := iso7816.NewNfcSession(tr)
 	doc := &document.Document{}
 	if p.Dg14HexPath != "" {
 		dg14Hex, err := profile.LoadHexFile(p.Dg14HexPath)
@@ -82,9 +84,15 @@ func main() {
 	ca := middleware.PerformChipAuth(nfc, doc, middleware.CAOptions{AllowContinue: false})
 	chipErrStr := errString(ca.ChipAuthErr)
 	mwErrStr := errString(ca.SurfacedError)
+	sessionContinue := false
+	if chipErrStr != "" && !ca.ChipAuthOK {
+		rapdu := tr.Transceive(0x00, 0xB0, 0x00, 0x00, nil, 8, nil)
+		sessionContinue = len(rapdu) >= 2 && rapdu[len(rapdu)-2] == 0x90 && rapdu[len(rapdu)-1] == 0x00
+	}
 	obs, obsMeaning := classifier.ClassifyTCCA01(classifier.TCCA01Input{
 		ChipAuthFailed:          chipErrStr != "",
 		ChipAuthSuccess:         ca.ChipAuthOK,
+		SessionContinueOK:       sessionContinue,
 		FailureSurfacedToCaller: mwErrStr != "",
 	})
 
@@ -104,7 +112,8 @@ func main() {
 			Mechanism: p.Mechanism, Condition: p.Condition, Tier: p.Tier,
 			Variant: *variant, FigureID: *figureID, Provenance: prov,
 		},
-		ChipAuthErr: chipErrStr, ChipAuthSuccess: ca.ChipAuthOK, MiddlewareErr: mwErrStr,
+		ChipAuthErr: chipErrStr, ChipAuthSuccess: ca.ChipAuthOK, SessionContinueOK: sessionContinue,
+		MiddlewareErr: mwErrStr,
 		Observability: obs.Int(), ObservabilityMe: obsMeaning,
 		Trace: buildTrace(nfc.ApduLog()),
 	}

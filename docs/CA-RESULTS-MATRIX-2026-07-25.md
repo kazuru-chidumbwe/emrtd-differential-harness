@@ -1,4 +1,4 @@
-# TC-CA-01 CA skew matrix — profile lock + 40-run pin (2026-07-25)
+# TC-CA-01 CA skew matrix — 40-run pin + emergent continue-check (R1)
 
 **Suite:** `ca-01-sweep` (10 profiles × 2 libraries × 2 variants = **40 runs**)
 
@@ -10,15 +10,15 @@
 
 **Injection:** first CA MSE:Set AT (`INS=0x22`, `P1=0x41`, `P2=0xA4`) returns `ca_sw`. `ca_fail_on` is documentation-only (simulators do not branch on it). DG14 fixture `testdata/dg14/ca-v2-sample.hex` advertises CA for both direction labels; true CA version negotiation is not simulated.
 
+**Emergent continue-check (R1):** After CA MSE reject, the simulator answers a subsequent unprotected **READ BINARY** (`INS=0xB0`) with `9000`. Drivers record `session_continue_ok`. Classifier silent = CA failure ∧ !success ∧ session continue ∧ !surfaced — parallel to AC-01 `BacSuccess` / EAC-01 `ProtectedDGAccessible`. Baseline scores are therefore **emergent under the harness model**, not pure by-construction bit flips. Mitigated arms still force `FailureSurfacedToCaller=true`.
+
 **Generator:** `python3 profiles/generate_ca_sweep.py` → `profiles/ca-sweep/` + `index.json`
 
 **Smoke anchors (unchanged paths):**
 - `profiles/ca-v1-v2-skew.json` — forward skew, SW `6FFF`
 - `profiles/ca-v2-terminal-v1.json` — reverse skew label, SW `6985`
 
-**Observed Observability Score (lab host Docker `emrtd-harness:paper-2026-07-25`, 2026-07-25):**
-
-Scores are **by construction** of the naive-host / mitigated drivers (`FailureSurfacedToCaller` false vs true). Unlike TC-AC-01 (`BacSuccess`) and TC-EAC-01 (`ProtectedDGAccessible`), CA has no emergent “session continues” check; identical gmrtd/JMRTD cells corroborate consistent application of that model, not a discovered library difference.
+**Observed Observability Score (test-server, R1 re-run):**
 
 | Library | Variant | Score | Cells |
 | --- | --- | ---: | ---: |
@@ -31,9 +31,9 @@ Scores are **by construction** of the naive-host / mitigated drivers (`FailureSu
 
 | Field | Value |
 | --- | --- |
-| Log dir | `logs/ca-01-sweep-full-20260725T204638Z` |
-| Wall clock | ~148 s (container) |
-| `bundle_sha256` | `ce12ee2ca83e0c7f6137802a4386df01a7a2996ac5f883441d190d1d8ef9b569` |
+| Host | `test-server` (Ubuntu; Go 1.25.0; OpenJDK 17; Python 3.12.3) |
+| Log dir | `logs/ca-01-sweep-full-r1-test-server` |
+| `bundle_sha256` | `52af54e51271523f082f218777d08a4eb95caca6cae0890579dd7e7b92afda07` |
 | Runner | `scripts/run_ca_sweep_full.sh` |
 
 **Reproduce:**
@@ -46,3 +46,4 @@ bash scripts/run_ca_sweep_full.sh
 **Notes:**
 - Option A pin: `org.jmrtd:jmrtd:0.8.6` (see `docs/JMRTD-PIN.md`).
 - Corroborating depth for the paper is this 40-run matrix, not a second 200-run PACE factorial.
+- Supersedes prior by-construction-only pin `ce12ee2c…` (pre–continue-check).

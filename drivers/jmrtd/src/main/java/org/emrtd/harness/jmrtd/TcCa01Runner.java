@@ -35,17 +35,20 @@ public final class TcCa01Runner {
 
         String chipAuthErr = "";
         boolean chipAuthSuccess = false;
+        boolean sessionContinueOk = false;
         if (bacSuccess) {
             card.transmit(new CommandAPDU(0x00, 0x22, 0x41, 0xA4, new byte[0], 0));
             chipAuthSuccess = card.trace().stream()
                     .anyMatch(t -> t.label.equals("MSE:Set AT (CA)") && t.success);
             if (!chipAuthSuccess) {
                 chipAuthErr = "CA MSE:Set AT failed (synthetic chip)";
+                var dg = card.transmit(new CommandAPDU(0x00, 0xB0, 0x00, 0x00, 8));
+                sessionContinueOk = dg.getSW() == 0x9000;
             }
         }
 
         int obs = Observability.classifyTcCa01(new Observability.TCCA01Outcome(
-                !chipAuthErr.isEmpty() || !chipAuthSuccess, chipAuthSuccess, false));
+                !chipAuthErr.isEmpty() || !chipAuthSuccess, chipAuthSuccess, sessionContinueOk, false));
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("run_id", RunIds.next(profile.id + "-jmrtd"));
@@ -58,6 +61,7 @@ public final class TcCa01Runner {
         result.put("figure_id", a.figureId.isEmpty() ? null : a.figureId);
         result.put("chip_auth_err", chipAuthErr);
         result.put("chip_auth_success", chipAuthSuccess);
+        result.put("session_continue_ok", sessionContinueOk);
         result.put("bac_success", bacSuccess);
         result.put("bac_err", bacErr);
         result.put("observability_score", obs);
@@ -78,8 +82,9 @@ public final class TcCa01Runner {
 
         Provenance.writeResult(a.logDir, (String) result.get("run_id"), result);
 
-        if (!bacSuccess || chipAuthSuccess) {
-            System.err.printf("TC-CA-01 gate failed: bac_success=%s chip_auth_success=%s%n", bacSuccess, chipAuthSuccess);
+        if (!bacSuccess || chipAuthSuccess || !sessionContinueOk) {
+            System.err.printf("TC-CA-01 gate failed: bac_success=%s chip_auth_success=%s session_continue=%s%n",
+                    bacSuccess, chipAuthSuccess, sessionContinueOk);
             System.exit(1);
         }
     }

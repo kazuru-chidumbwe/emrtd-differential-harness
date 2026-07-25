@@ -30,11 +30,12 @@ type traceEntry struct {
 
 type smokeResult struct {
 	output.Meta
-	ChipAuthErr     string       `json:"chip_auth_err"`
-	ChipAuthSuccess bool         `json:"chip_auth_success"`
-	Observability   int          `json:"observability_score"`
-	ObservabilityMe string       `json:"observability_meaning"`
-	Trace           []traceEntry `json:"trace"`
+	ChipAuthErr         string       `json:"chip_auth_err"`
+	ChipAuthSuccess     bool         `json:"chip_auth_success"`
+	SessionContinueOK   bool         `json:"session_continue_ok"`
+	Observability       int          `json:"observability_score"`
+	ObservabilityMe     string       `json:"observability_meaning"`
+	Trace               []traceEntry `json:"trace"`
 }
 
 func main() {
@@ -62,7 +63,8 @@ func main() {
 		caSW = "6FFF"
 	}
 
-	nfc := iso7816.NewNfcSession(simulator.NewTcCa01Transceiver(caSW, pass))
+	tr := simulator.NewTcCa01Transceiver(caSW, pass)
+	nfc := iso7816.NewNfcSession(tr)
 	doc := &document.Document{}
 	if p.Dg14HexPath != "" {
 		dg14Hex, err := profile.LoadHexFile(p.Dg14HexPath)
@@ -81,9 +83,18 @@ func main() {
 	caResult, caErr := chipauth.NewChipAuth(nfc, doc).DoChipAuth()
 	chipErrStr := errString(caErr)
 	chipOK := caResult != nil && caResult.Success
+
+	// Emergent continue-check: READ BINARY after CA failure (parallel to EAC ProtectedDGAccessible).
+	sessionContinue := false
+	if chipErrStr != "" && !chipOK {
+		rapdu := tr.Transceive(0x00, 0xB0, 0x00, 0x00, nil, 8, nil)
+		sessionContinue = len(rapdu) >= 2 && rapdu[len(rapdu)-2] == 0x90 && rapdu[len(rapdu)-1] == 0x00
+	}
+
 	obs, obsMeaning := classifier.ClassifyTCCA01(classifier.TCCA01Input{
 		ChipAuthFailed:          chipErrStr != "",
 		ChipAuthSuccess:         chipOK,
+		SessionContinueOK:       sessionContinue,
 		FailureSurfacedToCaller: false,
 	})
 
@@ -102,7 +113,7 @@ func main() {
 			Mechanism: p.Mechanism, Condition: p.Condition, Tier: p.Tier,
 			Variant: *variant, FigureID: *figureID, Provenance: prov,
 		},
-		ChipAuthErr: chipErrStr, ChipAuthSuccess: chipOK,
+		ChipAuthErr: chipErrStr, ChipAuthSuccess: chipOK, SessionContinueOK: sessionContinue,
 		Observability: obs.Int(), ObservabilityMe: obsMeaning,
 		Trace: buildTrace(nfc.ApduLog()),
 	}
@@ -110,7 +121,7 @@ func main() {
 		fatal("write", err)
 	}
 	_ = json.NewEncoder(os.Stdout).Encode(result)
-	if chipErrStr == "" || chipOK {
+	if chipErrStr == "" || chipOK || !sessionContinue {
 		os.Exit(1)
 	}
 }

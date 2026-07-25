@@ -1,0 +1,35 @@
+{
+  "generator": "profiles/generate_aa_sweep.py",
+  "n_profiles": 5,
+  "axes": {
+    "aa_sw": 5
+  },
+  "factorial_note": "5 profiles \u00d7 2 libraries \u00d7 2 variants = 20 runs when fully executed. Scores follow the naive-host / mitigated model (no emergent continue-check).",
+  "profiles": [
+    {
+      "id": "TC-AA-01-sweep-6300",
+      "path": "profiles/aa-sweep/TC-AA-01-sweep-6300.json",
+      "aa_sw": "6300"
+    },
+    {
+      "id": "TC-AA-01-sweep-6982",
+      "path": "profiles/aa-sweep/TC-AA-01-sweep-6982.json",
+      "aa_sw": "6982"
+    },
+    {
+      "id": "TC-AA-01-sweep-6a80",
+      "path": "profiles/aa-sweep/TC-AA-01-sweep-6a80.json",
+      "aa_sw": "6A80"
+    },
+    {
+      "id": "TC-AA-01-sweep-6a88",
+      "path": "profiles/aa-sweep/TC-AA-01-sweep-6a88.json",
+      "aa_sw": "6A88"
+    },
+    {
+      "id": "TC-AA-01-sweep-6985",
+      "path": "profiles/aa-sweep/TC-AA-01-sweep-6985.json",
+      "aa_sw": "6985"
+    }
+  ]
+}

@@ -33,6 +33,11 @@ func (t *TcCa01Transceiver) Transceive(cla, ins, p1, p2 int, data []byte, le int
 			return append([]byte(nil), t.caSW...)
 		}
 	}
+	// Emergent continue-check: after CA reject, READ BINARY (INS 0xB0) still succeeds.
+	if t.caFail && byte(ins) == 0xB0 {
+		payload := []byte{0x61, 0x03, 0x5F, 0x2E, 0x00}
+		return append(payload, 0x90, 0x00)
+	}
 	// PACE path — not used in TC-CA-01; decline cleanly
 	if byte(ins) == iso7816.INS_MANAGE_SE || byte(ins) == iso7816.INS_GENERAL_AUTHENTICATE {
 		return []byte{0x6D, 0x00}

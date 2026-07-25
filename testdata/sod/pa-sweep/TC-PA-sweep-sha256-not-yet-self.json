@@ -1,0 +1,18 @@
+{
+  "id": "TC-PA-sweep-sha256-not-yet-self",
+  "name": "PA sweep digest=sha256 validity=not_yet chain=self",
+  "mechanism": "PA",
+  "condition": "pa_sha256_not_yet_self",
+  "tier": "offline",
+  "fixture": "testdata/sod/fixtures/pa-sweep-sha256-not-yet-self-sod.hex",
+  "dsc_fixture": "testdata/sod/fixtures/pa-sweep-sha256-not-yet-self-dsc.pem",
+  "csca_fixture": "testdata/sod/fixtures/pa-sweep-sha256-not-yet-self-csca.pem",
+  "sweep_axes": {
+    "digest": "sha256",
+    "validity": "not_yet",
+    "chain": "self"
+  },
+  "inspection_date": "2026-07-07",
+  "expect_policy_rejection": true,
+  "notes": "Combinatorial offline PA grid cell. Live PKD/CRL out of scope. expect_policy_rejection=True."
+}

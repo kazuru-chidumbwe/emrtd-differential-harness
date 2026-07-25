@@ -32,7 +32,7 @@ jobs:
 
       - name: Package JMRTD harness jar
         working-directory: drivers/jmrtd
-        run: mvn -q -DskipTests package
+        run: mvn -q -Dmaven.test.skip=true package
 
       - name: Unit tests (classifiers + middleware + normfail)
         run: |
@@ -45,9 +45,28 @@ jobs:
           chmod +x scripts/verify_aa_ta_eac_smoke.sh
           LOG_DIR=logs/aa-ta-eac-smoke bash scripts/verify_aa_ta_eac_smoke.sh
 
+      - name: AA 20-run SW grid (bilateral corroborating)
+        run: |
+          chmod +x scripts/run_aa_sweep_full.sh
+          python3 profiles/generate_aa_sweep.py
+          LOG_DIR=logs/aa-01-sweep-ci bash scripts/run_aa_sweep_full.sh
+
+      - name: Middleware overhead sample
+        run: go test ./middleware/ -run TestMiddlewareOverheadSample -count=1 -v
+
+      - name: PA combinatorial offline grid (≥24)
+        run: |
+          pip install --break-system-packages cryptography asn1crypto git+https://github.com/ZeroPass/pymrtd.git@v0.6.6
+          chmod +x scripts/run_pa_sweep_full.sh
+          python3 profiles/generate_pa_sweep.py
+          LOG_DIR=logs/pa-sweep-ci bash scripts/run_pa_sweep_full.sh
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: aa-ta-eac-smoke-results
-          path: logs/aa-ta-eac-smoke/
+          path: |
+            logs/aa-ta-eac-smoke/
+            logs/aa-01-sweep-ci/
+            logs/pa-sweep-ci/
           retention-days: 90

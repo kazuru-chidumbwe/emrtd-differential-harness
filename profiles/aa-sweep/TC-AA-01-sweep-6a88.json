@@ -1,0 +1,27 @@
+{
+  "id": "TC-AA-01-sweep-6a88",
+  "name": "AA sweep: aa_sw=6A88",
+  "mechanism": "AA",
+  "condition": "aa_internal_authenticate_reject",
+  "tier": "wire",
+  "seed": 1,
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "dg15_hex_path": "testdata/dg15/aa-rsa-sample.hex",
+  "aa_injection": {
+    "aa_fail_on": "first_internal_authenticate",
+    "aa_sw": "6A88",
+    "notes": "Synthetic \u2014 BAC then AA fails at INTERNAL AUTHENTICATE (0x88) with SW 6A88. Naive caller that ignores ActiveAuthErr scores 0; mitigated surfaces."
+  },
+  "sweep_axes": {
+    "aa_sw": "6A88"
+  },
+  "expected_gmrtd": {
+    "active_auth_err": "non_null",
+    "observability_if_caller_checks_step_only": 0
+  }
+}

@@ -21,11 +21,14 @@ public final class Observability {
     public static final class TCCA01Outcome {
         public final boolean chipAuthFailed;
         public final boolean chipAuthSuccess;
+        public final boolean sessionContinueOk;
         public final boolean failureSurfacedToCaller;
 
-        public TCCA01Outcome(boolean chipAuthFailed, boolean chipAuthSuccess, boolean failureSurfacedToCaller) {
+        public TCCA01Outcome(boolean chipAuthFailed, boolean chipAuthSuccess,
+                             boolean sessionContinueOk, boolean failureSurfacedToCaller) {
             this.chipAuthFailed = chipAuthFailed;
             this.chipAuthSuccess = chipAuthSuccess;
+            this.sessionContinueOk = sessionContinueOk;
             this.failureSurfacedToCaller = failureSurfacedToCaller;
         }
     }
@@ -85,7 +88,7 @@ public final class Observability {
     }
 
     public static int classifyTcCa01(TCCA01Outcome o) {
-        if (o.chipAuthFailed && !o.chipAuthSuccess && !o.failureSurfacedToCaller) {
+        if (o.chipAuthFailed && !o.chipAuthSuccess && o.sessionContinueOk && !o.failureSurfacedToCaller) {
             return 0;
         }
         if (o.chipAuthFailed && !o.failureSurfacedToCaller) {

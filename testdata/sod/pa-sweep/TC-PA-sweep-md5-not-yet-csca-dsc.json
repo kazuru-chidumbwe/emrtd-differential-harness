@@ -1,0 +1,18 @@
+{
+  "id": "TC-PA-sweep-md5-not-yet-csca-dsc",
+  "name": "PA sweep digest=md5 validity=not_yet chain=csca_dsc",
+  "mechanism": "PA",
+  "condition": "pa_md5_not_yet_csca_dsc",
+  "tier": "offline",
+  "fixture": "testdata/sod/fixtures/pa-sweep-md5-not-yet-csca-dsc-sod.hex",
+  "dsc_fixture": "testdata/sod/fixtures/pa-sweep-md5-not-yet-csca-dsc-dsc.pem",
+  "csca_fixture": "testdata/sod/fixtures/pa-sweep-md5-not-yet-csca-dsc-csca.pem",
+  "sweep_axes": {
+    "digest": "md5",
+    "validity": "not_yet",
+    "chain": "csca_dsc"
+  },
+  "inspection_date": "2026-07-07",
+  "expect_policy_rejection": true,
+  "notes": "Combinatorial offline PA grid cell. Live PKD/CRL out of scope. expect_policy_rejection=True."
+}

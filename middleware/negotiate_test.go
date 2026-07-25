@@ -12,7 +12,7 @@ import (
 
 const cardAccessPaceHex = "31143012060A04007F0007020204020402010202010D"
 
-func mustPassword(t *testing.T) *password.Password {
+func mustPassword(t testing.TB) *password.Password {
 	t.Helper()
 	pass, err := password.NewPasswordMrzi("L898902C", "690806", "940623")
 	if err != nil {
@@ -21,7 +21,7 @@ func mustPassword(t *testing.T) *password.Password {
 	return pass
 }
 
-func mustPaceDoc(t *testing.T) *document.Document {
+func mustPaceDoc(t testing.TB) *document.Document {
 	t.Helper()
 	doc := &document.Document{}
 	var err error

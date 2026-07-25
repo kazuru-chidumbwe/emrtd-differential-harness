@@ -68,6 +68,9 @@ public final class TcCa01CardService extends CardService {
                 } else {
                     body = swBytes(ISO7816.SW_INS_NOT_SUPPORTED);
                 }
+            } else if (caFailed && ins == 0xB0) {
+                label = "READ BINARY (post-CA continue)";
+                body = concat(new byte[] {0x61, 0x03, 0x5F, 0x2E, 0x00}, swBytes(ISO7816.SW_NO_ERROR));
             } else if (ins == 0x22 || ins == 0x86) {
                 label = ins == 0x22 ? "MSE:Set AT" : "General Authenticate";
                 body = swBytes(ISO7816.SW_INS_NOT_SUPPORTED);

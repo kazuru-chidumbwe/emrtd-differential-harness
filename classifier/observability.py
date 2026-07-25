@@ -59,6 +59,7 @@ def classify_tc_ac_01(outcome: TCAC01Outcome) -> ObservabilityScore:
 class TCCA01Outcome:
     chip_auth_failed: bool
     chip_auth_success: bool
+    session_continue_ok: bool
     failure_surfaced_to_caller: bool
 
 
@@ -67,6 +68,7 @@ def classify_tc_ca_01(outcome: TCCA01Outcome) -> ObservabilityScore:
     if (
         outcome.chip_auth_failed
         and not outcome.chip_auth_success
+        and outcome.session_continue_ok
         and not outcome.failure_surfaced_to_caller
     ):
         return ObservabilityScore.SILENT

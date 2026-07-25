@@ -40,7 +40,7 @@ func TestClassifyTCAC01_paceFailBacFailLogged(t *testing.T) {
 
 func TestClassifyTCCA01_silent(t *testing.T) {
 	score, _ := ClassifyTCCA01(TCCA01Input{
-		ChipAuthFailed: true, ChipAuthSuccess: false, FailureSurfacedToCaller: false,
+		ChipAuthFailed: true, ChipAuthSuccess: false, SessionContinueOK: true, FailureSurfacedToCaller: false,
 	})
 	if score != ScoreSilent {
 		t.Fatalf("got %d want silent", score)
@@ -48,9 +48,9 @@ func TestClassifyTCCA01_silent(t *testing.T) {
 }
 
 func TestClassifyTCCA01_logged(t *testing.T) {
-	// Failed but ChipAuthSuccess still true → logged branch (not the silent triple).
+	// Failed but session did not continue → logged branch (not the silent quadruple).
 	score, _ := ClassifyTCCA01(TCCA01Input{
-		ChipAuthFailed: true, ChipAuthSuccess: true, FailureSurfacedToCaller: false,
+		ChipAuthFailed: true, ChipAuthSuccess: false, SessionContinueOK: false, FailureSurfacedToCaller: false,
 	})
 	if score != ScoreLogged {
 		t.Fatalf("got %d want logged", score)
@@ -59,7 +59,7 @@ func TestClassifyTCCA01_logged(t *testing.T) {
 
 func TestClassifyTCCA01_surfaced(t *testing.T) {
 	score, _ := ClassifyTCCA01(TCCA01Input{
-		ChipAuthFailed: true, ChipAuthSuccess: false, FailureSurfacedToCaller: true,
+		ChipAuthFailed: true, ChipAuthSuccess: false, SessionContinueOK: true, FailureSurfacedToCaller: true,
 	})
 	if score != ScoreSurfaced {
 		t.Fatalf("got %d want surfaced", score)

@@ -28,19 +28,19 @@ public class ObservabilityTest {
     @Test
     void classifyTcCa01Silent() {
         assertEquals(0, Observability.classifyTcCa01(
-                new Observability.TCCA01Outcome(true, false, false)));
+                new Observability.TCCA01Outcome(true, false, true, false)));
     }
 
     @Test
     void classifyTcCa01Logged() {
         assertEquals(1, Observability.classifyTcCa01(
-                new Observability.TCCA01Outcome(true, true, false)));
+                new Observability.TCCA01Outcome(true, false, false, false)));
     }
 
     @Test
     void classifyTcCa01Surfaced() {
         assertEquals(2, Observability.classifyTcCa01(
-                new Observability.TCCA01Outcome(true, false, true)));
+                new Observability.TCCA01Outcome(true, false, true, true)));
     }
 
     @Test

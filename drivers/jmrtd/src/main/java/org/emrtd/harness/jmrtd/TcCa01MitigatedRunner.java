@@ -41,6 +41,7 @@ public final class TcCa01MitigatedRunner {
 
         String chipAuthErr = "";
         boolean chipAuthSuccess = false;
+        boolean sessionContinueOk = false;
         String middlewareErr = "";
         if (bacSuccess) {
             card.transmit(new CommandAPDU(0x00, 0x22, 0x41, 0xA4, new byte[0], 0));
@@ -48,15 +49,15 @@ public final class TcCa01MitigatedRunner {
                     .anyMatch(t -> t.label.equals("MSE:Set AT (CA)") && t.success);
             if (!chipAuthSuccess) {
                 chipAuthErr = "CA MSE:Set AT failed (synthetic chip)";
-                // Explicit-reject: chip authentication failure is a hard stop. The session is
-                // not handed back as "open" the way the baseline runner implicitly allows.
                 middlewareErr = "chip authentication failed: explicit reject (middleware CA analogue): " + chipAuthErr;
+                var dg = card.transmit(new CommandAPDU(0x00, 0xB0, 0x00, 0x00, 8));
+                sessionContinueOk = dg.getSW() == 0x9000;
             }
         }
 
         boolean failureSurfaced = !middlewareErr.isEmpty();
         int obs = Observability.classifyTcCa01(new Observability.TCCA01Outcome(
-                !chipAuthSuccess, chipAuthSuccess, failureSurfaced));
+                !chipAuthSuccess, chipAuthSuccess, sessionContinueOk, failureSurfaced));
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("run_id", RunIds.next(profile.id + "-jmrtd-mitigated"));
@@ -69,6 +70,7 @@ public final class TcCa01MitigatedRunner {
         result.put("figure_id", a.figureId.isEmpty() ? null : a.figureId);
         result.put("chip_auth_err", chipAuthErr);
         result.put("chip_auth_success", chipAuthSuccess);
+        result.put("session_continue_ok", sessionContinueOk);
         result.put("bac_success", bacSuccess);
         result.put("bac_err", bacErr);
         result.put("middleware_err", middlewareErr);

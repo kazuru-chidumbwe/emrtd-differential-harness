@@ -1,0 +1,18 @@
+{
+  "id": "TC-PA-sweep-sha1-fresh-self",
+  "name": "PA sweep digest=sha1 validity=fresh chain=self",
+  "mechanism": "PA",
+  "condition": "pa_sha1_fresh_self",
+  "tier": "offline",
+  "fixture": "testdata/sod/fixtures/pa-sweep-sha1-fresh-self-sod.hex",
+  "dsc_fixture": "testdata/sod/fixtures/pa-sweep-sha1-fresh-self-dsc.pem",
+  "csca_fixture": "testdata/sod/fixtures/pa-sweep-sha1-fresh-self-csca.pem",
+  "sweep_axes": {
+    "digest": "sha1",
+    "validity": "fresh",
+    "chain": "self"
+  },
+  "inspection_date": "2026-07-07",
+  "expect_policy_rejection": true,
+  "notes": "Combinatorial offline PA grid cell. Live PKD/CRL out of scope. expect_policy_rejection=True."
+}

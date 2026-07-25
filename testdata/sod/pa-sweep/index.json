@@ -1,0 +1,216 @@
+{
+  "generator": "profiles/generate_pa_sweep.py",
+  "n_fixtures": 24,
+  "axes": {
+    "digest": [
+      "sha1",
+      "md5",
+      "sha256"
+    ],
+    "validity": [
+      "fresh",
+      "expired_1y",
+      "expired_5y",
+      "not_yet"
+    ],
+    "chain": [
+      "self",
+      "csca_dsc"
+    ]
+  },
+  "factorial_note": "3\u00d74\u00d72 = 24 fixtures, n=1 each. Combinatorial policy coverage, not statistical variance.",
+  "cases": [
+    {
+      "id": "TC-PA-sweep-sha1-fresh-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-fresh-self.json",
+      "digest": "sha1",
+      "validity": "fresh",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha1-fresh-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-fresh-csca-dsc.json",
+      "digest": "sha1",
+      "validity": "fresh",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha1-expired-1y-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-expired-1y-self.json",
+      "digest": "sha1",
+      "validity": "expired_1y",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha1-expired-1y-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-expired-1y-csca-dsc.json",
+      "digest": "sha1",
+      "validity": "expired_1y",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha1-expired-5y-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-expired-5y-self.json",
+      "digest": "sha1",
+      "validity": "expired_5y",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha1-expired-5y-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-expired-5y-csca-dsc.json",
+      "digest": "sha1",
+      "validity": "expired_5y",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha1-not-yet-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-not-yet-self.json",
+      "digest": "sha1",
+      "validity": "not_yet",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha1-not-yet-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha1-not-yet-csca-dsc.json",
+      "digest": "sha1",
+      "validity": "not_yet",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-fresh-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-fresh-self.json",
+      "digest": "md5",
+      "validity": "fresh",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-fresh-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-fresh-csca-dsc.json",
+      "digest": "md5",
+      "validity": "fresh",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-expired-1y-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-expired-1y-self.json",
+      "digest": "md5",
+      "validity": "expired_1y",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-expired-1y-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-expired-1y-csca-dsc.json",
+      "digest": "md5",
+      "validity": "expired_1y",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-expired-5y-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-expired-5y-self.json",
+      "digest": "md5",
+      "validity": "expired_5y",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-expired-5y-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-expired-5y-csca-dsc.json",
+      "digest": "md5",
+      "validity": "expired_5y",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-not-yet-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-not-yet-self.json",
+      "digest": "md5",
+      "validity": "not_yet",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-md5-not-yet-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-md5-not-yet-csca-dsc.json",
+      "digest": "md5",
+      "validity": "not_yet",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha256-fresh-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-fresh-self.json",
+      "digest": "sha256",
+      "validity": "fresh",
+      "chain": "self",
+      "expect_policy_rejection": false
+    },
+    {
+      "id": "TC-PA-sweep-sha256-fresh-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-fresh-csca-dsc.json",
+      "digest": "sha256",
+      "validity": "fresh",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": false
+    },
+    {
+      "id": "TC-PA-sweep-sha256-expired-1y-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-expired-1y-self.json",
+      "digest": "sha256",
+      "validity": "expired_1y",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha256-expired-1y-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-expired-1y-csca-dsc.json",
+      "digest": "sha256",
+      "validity": "expired_1y",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha256-expired-5y-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-expired-5y-self.json",
+      "digest": "sha256",
+      "validity": "expired_5y",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha256-expired-5y-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-expired-5y-csca-dsc.json",
+      "digest": "sha256",
+      "validity": "expired_5y",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha256-not-yet-self",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-not-yet-self.json",
+      "digest": "sha256",
+      "validity": "not_yet",
+      "chain": "self",
+      "expect_policy_rejection": true
+    },
+    {
+      "id": "TC-PA-sweep-sha256-not-yet-csca-dsc",
+      "path": "testdata/sod/pa-sweep/TC-PA-sweep-sha256-not-yet-csca-dsc.json",
+      "digest": "sha256",
+      "validity": "not_yet",
+      "chain": "csca_dsc",
+      "expect_policy_rejection": true
+    }
+  ]
+}
