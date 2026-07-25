@@ -32,6 +32,17 @@ make suite-paper    # full paper matrix manifest
 make paper          # CI: tests → smoke → suite → verify → artifacts/
 ```
 
+### Docker (smoke gate)
+
+One-file reproduction without a hand-tuned host (network required at build):
+
+```bash
+docker build -t emrtd-harness .
+docker run --rm emrtd-harness
+# optional offline PA fixtures (incl. TC-PA-04a/04b chained):
+docker run --rm emrtd-harness bash scripts/run_offline_pa.sh
+```
+
 Expected output includes `logs/suite-*/artifact-manifest.json` — the **canonical** published object. Cite `FIG-01`…`FIG-04` (not manuscript figure numbers). Derived `summary-*.md` tables reference the manifest.
 
 ---
