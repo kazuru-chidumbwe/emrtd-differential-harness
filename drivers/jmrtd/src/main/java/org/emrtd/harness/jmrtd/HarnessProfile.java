@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 
 public final class HarnessProfile {
     public String id;
@@ -16,9 +17,17 @@ public final class HarnessProfile {
     public String cardAccessHex;
     @SerializedName("dg14_hex_path")
     public String dg14HexPath;
+    @SerializedName("dg15_hex_path")
+    public String dg15HexPath;
     public Injection injection;
     @SerializedName("ca_injection")
     public CaInjection caInjection;
+    @SerializedName("aa_injection")
+    public AaInjection aaInjection;
+    @SerializedName("ta_injection")
+    public TaInjection taInjection;
+    @SerializedName("peer_support")
+    public Map<String, String> peerSupport;
 
     public static final class Mrz {
         @SerializedName("document_number")
@@ -37,6 +46,18 @@ public final class HarnessProfile {
     public static final class CaInjection {
         @SerializedName("ca_sw")
         public String caSw;
+    }
+
+    public static final class AaInjection {
+        @SerializedName("aa_sw")
+        public String aaSw;
+    }
+
+    public static final class TaInjection {
+        @SerializedName("ta_sw")
+        public String taSw;
+        @SerializedName("ta_fail_on")
+        public String taFailOn;
     }
 
     public static HarnessProfile load(Path path) throws IOException {

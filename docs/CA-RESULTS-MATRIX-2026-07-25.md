@@ -1,6 +1,6 @@
-# TC-CA-01 CA skew matrix — profile lock (2026-07-25)
+# TC-CA-01 CA skew matrix — profile lock + 40-run pin (2026-07-25)
 
-**Suite:** `ca-01-sweep` (10 profiles × 2 libraries × 2 variants = **40 runs** when fully executed)
+**Suite:** `ca-01-sweep` (10 profiles × 2 libraries × 2 variants = **40 runs**)
 
 **Axes (harness-consumed):**
 | Axis | Values |
@@ -16,32 +16,31 @@
 - `profiles/ca-v1-v2-skew.json` — forward skew, SW `6FFF`
 - `profiles/ca-v2-terminal-v1.json` — reverse skew label, SW `6985`
 
-**Expected Observability Score (by design, deterministic APDU replay):**
+**Observed Observability Score (lab host Docker `emrtd-harness:paper-2026-07-25`, 2026-07-25):**
 
-| Library | Variant | Expected score | Cells |
+| Library | Variant | Score | Cells |
 | --- | --- | ---: | ---: |
 | gmrtd | baseline | 0 (silent) | 10 / 10 |
 | gmrtd | mitigated | 2 (surfaced) | 10 / 10 |
 | JMRTD | baseline | 0 (silent) | 10 / 10 |
 | JMRTD | mitigated | 2 (surfaced) | 10 / 10 |
 
-**Reproduce (gmrtd matrix):**
+**Lab pin:**
+
+| Field | Value |
+| --- | --- |
+| Log dir | `logs/ca-01-sweep-full-20260725T204638Z` |
+| Wall clock | ~148 s (container) |
+| `bundle_sha256` | `ce12ee2ca83e0c7f6137802a4386df01a7a2996ac5f883441d190d1d8ef9b569` |
+| Runner | `scripts/run_ca_sweep_full.sh` |
+
+**Reproduce:**
 
 ```bash
-bash scripts/bootstrap-vendor.sh
-export GOTOOLCHAIN=auto
-bash scripts/run_ca_sweep_gmrtd.sh
-```
-
-**Reproduce (JMRTD Option A 0.8.6 — single smoke cell):**
-
-```bash
-bash scripts/install-jmrtd-local.sh
-( cd drivers/jmrtd && mvn -q -DskipTests package )
-java -cp drivers/jmrtd/target/jmrtd-tc-ac-01-0.1.0.jar org.emrtd.harness.jmrtd.TcCa01MitigatedRunner \
-  -profile profiles/ca-v1-v2-skew.json -log-dir logs
+bash scripts/run_ca_sweep_full.sh
+# or gmrtd-only: bash scripts/run_ca_sweep_gmrtd.sh
 ```
 
 **Notes:**
-- Full 40-run lab wall-clock and suite `bundle_sha256` are filled when `run_ca_sweep_gmrtd.sh` + JMRTD loop complete on `test-server`; until then cite this profile lock + smoke anchors.
 - Option A pin: `org.jmrtd:jmrtd:0.8.6` (see `docs/JMRTD-PIN.md`).
+- Corroborating depth for the paper is this 40-run matrix, not a second 200-run PACE factorial.

@@ -1,0 +1,24 @@
+{
+  "id": "TC-AA-01",
+  "name": "DG15 advertises AA; chip rejects INTERNAL AUTHENTICATE (forced AA failure)",
+  "mechanism": "AA",
+  "condition": "aa_internal_authenticate_reject",
+  "tier": "wire",
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "dg15_hex_path": "testdata/dg15/aa-rsa-sample.hex",
+  "aa_injection": {
+    "aa_fail_on": "first_internal_authenticate",
+    "aa_sw": "6982",
+    "notes": "Synthetic — BAC session then AA fails at INTERNAL AUTHENTICATE (0x88). Models forced AA challenge-response failure; gmrtd DoActiveAuth returns err (Success=false). Naive caller that ignores ActiveAuthErr scores 0."
+  },
+  "expected_gmrtd": {
+    "active_auth_err": "non_null",
+    "perform_chip_auth_step_err": "null",
+    "observability_if_caller_checks_step_only": 0
+  }
+}

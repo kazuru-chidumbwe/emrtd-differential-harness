@@ -1,0 +1,36 @@
+{
+  "suite_id": "ta-eac-smoke",
+  "description": "TC-TA-01 / TC-EAC-01 JMRTD + gmrtd-unsupported stubs",
+  "seed": 1,
+  "n": 1,
+  "entries": [
+    {
+      "scenario_id": "SCN-TA-01-jmrtd-baseline",
+      "test_case": "TC-TA-01",
+      "library": "jmrtd",
+      "main_class": "org.emrtd.harness.jmrtd.TcTa01Runner",
+      "profile": "profiles/ta-pso-verify-reject.json"
+    },
+    {
+      "scenario_id": "SCN-TA-01-gmrtd-unsupported",
+      "test_case": "TC-TA-01",
+      "library": "gmrtd",
+      "command": "tc-ta-eac-unsupported",
+      "profile": "profiles/ta-pso-verify-reject.json"
+    },
+    {
+      "scenario_id": "SCN-EAC-01-jmrtd-baseline",
+      "test_case": "TC-EAC-01",
+      "library": "jmrtd",
+      "main_class": "org.emrtd.harness.jmrtd.TcEac01Runner",
+      "profile": "profiles/eac-ta-fail-dg-access.json"
+    },
+    {
+      "scenario_id": "SCN-EAC-01-gmrtd-unsupported",
+      "test_case": "TC-EAC-01",
+      "library": "gmrtd",
+      "command": "tc-ta-eac-unsupported",
+      "profile": "profiles/eac-ta-fail-dg-access.json"
+    }
+  ]
+}

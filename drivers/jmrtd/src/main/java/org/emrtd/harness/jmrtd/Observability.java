@@ -30,6 +30,50 @@ public final class Observability {
         }
     }
 
+    public static final class TCAA01Outcome {
+        public final boolean activeAuthFailed;
+        public final boolean activeAuthSuccess;
+        public final boolean failureSurfacedToCaller;
+
+        public TCAA01Outcome(boolean activeAuthFailed, boolean activeAuthSuccess, boolean failureSurfacedToCaller) {
+            this.activeAuthFailed = activeAuthFailed;
+            this.activeAuthSuccess = activeAuthSuccess;
+            this.failureSurfacedToCaller = failureSurfacedToCaller;
+        }
+    }
+
+    public static final class TCTA01Outcome {
+        public final boolean terminalAuthFailed;
+        public final boolean terminalAuthSuccess;
+        public final boolean failureSurfacedToCaller;
+        public final boolean peerUnsupported;
+
+        public TCTA01Outcome(boolean terminalAuthFailed, boolean terminalAuthSuccess,
+                             boolean failureSurfacedToCaller, boolean peerUnsupported) {
+            this.terminalAuthFailed = terminalAuthFailed;
+            this.terminalAuthSuccess = terminalAuthSuccess;
+            this.failureSurfacedToCaller = failureSurfacedToCaller;
+            this.peerUnsupported = peerUnsupported;
+        }
+    }
+
+    public static final class TCEAC01Outcome {
+        public final boolean eacFailed;
+        public final boolean eacSuccess;
+        public final boolean protectedDgAccessible;
+        public final boolean failureSurfacedToCaller;
+        public final boolean peerUnsupported;
+
+        public TCEAC01Outcome(boolean eacFailed, boolean eacSuccess, boolean protectedDgAccessible,
+                              boolean failureSurfacedToCaller, boolean peerUnsupported) {
+            this.eacFailed = eacFailed;
+            this.eacSuccess = eacSuccess;
+            this.protectedDgAccessible = protectedDgAccessible;
+            this.failureSurfacedToCaller = failureSurfacedToCaller;
+            this.peerUnsupported = peerUnsupported;
+        }
+    }
+
     public static int classifyTcAc01(TCAC01Outcome o) {
         if (o.paceFailed && o.bacSuccess && o.bacErr.isEmpty() && !o.paceSurfacedToCaller) {
             return 0;
@@ -45,6 +89,42 @@ public final class Observability {
             return 0;
         }
         if (o.chipAuthFailed && !o.failureSurfacedToCaller) {
+            return 1;
+        }
+        return 2;
+    }
+
+    public static int classifyTcAa01(TCAA01Outcome o) {
+        if (o.activeAuthFailed && !o.activeAuthSuccess && !o.failureSurfacedToCaller) {
+            return 0;
+        }
+        if (o.activeAuthFailed && !o.failureSurfacedToCaller) {
+            return 1;
+        }
+        return 2;
+    }
+
+    public static int classifyTcTa01(TCTA01Outcome o) {
+        if (o.peerUnsupported) {
+            return 2;
+        }
+        if (o.terminalAuthFailed && !o.terminalAuthSuccess && !o.failureSurfacedToCaller) {
+            return 0;
+        }
+        if (o.terminalAuthFailed && !o.failureSurfacedToCaller) {
+            return 1;
+        }
+        return 2;
+    }
+
+    public static int classifyTcEac01(TCEAC01Outcome o) {
+        if (o.peerUnsupported) {
+            return 2;
+        }
+        if (o.eacFailed && !o.eacSuccess && o.protectedDgAccessible && !o.failureSurfacedToCaller) {
+            return 0;
+        }
+        if (o.eacFailed && !o.failureSurfacedToCaller) {
             return 1;
         }
         return 2;

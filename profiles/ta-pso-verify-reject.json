@@ -1,0 +1,26 @@
+{
+  "id": "TC-TA-01",
+  "name": "TA PSO:Verify Certificate rejected (JMRTD-asymmetric; gmrtd unsupported)",
+  "mechanism": "TA",
+  "condition": "ta_pso_verify_cert_reject",
+  "tier": "wire",
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "ta_injection": {
+    "ta_fail_on": "first_pso_verify_certificate",
+    "ta_sw": "6982",
+    "notes": "Synthetic SW-proxy — BAC then first PSO (INS 0x2A) returns ta_sw. Models chip rejecting terminal cert. Not full doEACTA/CVC crypto. gmrtd has no TA."
+  },
+  "peer_support": {
+    "jmrtd": "supported",
+    "gmrtd": "unsupported"
+  },
+  "expected_jmrtd": {
+    "terminal_auth_err": "non_null",
+    "observability_if_caller_swallows": 0
+  }
+}

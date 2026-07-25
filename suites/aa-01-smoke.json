@@ -1,0 +1,46 @@
+{
+  "suite_id": "aa-01-smoke",
+  "description": "TC-AA-01 smoke: gmrtd+JMRTD × baseline+mitigated (4 runs)",
+  "seed": 1,
+  "n": 1,
+  "entries": [
+    {
+      "scenario_id": "SCN-AA-01-gmrtd-baseline",
+      "test_case": "TC-AA-01",
+      "library": "gmrtd",
+      "variant": "baseline",
+      "driver": "go",
+      "command": "tc-aa-01",
+      "profile": "profiles/aa-internal-auth-reject.json"
+    },
+    {
+      "scenario_id": "SCN-AA-01-gmrtd-mitigated",
+      "test_case": "TC-AA-01",
+      "library": "gmrtd",
+      "variant": "mitigated",
+      "driver": "go",
+      "command": "tc-aa-01-mitigated",
+      "profile": "profiles/aa-internal-auth-reject.json",
+      "middleware": "explicit-reject-aa"
+    },
+    {
+      "scenario_id": "SCN-AA-01-jmrtd-baseline",
+      "test_case": "TC-AA-01",
+      "library": "jmrtd",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAa01Runner",
+      "profile": "profiles/aa-internal-auth-reject.json"
+    },
+    {
+      "scenario_id": "SCN-AA-01-jmrtd-mitigated",
+      "test_case": "TC-AA-01",
+      "library": "jmrtd",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAa01MitigatedRunner",
+      "profile": "profiles/aa-internal-auth-reject.json",
+      "middleware": "explicit-reject-aa"
+    }
+  ]
+}

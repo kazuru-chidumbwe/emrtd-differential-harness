@@ -1,0 +1,27 @@
+{
+  "id": "TC-EAC-01",
+  "name": "EAC: TA fails but protected DG still readable (silent downgrade proxy; JMRTD-asymmetric)",
+  "mechanism": "EAC",
+  "condition": "eac_ta_fail_protected_dg_reachable",
+  "tier": "wire",
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "ta_injection": {
+    "ta_fail_on": "first_pso_verify_certificate",
+    "ta_sw": "6982",
+    "notes": "After BAC, TA PSO fails; READ BINARY of synthetic DG3 still returns 9000 — models access without TA-grade assurance."
+  },
+  "peer_support": {
+    "jmrtd": "supported",
+    "gmrtd": "unsupported"
+  },
+  "expected_jmrtd": {
+    "eac_failed": true,
+    "protected_dg_accessible": true,
+    "observability_if_caller_swallows": 0
+  }
+}

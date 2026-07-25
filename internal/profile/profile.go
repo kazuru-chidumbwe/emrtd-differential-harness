@@ -26,6 +26,18 @@ type CAInjection struct {
 	Notes    string `json:"notes"`
 }
 
+type AAInjection struct {
+	AaFailOn string `json:"aa_fail_on"`
+	AaSW     string `json:"aa_sw"`
+	Notes    string `json:"notes"`
+}
+
+type TAInjection struct {
+	TaFailOn string `json:"ta_fail_on"`
+	TaSW     string `json:"ta_sw"`
+	Notes    string `json:"notes"`
+}
+
 type Profile struct {
 	ID            string       `json:"id"`
 	Name          string       `json:"name"`
@@ -35,8 +47,13 @@ type Profile struct {
 	MRZ           MRZ          `json:"mrz"`
 	CardAccessHex string       `json:"card_access_hex"`
 	Dg14HexPath   string       `json:"dg14_hex_path,omitempty"`
+	Dg15HexPath   string       `json:"dg15_hex_path,omitempty"`
 	Injection     Injection    `json:"injection,omitempty"`
 	CAInjection   CAInjection  `json:"ca_injection,omitempty"`
+	AAInjection   AAInjection  `json:"aa_injection,omitempty"`
+	TAInjection   TAInjection  `json:"ta_injection,omitempty"`
+	// PeerSupport documents asymmetric mechanisms (e.g. TA: gmrtd unsupported).
+	PeerSupport map[string]string `json:"peer_support,omitempty"`
 }
 
 func Load(path string) (*Profile, error) {
@@ -51,10 +68,12 @@ func Load(path string) (*Profile, error) {
 	if p.ID == "" || p.MRZ.DocumentNumber == "" {
 		return nil, fmt.Errorf("profile missing required fields (id, mrz)")
 	}
-	if p.CardAccessHex == "" && p.Dg14HexPath == "" {
+	if p.CardAccessHex == "" && p.Dg14HexPath == "" && p.Dg15HexPath == "" {
 		// BAC-only success-path profiles intentionally omit CardAccess.
-		if p.Condition != "bac_only_success" && p.Mechanism != "BAC" {
-			return nil, fmt.Errorf("profile needs card_access_hex and/or dg14_hex_path")
+		// TA/EAC asymmetric profiles may omit DG fixtures when using synthetic PKI paths.
+		if p.Condition != "bac_only_success" && p.Mechanism != "BAC" &&
+			p.Mechanism != "TA" && p.Mechanism != "EAC" {
+			return nil, fmt.Errorf("profile needs card_access_hex, dg14_hex_path, and/or dg15_hex_path")
 		}
 	}
 	return &p, nil

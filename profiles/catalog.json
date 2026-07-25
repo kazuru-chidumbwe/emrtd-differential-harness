@@ -49,6 +49,33 @@
       "description": "Generated CA matrix: 2 skew directions × 5 status words (see profiles/ca-sweep/index.json)"
     },
     {
+      "id": "TC-AA-01",
+      "path": "profiles/aa-internal-auth-reject.json",
+      "tier": "wire",
+      "mechanism": "AA",
+      "condition": "aa_internal_authenticate_reject",
+      "seed": 1,
+      "description": "AA forced INTERNAL AUTHENTICATE reject (SW 6982); baseline silent / mitigated surface"
+    },
+    {
+      "id": "TC-TA-01",
+      "path": "profiles/ta-pso-verify-reject.json",
+      "tier": "wire",
+      "mechanism": "TA",
+      "condition": "ta_pso_verify_cert_reject",
+      "seed": 1,
+      "description": "JMRTD-asymmetric TA: PSO:Verify Certificate fail; gmrtd unsupported"
+    },
+    {
+      "id": "TC-EAC-01",
+      "path": "profiles/eac-ta-fail-dg-access.json",
+      "tier": "wire",
+      "mechanism": "EAC",
+      "condition": "eac_ta_fail_protected_dg_reachable",
+      "seed": 1,
+      "description": "JMRTD-asymmetric EAC: TA fails but protected DG still readable (silent downgrade proxy)"
+    },
+    {
       "id": "TC-FI-01",
       "path": "profiles/fi-cardaccess-truncated.json",
       "tier": "wire",

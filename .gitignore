@@ -29,3 +29,7 @@ Thumbs.db
 
 # Vendor (cloned by scripts/bootstrap-vendor.sh)
 ../_vendor/
+
+# Compiled Java probes
+*.class
+
