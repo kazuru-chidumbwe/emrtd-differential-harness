@@ -118,4 +118,9 @@ public final class TcAc01CardService extends CardService {
         }
         return sb.toString();
     }
+
+    @Override
+    public boolean isConnectionLost(Exception e) {
+        return false;
+    }
 }
