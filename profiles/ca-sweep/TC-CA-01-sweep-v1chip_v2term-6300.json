@@ -1,0 +1,29 @@
+{
+  "id": "TC-CA-01-sweep-v1chip_v2term-6300",
+  "name": "CA sweep: direction=v1chip_v2term sw=6300",
+  "mechanism": "EAC-CA",
+  "condition": "ca_v1_chip_v2_terminal_skew",
+  "tier": "wire",
+  "seed": 1,
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "dg14_hex_path": "testdata/dg14/ca-v2-sample.hex",
+  "ca_injection": {
+    "ca_fail_on": "first_ca_mse_set_at",
+    "ca_sw": "6300",
+    "notes": "Proxy for CA v1 chip / v2 terminal skew (reverse label). Same first-MSE injection as the forward skew; direction is the catalog condition for matrix cells. Status word 6300."
+  },
+  "sweep_axes": {
+    "skew_direction": "v1chip_v2term",
+    "ca_sw": "6300"
+  },
+  "expected_gmrtd": {
+    "chip_auth_err": "non_null",
+    "perform_chip_auth_step_err": "null",
+    "observability_if_caller_checks_step_only": 0
+  }
+}

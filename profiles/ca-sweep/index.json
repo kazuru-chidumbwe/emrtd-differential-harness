@@ -1,0 +1,81 @@
+{
+  "generator": "profiles/generate_ca_sweep.py",
+  "n_profiles": 10,
+  "axes": {
+    "skew_direction": 2,
+    "ca_sw": 5
+  },
+  "factorial_note": "10 profiles \u00d7 2 libraries \u00d7 2 variants = 40 runs when fully executed. Injection is first CA MSE:Set AT only; ca_fail_on is not branched in simulators.",
+  "profiles": [
+    {
+      "id": "TC-CA-01-sweep-v2chip_v1term-6fff",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v2chip_v1term-6fff.json",
+      "condition": "ca_v2_chip_v1_terminal_skew",
+      "ca_sw": "6FFF",
+      "skew_direction": "v2chip_v1term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v2chip_v1term-6300",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v2chip_v1term-6300.json",
+      "condition": "ca_v2_chip_v1_terminal_skew",
+      "ca_sw": "6300",
+      "skew_direction": "v2chip_v1term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v2chip_v1term-6982",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v2chip_v1term-6982.json",
+      "condition": "ca_v2_chip_v1_terminal_skew",
+      "ca_sw": "6982",
+      "skew_direction": "v2chip_v1term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v2chip_v1term-6a88",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v2chip_v1term-6a88.json",
+      "condition": "ca_v2_chip_v1_terminal_skew",
+      "ca_sw": "6A88",
+      "skew_direction": "v2chip_v1term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v2chip_v1term-6a80",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v2chip_v1term-6a80.json",
+      "condition": "ca_v2_chip_v1_terminal_skew",
+      "ca_sw": "6A80",
+      "skew_direction": "v2chip_v1term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v1chip_v2term-6fff",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v1chip_v2term-6fff.json",
+      "condition": "ca_v1_chip_v2_terminal_skew",
+      "ca_sw": "6FFF",
+      "skew_direction": "v1chip_v2term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v1chip_v2term-6300",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v1chip_v2term-6300.json",
+      "condition": "ca_v1_chip_v2_terminal_skew",
+      "ca_sw": "6300",
+      "skew_direction": "v1chip_v2term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v1chip_v2term-6982",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v1chip_v2term-6982.json",
+      "condition": "ca_v1_chip_v2_terminal_skew",
+      "ca_sw": "6982",
+      "skew_direction": "v1chip_v2term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v1chip_v2term-6a88",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v1chip_v2term-6a88.json",
+      "condition": "ca_v1_chip_v2_terminal_skew",
+      "ca_sw": "6A88",
+      "skew_direction": "v1chip_v2term"
+    },
+    {
+      "id": "TC-CA-01-sweep-v1chip_v2term-6a80",
+      "path": "profiles/ca-sweep/TC-CA-01-sweep-v1chip_v2term-6a80.json",
+      "condition": "ca_v1_chip_v2_terminal_skew",
+      "ca_sw": "6A80",
+      "skew_direction": "v1chip_v2term"
+    }
+  ]
+}

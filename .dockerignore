@@ -6,5 +6,4 @@ logs/
 *.md.bak
 .DS_Store
 Thumbs.db
-drivers/jmrtd/src/main/java/org/emrtd/harness/jmrtd/PassportServices.java
 scripts/smoke-jmrtd-local.ps1

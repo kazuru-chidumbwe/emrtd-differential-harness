@@ -1,0 +1,29 @@
+{
+  "id": "TC-CA-01-sweep-v2chip_v1term-6a80",
+  "name": "CA sweep: direction=v2chip_v1term sw=6A80",
+  "mechanism": "EAC-CA",
+  "condition": "ca_v2_chip_v1_terminal_skew",
+  "tier": "wire",
+  "seed": 1,
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "",
+  "dg14_hex_path": "testdata/dg14/ca-v2-sample.hex",
+  "ca_injection": {
+    "ca_fail_on": "first_ca_mse_set_at",
+    "ca_sw": "6A80",
+    "notes": "Proxy for CA v2 chip / v1 terminal skew: after BAC, first CA MSE:Set AT returns ca_sw. DG14 advertises CA; full CA version negotiation is not simulated. Status word 6A80."
+  },
+  "sweep_axes": {
+    "skew_direction": "v2chip_v1term",
+    "ca_sw": "6A80"
+  },
+  "expected_gmrtd": {
+    "chip_auth_err": "non_null",
+    "perform_chip_auth_step_err": "null",
+    "observability_if_caller_checks_step_only": 0
+  }
+}

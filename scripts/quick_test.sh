@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # R1 smoke gate — TC-AC-01 (synthetic profile, no physical passport).
+# Option A: JMRTD 0.8.6 from Maven Central (~/.m2), not E3V3A vendor tree.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -8,14 +9,11 @@ cd "$ROOT"
 PROFILE="${PROFILE:-profiles/pace-then-bac-downgrade.json}"
 LOG_DIR="${LOG_DIR:-logs}"
 VENDOR_GMRTD="${GMRTD_PATH:-$ROOT/../_vendor/gmrtd}"
-VENDOR_JMRTD="${JMRTD_PATH:-$ROOT/../_vendor/JMRTD/jmrtd}"
+JMRTD_VERSION="${JMRTD_VERSION:-0.8.6}"
+JMRTD_JAR="${HOME}/.m2/repository/org/jmrtd/jmrtd/${JMRTD_VERSION}/jmrtd-${JMRTD_VERSION}.jar"
 
 if [[ ! -d "$VENDOR_GMRTD" ]]; then
   echo "error: gmrtd vendor not found at $VENDOR_GMRTD" >&2
-  exit 2
-fi
-if [[ ! -f "$VENDOR_JMRTD/pom.xml" ]]; then
-  echo "error: JMRTD vendor not found at $VENDOR_JMRTD" >&2
   exit 2
 fi
 
@@ -25,9 +23,9 @@ echo "==> TC-AC-01 smoke (gmrtd)"
 go run ./cmd/tc-ac-01 -profile "$PROFILE" -log-dir "$LOG_DIR"
 
 echo ""
-echo "==> TC-AC-01 smoke (jmrtd)"
-if ! jar tf "$HOME/.m2/repository/org/jmrtd/jmrtd/0.5.2/jmrtd-0.5.2.jar" 2>/dev/null | grep -q 'org/jmrtd/PassportService.class'; then
-  echo "    building JMRTD 0.5.2 from vendor sources..."
+echo "==> TC-AC-01 smoke (jmrtd ${JMRTD_VERSION})"
+if [[ ! -f "$JMRTD_JAR" ]]; then
+  echo "    resolving JMRTD ${JMRTD_VERSION} from Maven Central..."
   bash scripts/install-jmrtd-local.sh
 fi
 ( cd drivers/jmrtd && mvn -q -DskipTests package )

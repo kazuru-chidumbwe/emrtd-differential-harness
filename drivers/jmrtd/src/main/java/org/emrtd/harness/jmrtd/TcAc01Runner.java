@@ -26,18 +26,18 @@ public final class TcAc01Runner {
 
         BACKey bacKey = new BACKey(profile.mrz.documentNumber, profile.mrz.dateOfBirth, profile.mrz.dateOfExpiry);
         TcAc01CardService card = new TcAc01CardService(bacKey, paceSw);
-        PassportService service = new PassportService(card);
+        PassportService service = PassportServices.open(card);
         service.open();
 
         CardAccessFile cardAccess = new CardAccessFile(new ByteArrayInputStream(Hex.hexStringToBytes(profile.cardAccessHex)));
-        PACEInfo paceInfo = cardAccess.getPACEInfos().iterator().next();
+        PACEInfo paceInfo = PassportServices.firstPaceInfo(cardAccess);
         String oid = paceInfo.getObjectIdentifier();
         AlgorithmParameterSpec params = PACEInfo.toParameterSpec(paceInfo.getParameterId());
 
         String paceErr = "";
         boolean paceThrown = false;
         try {
-            service.doPACE(bacKey, oid, params);
+            service.doPACE(bacKey, oid, params, paceInfo.getParameterId());
         } catch (PACEException e) {
             paceThrown = true;
             paceErr = e.getMessage();

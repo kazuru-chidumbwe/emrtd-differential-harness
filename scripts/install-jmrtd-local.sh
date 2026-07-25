@@ -1,34 +1,33 @@
 #!/usr/bin/env bash
-# Build JMRTD 0.5.2 from vendor src/ (non-standard layout) and install to ~/.m2
+# Fetch JMRTD 0.8.6 from Maven Central (Option A — live maintainer line).
+# Does not clone E3V3A. Requires network + Maven.
 set -euo pipefail
 
-JMRTD_DIR="${JMRTD_DIR:-$(cd "$(dirname "$0")/../../_vendor/JMRTD/jmrtd" && pwd)}"
-VERSION=0.5.2
-OUT_JAR="$JMRTD_DIR/target/jmrtd-${VERSION}-harness.jar"
+VERSION="${JMRTD_VERSION:-0.8.6}"
+EXPECTED_SHA256="${JMRTD_JAR_SHA256:-5C303D7BA0DB892411E739A9920B3E0FB3C62416344CD7F220F359BDD91C0C5B}"
 
-if [[ ! -d "$JMRTD_DIR/src/org/jmrtd" ]]; then
-  echo "JMRTD sources not found at $JMRTD_DIR" >&2
+echo "==> Resolving org.jmrtd:jmrtd:${VERSION} from Maven Central"
+mvn -q dependency:get -Dartifact="org.jmrtd:jmrtd:${VERSION}"
+
+JAR="$HOME/.m2/repository/org/jmrtd/jmrtd/${VERSION}/jmrtd-${VERSION}.jar"
+if [[ ! -f "$JAR" ]]; then
+  echo "error: jar not found at $JAR" >&2
   exit 2
 fi
 
-echo "==> JMRTD local build from $JMRTD_DIR"
-mkdir -p "$JMRTD_DIR/target" "$JMRTD_DIR/.harness-build"
+# SHA-256 check (Linux sha256sum or macOS/Windows-compatible python)
+ACTUAL="$(python3 - <<PY
+import hashlib, pathlib
+p = pathlib.Path(r"""$JAR""")
+print(hashlib.sha256(p.read_bytes()).hexdigest().upper())
+PY
+)"
+if [[ "$ACTUAL" != "$EXPECTED_SHA256" ]]; then
+  echo "error: JMRTD ${VERSION} jar SHA-256 mismatch" >&2
+  echo "  expected $EXPECTED_SHA256" >&2
+  echo "  actual   $ACTUAL" >&2
+  exit 3
+fi
 
-cd "$JMRTD_DIR"
-mvn -q dependency:copy-dependencies -DincludeScope=compile -DoutputDirectory=.harness-build/lib
-mvn -q dependency:copy -Dartifact=org.ejbca.cvc:cert-cvc:1.4.13 -DoutputDirectory=.harness-build/lib
-
-mapfile -t SOURCES < <(find src -name '*.java' | sort)
-javac -encoding UTF-8 -cp ".harness-build/lib/*" -d .harness-build/classes "${SOURCES[@]}"
-
-jar cf "$OUT_JAR" -C .harness-build/classes .
-
-mvn -q install:install-file \
-  -Dfile="$OUT_JAR" \
-  -DgroupId=org.jmrtd \
-  -DartifactId=jmrtd \
-  -Dversion="$VERSION" \
-  -Dpackaging=jar \
-  -DpomFile=pom.xml
-
-echo "Installed $(wc -c < "$OUT_JAR") byte jar to local Maven repo"
+echo "Installed $JAR"
+echo "SHA-256 OK ($ACTUAL)"

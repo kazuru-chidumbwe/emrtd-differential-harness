@@ -95,8 +95,7 @@
       "main_class": "org.emrtd.harness.jmrtd.TcCa01MitigatedRunner",
       "profile": "profiles/ca-v1-v2-skew.json",
       "middleware": "explicit-reject-ca",
-      "figure_id": "FIG-07b",
-      "status": "draft — not yet compile-verified, see PR notes"
+      "figure_id": "FIG-07b"
     },
     {
       "scenario_id": "SCN-PA-01-pymrtd-baseline",
@@ -121,6 +120,30 @@
       "fixture": "testdata/sod/tc-pa-03-expired-dsc.json",
       "n": 1,
       "figure_id": "FIG-09"
+    },
+    {
+      "scenario_id": "SCN-PA-04a-pymrtd-baseline",
+      "test_case": "TC-PA-04a",
+      "library": "pymrtd",
+      "tier": "offline",
+      "variant": "baseline",
+      "driver": "python",
+      "script": "drivers/pymrtd-offline/run_case.py",
+      "fixture": "testdata/sod/tc-pa-04a-chained-fresh.json",
+      "n": 1,
+      "figure_id": "FIG-10"
+    },
+    {
+      "scenario_id": "SCN-PA-04b-pymrtd-baseline",
+      "test_case": "TC-PA-04b",
+      "library": "pymrtd",
+      "tier": "offline",
+      "variant": "baseline",
+      "driver": "python",
+      "script": "drivers/pymrtd-offline/run_case.py",
+      "fixture": "testdata/sod/tc-pa-04b-chained-expired.json",
+      "n": 1,
+      "figure_id": "FIG-11"
     }
   ]
 }

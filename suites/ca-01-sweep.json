@@ -1,0 +1,52 @@
+{
+  "suite_id": "ca-01-sweep",
+  "description": "TC-CA-01 matrix: 10 profiles (2 skew directions × 5 ca_sw) × gmrtd/jmrtd × baseline/mitigated = 40 runs",
+  "seed": 1,
+  "n": 1,
+  "table_id": "TABLE-CA-01",
+  "profile_index": "profiles/ca-sweep/index.json",
+  "entries": [
+    {
+      "scenario_id": "SCN-CA-sweep-gmrtd-baseline",
+      "test_case": "TC-CA-01-sweep",
+      "library": "gmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "go",
+      "command": "tc-ca-01",
+      "profile_glob": "profiles/ca-sweep/TC-CA-01-sweep-*.json"
+    },
+    {
+      "scenario_id": "SCN-CA-sweep-gmrtd-mitigated",
+      "test_case": "TC-CA-01-sweep",
+      "library": "gmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "go",
+      "command": "tc-ca-01-mitigated",
+      "profile_glob": "profiles/ca-sweep/TC-CA-01-sweep-*.json",
+      "middleware": "explicit-reject-ca"
+    },
+    {
+      "scenario_id": "SCN-CA-sweep-jmrtd-baseline",
+      "test_case": "TC-CA-01-sweep",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcCa01Runner",
+      "profile_glob": "profiles/ca-sweep/TC-CA-01-sweep-*.json"
+    },
+    {
+      "scenario_id": "SCN-CA-sweep-jmrtd-mitigated",
+      "test_case": "TC-CA-01-sweep",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcCa01MitigatedRunner",
+      "profile_glob": "profiles/ca-sweep/TC-CA-01-sweep-*.json",
+      "middleware": "explicit-reject-ca"
+    }
+  ]
+}

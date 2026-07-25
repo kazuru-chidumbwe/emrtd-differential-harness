@@ -34,7 +34,7 @@ make paper          # CI: tests → smoke → suite → verify → artifacts/
 
 ### Docker (smoke gate)
 
-One-file reproduction without a hand-tuned host (network required at build):
+One-file reproduction without a hand-tuned host (network required at build). **Option A:** image clones gmrtd and resolves `org.jmrtd:jmrtd:0.8.6` from Maven Central (SHA-256 checked); it does **not** clone E3V3A.
 
 ```bash
 docker build -t emrtd-harness .
@@ -42,6 +42,8 @@ docker run --rm emrtd-harness
 # optional offline PA fixtures (incl. TC-PA-04a/04b chained):
 docker run --rm emrtd-harness bash scripts/run_offline_pa.sh
 ```
+
+CA matrix profiles: `python3 profiles/generate_ca_sweep.py` then `bash scripts/run_ca_sweep_gmrtd.sh`. See [`docs/CA-RESULTS-MATRIX-2026-07-25.md`](docs/CA-RESULTS-MATRIX-2026-07-25.md) and [`docs/PA-RESULTS-2026-07-25.md`](docs/PA-RESULTS-2026-07-25.md).
 
 Expected output includes `logs/suite-*/artifact-manifest.json` — the **canonical** published object. Cite `FIG-01`…`FIG-04` (not manuscript figure numbers). Derived `summary-*.md` tables reference the manifest.
 

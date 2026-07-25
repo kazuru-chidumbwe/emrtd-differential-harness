@@ -1,8 +1,8 @@
 {
-  "id": "TC-CA-01",
-  "name": "DG14 EAC-CA; chip rejects CA MSE with SW 6985 (terminal v1 skew)",
+  "id": "TC-CA-01-terminal-v1",
+  "name": "DG14 EAC-CA; chip rejects CA MSE with SW 6985 (v1-chip/v2-terminal skew proxy)",
   "mechanism": "EAC-CA",
-  "condition": "ca_v2_chip_v1_terminal_skew",
+  "condition": "ca_v1_chip_v2_terminal_skew",
   "tier": "wire",
   "seed": 3,
   "mrz": {
@@ -15,6 +15,6 @@
   "ca_injection": {
     "ca_fail_on": "first_ca_mse_set_at",
     "ca_sw": "6985",
-    "notes": "Synthetic — same skew model as ca-v1-v2-skew with different status word."
+    "notes": "Synthetic reverse-skew proxy (condition ca_v1_chip_v2_terminal_skew) with SW 6985. Same first-MSE injection as ca-v1-v2-skew.json; direction is the catalog condition."
   }
 }

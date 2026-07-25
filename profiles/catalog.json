@@ -28,16 +28,25 @@
       "mechanism": "EAC-CA",
       "condition": "ca_v2_chip_v1_terminal_skew",
       "seed": 1,
-      "description": "DG14 CA advertised; MSE:Set AT fails at chip"
+      "description": "CA v2-chip/v1-terminal skew proxy; MSE:Set AT fails (SW 6FFF)"
     },
     {
       "id": "TC-CA-01-terminal-v1",
       "path": "profiles/ca-v2-terminal-v1.json",
       "tier": "wire",
       "mechanism": "EAC-CA",
-      "condition": "ca_v2_chip_v1_terminal_skew",
+      "condition": "ca_v1_chip_v2_terminal_skew",
       "seed": 3,
-      "description": "Variant CA status word (6985) on skew proxy"
+      "description": "CA v1-chip/v2-terminal skew proxy; MSE:Set AT fails (SW 6985)"
+    },
+    {
+      "id": "TC-CA-01-sweep",
+      "path": "profiles/ca-sweep/",
+      "tier": "wire",
+      "mechanism": "EAC-CA",
+      "condition": "ca_skew_matrix",
+      "seed": 1,
+      "description": "Generated CA matrix: 2 skew directions × 5 status words (see profiles/ca-sweep/index.json)"
     },
     {
       "id": "TC-FI-01",
@@ -47,6 +56,36 @@
       "condition": "truncated_cardaccess",
       "seed": 1,
       "description": "Truncated EF.CardAccess parse probe (scaffold)"
+    }
+  ],
+  "offline_cases": [
+    {
+      "id": "TC-PA-01",
+      "path": "testdata/sod/tc-pa-01-weak-digest.json",
+      "tier": "offline",
+      "mechanism": "PA",
+      "condition": "weak_digest"
+    },
+    {
+      "id": "TC-PA-03",
+      "path": "testdata/sod/tc-pa-03-expired-dsc.json",
+      "tier": "offline",
+      "mechanism": "PA",
+      "condition": "expired_dsc"
+    },
+    {
+      "id": "TC-PA-04a",
+      "path": "testdata/sod/tc-pa-04a-chained-fresh.json",
+      "tier": "offline",
+      "mechanism": "PA",
+      "condition": "chained_fresh_dsc"
+    },
+    {
+      "id": "TC-PA-04b",
+      "path": "testdata/sod/tc-pa-04b-chained-expired.json",
+      "tier": "offline",
+      "mechanism": "PA",
+      "condition": "chained_expired_dsc"
     }
   ]
 }

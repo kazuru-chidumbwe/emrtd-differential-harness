@@ -21,7 +21,7 @@ public final class TcCa01Runner {
 
         BACKey bacKey = new BACKey(profile.mrz.documentNumber, profile.mrz.dateOfBirth, profile.mrz.dateOfExpiry);
         TcCa01CardService card = new TcCa01CardService(bacKey, caSw);
-        PassportService service = new PassportService(card);
+        PassportService service = PassportServices.open(card);
         service.open();
 
         boolean bacSuccess = false;

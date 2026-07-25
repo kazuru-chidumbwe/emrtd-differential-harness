@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Clone upstream libraries for local harness runs (not vendored in git).
+# Option A (locked): gmrtd from GitHub; JMRTD from Maven Central 0.8.6 (see install-jmrtd-local.sh).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -12,14 +13,9 @@ if [[ ! -d "$VENDOR_DIR/gmrtd/.git" ]]; then
   git clone --depth 1 https://github.com/gmrtd/gmrtd.git "$VENDOR_DIR/gmrtd"
 fi
 
-if [[ ! -d "$VENDOR_DIR/JMRTD/.git" ]]; then
-  echo "==> clone JMRTD 0.5.2"
-  git clone --depth 1 --branch 0.5.2 https://github.com/E3V3A/JMRTD.git "$VENDOR_DIR/JMRTD"
-fi
-
 echo "Vendor ready under $VENDOR_DIR"
 echo "  GMRTD_PATH=$VENDOR_DIR/gmrtd"
-echo "  JMRTD_PATH=$VENDOR_DIR/JMRTD/jmrtd"
+echo "  JMRTD: run bash scripts/install-jmrtd-local.sh (Maven Central org.jmrtd:jmrtd:0.8.6)"
 
 export GOTOOLCHAIN="${GOTOOLCHAIN:-auto}"
 export GMRTD_PATH="$VENDOR_DIR/gmrtd"
