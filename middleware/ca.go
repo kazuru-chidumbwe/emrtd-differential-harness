@@ -25,12 +25,18 @@ type CAResult struct {
 	SurfacedError error
 }
 
+// runChipAuth is the CA entry used by PerformChipAuth (overridable in tests).
+var runChipAuth = func(nfc *iso7816.NfcSession, doc *document.Document) (ok bool, err error) {
+	result, err := chipauth.NewChipAuth(nfc, doc).DoChipAuth()
+	return result != nil && result.Success, err
+}
+
 // PerformChipAuth runs EAC-CA and optionally surfaces failure to the caller.
 func PerformChipAuth(nfc *iso7816.NfcSession, doc *document.Document, opts CAOptions) CAResult {
 	var res CAResult
-	result, err := chipauth.NewChipAuth(nfc, doc).DoChipAuth()
+	ok, err := runChipAuth(nfc, doc)
 	res.ChipAuthErr = err
-	res.ChipAuthOK = result != nil && result.Success
+	res.ChipAuthOK = ok
 
 	if err != nil && !opts.AllowContinue {
 		res.SurfacedError = fmt.Errorf("%w: %v", ErrChipAuthFailed, err)

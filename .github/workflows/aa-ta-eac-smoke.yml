@@ -34,8 +34,11 @@ jobs:
         working-directory: drivers/jmrtd
         run: mvn -q -DskipTests package
 
-      - name: Unit test normalized_failure helpers
-        run: go test ./internal/normfail/
+      - name: Unit tests (classifiers + middleware + normfail)
+        run: |
+          go test ./classifier/ ./middleware/ ./internal/normfail/
+          (cd classifier && python3 -m unittest test_observability -v)
+          (cd drivers/jmrtd && mvn -q test)
 
       - name: AA + TA/EAC smoke (+ gmrtd unsupported)
         run: |

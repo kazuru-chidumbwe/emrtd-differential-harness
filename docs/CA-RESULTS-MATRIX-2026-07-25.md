@@ -18,6 +18,8 @@
 
 **Observed Observability Score (lab host Docker `emrtd-harness:paper-2026-07-25`, 2026-07-25):**
 
+Scores are **by construction** of the naive-host / mitigated drivers (`FailureSurfacedToCaller` false vs true). Unlike TC-AC-01 (`BacSuccess`) and TC-EAC-01 (`ProtectedDGAccessible`), CA has no emergent “session continues” check; identical gmrtd/JMRTD cells corroborate consistent application of that model, not a discovered library difference.
+
 | Library | Variant | Score | Cells |
 | --- | --- | ---: | ---: |
 | gmrtd | baseline | 0 (silent) | 10 / 10 |

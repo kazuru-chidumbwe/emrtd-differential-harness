@@ -9,9 +9,11 @@ Forced AA failure after BAC. Grounding: [internal/aa-error-probe/RESULTS.md](../
 - gmrtd: `DoActiveAuth()` → non-nil error, `Success=false`.
 - JMRTD: `doAA(...)` throws; baseline catches (naive host); mitigated surfaces.
 
-## Expected Observability Score
+## Observability Score (by construction)
 
-| Library | Variant | Expected |
+Baseline drivers set `FailureSurfacedToCaller=false` (naive host). Mitigated drivers set it true via explicit-reject middleware. Unlike TC-AC-01 (`BacSuccess`) and TC-EAC-01 (`ProtectedDGAccessible`), CA/AA have no emergent “session continues” check: identical scores across gmrtd and JMRTD corroborate the naive-host model applied consistently, not a discovered library difference.
+
+| Library | Variant | Score |
 |---|---|---:|
 | gmrtd | baseline | **0** |
 | gmrtd | mitigated | **2** |

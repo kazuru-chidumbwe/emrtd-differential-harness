@@ -4,6 +4,8 @@
 set -euo pipefail
 
 VERSION="${JMRTD_VERSION:-0.8.6}"
+# Paper / reproducibility path MUST use the default pin below.
+# Override JMRTD_JAR_SHA256 only for intentional version bumps (never in CI or paper reproduction).
 EXPECTED_SHA256="${JMRTD_JAR_SHA256:-5C303D7BA0DB892411E739A9920B3E0FB3C62416344CD7F220F359BDD91C0C5B}"
 
 echo "==> Resolving org.jmrtd:jmrtd:${VERSION} from Maven Central"

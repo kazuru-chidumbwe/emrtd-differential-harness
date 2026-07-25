@@ -25,12 +25,18 @@ type AAResult struct {
 	SurfacedError error
 }
 
+// runActiveAuth is the AA entry used by PerformActiveAuth (overridable in tests).
+var runActiveAuth = func(nfc *iso7816.NfcSession, doc *document.Document) (ok bool, err error) {
+	result, err := activeauth.NewActiveAuth(nfc, doc).DoActiveAuth()
+	return result != nil && result.Success, err
+}
+
 // PerformActiveAuth runs AA and optionally surfaces failure to the caller.
 func PerformActiveAuth(nfc *iso7816.NfcSession, doc *document.Document, opts AAOptions) AAResult {
 	var res AAResult
-	result, err := activeauth.NewActiveAuth(nfc, doc).DoActiveAuth()
+	ok, err := runActiveAuth(nfc, doc)
 	res.ActiveAuthErr = err
-	res.ActiveAuthOK = result != nil && result.Success
+	res.ActiveAuthOK = ok
 
 	if err != nil && !opts.AllowContinue {
 		res.SurfacedError = fmt.Errorf("%w: %v", ErrActiveAuthFailed, err)
