@@ -39,7 +39,8 @@ public final class TcAc01MitigatedRunner {
         boolean paceThrown = false;
         try {
             service.doPACE(bacKey, oid, params, paceInfo.getParameterId());
-        } catch (PACEException | CardServiceException e) {
+        } catch (Exception e) {
+            // 0.8.6 raises CardServiceProtocolException (not always PACEException) on chip SW failure.
             paceThrown = true;
             paceErr = e.getMessage();
         }
