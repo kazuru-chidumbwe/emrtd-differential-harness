@@ -25,7 +25,7 @@
 
 0.5.2 → 0.8.6 is roughly a decade. **Do not** carry Class B / S_API assumptions forward.
 
-See docs: `docs/disclosure/JMRTD-CLASS-B-REVERIFY-0.8.6-2026-07-19.md`.
+See in-repo Class B re-verify notes under `docs/` (Option A / 0.8.6 pin).
 
 | Check | Preliminary (19 Jul) |
 | --- | --- |
@@ -67,4 +67,4 @@ See docs: `docs/disclosure/JMRTD-CLASS-B-REVERIFY-0.8.6-2026-07-19.md`.
 
 ## Provenance of the retired pin
 
-See [`../../../docs/disclosure/JMRTD-SOURCE-PROVENANCE-2026-07-19.md`](../../../docs/disclosure/JMRTD-SOURCE-PROVENANCE-2026-07-19.md).
+See in-repo provenance notes under `docs/` (retired E3V3A pin rationale).

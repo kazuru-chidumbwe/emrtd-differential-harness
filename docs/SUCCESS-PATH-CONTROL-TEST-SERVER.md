@@ -25,8 +25,5 @@ go run ./cmd/tc-ac-01-mitigated \
   -suite-id ac-01-success-path-control -log-dir logs/sp-control
 ```
 
-Then compute manifest SHA-256 of the log dir and update:
-- `docs/sections/Evaluation.md` §6.5
-- `JISA-manuscript.md` matching block
-
+Then compute manifest SHA-256 of the log dir and update paper Evaluation §6.5 (private manuscript pack; not in this repo) and any matching manuscript block.
 JMRTD success-path entries in the suite JSON may need runner flags for empty CardAccess — confirm on server before citing Java cells.
