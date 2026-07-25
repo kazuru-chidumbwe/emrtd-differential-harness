@@ -72,6 +72,11 @@ public final class TcAa01Runner {
         result.put("active_auth_success", aaSuccess);
         result.put("bac_success", bacSuccess);
         result.put("bac_err", bacErr);
+        Map<String, Object> nf = NormalizedFailure.fromErr("AA", "internal_authenticate", aaErr, false);
+        if (!nf.containsKey("iso7816_sw") || ((String) nf.getOrDefault("iso7816_sw", "")).isEmpty()) {
+            nf = NormalizedFailure.chipSw("AA", "internal_authenticate", aaSw, false);
+        }
+        result.put("normalized_failure", nf);
         result.put("observability_score", obs);
         result.put("observability_meaning", Observability.meaning(obs));
         result.put("provenance", Provenance.collect(root, a.profilePath, a.suiteId, a.suiteSeed, a.suiteN, a.runIndex,

@@ -59,3 +59,27 @@ Runs tests → smoke → suite → manifest → verify. Fails if any gate fails 
 | `provenance_version` | Per-run `provenance` block changes |
 | `run_schema_version` | Per-run JSON output changes |
 | `profile_catalog_version` | `profiles/catalog.json` changes |
+
+## Per-run `normalized_failure` (AA / TA / EAC)
+
+Optional object on AA, TA, and EAC run JSON (library-native error strings remain). Observability Score contract is unchanged.
+
+```json
+{
+  "mechanism": "AA",
+  "step": "internal_authenticate",
+  "iso7816_sw": "6982",
+  "failure_class": "chip_sw_reject",
+  "surfaced": false
+}
+```
+
+| Field | Meaning |
+| --- | --- |
+| `mechanism` | `AA`, `TA`, or `EAC` |
+| `step` | Wire/API step (`internal_authenticate`, `pso_verify_certificate`, or `n/a`) |
+| `iso7816_sw` | Status word when known (omitted or empty otherwise) |
+| `failure_class` | `chip_sw_reject` \| `protocol_exception` \| `peer_unsupported` |
+| `surfaced` | Whether the host/middleware treated the failure as a hard stop |
+
+Go: `internal/normfail`. Java: `NormalizedFailure`.

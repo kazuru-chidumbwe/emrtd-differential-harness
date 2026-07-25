@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/classifier"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/normfail"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/output"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/profile"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/provenance"
@@ -16,10 +17,11 @@ import (
 
 type result struct {
 	output.Meta
-	PeerUnsupported   bool   `json:"peer_unsupported"`
-	Observability     int    `json:"observability_score"`
-	ObservabilityMe   string `json:"observability_meaning"`
-	Note              string `json:"note"`
+	PeerUnsupported   bool             `json:"peer_unsupported"`
+	NormalizedFailure normfail.Failure `json:"normalized_failure"`
+	Observability     int              `json:"observability_score"`
+	ObservabilityMe   string           `json:"observability_meaning"`
+	Note              string           `json:"note"`
 }
 
 func main() {
@@ -57,6 +59,10 @@ func main() {
 		os.Exit(2)
 	}
 
+	mech := p.Mechanism
+	if mech == "" {
+		mech = "TA"
+	}
 	runID := runid.New(fmt.Sprintf("%s-gmrtd-unsupported", p.ID))
 	out := result{
 		Meta: output.Meta{
@@ -64,10 +70,11 @@ func main() {
 			Mechanism: p.Mechanism, Condition: p.Condition, Tier: p.Tier,
 			Variant: *variant, FigureID: *figureID, Provenance: prov,
 		},
-		PeerUnsupported: true,
-		Observability:   obs.Int(),
-		ObservabilityMe: meaning,
-		Note:            "gmrtd does not implement Terminal Authentication; EAC incomplete (CA-only)",
+		PeerUnsupported:   true,
+		NormalizedFailure: normfail.PeerUnsupported(mech),
+		Observability:     obs.Int(),
+		ObservabilityMe:   meaning,
+		Note:              "gmrtd does not implement Terminal Authentication; EAC incomplete (CA-only)",
 	}
 	if err := output.WriteJSON(*logDir, runID, out); err != nil {
 		fmt.Fprintf(os.Stderr, "write: %v\n", err)

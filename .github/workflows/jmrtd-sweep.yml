@@ -52,6 +52,11 @@ jobs:
             || echo "TcCa01MitigatedRunner exited non-zero — see log above, this is expected to be investigated, not silently ignored"
           ls logs/ | grep -i "ca-01.*mitigated" && echo "run artifact found" || (echo "NO RUN ARTIFACT PRODUCED — compile succeeded but execution did not" && exit 1)
 
+      - name: AA + TA/EAC smoke (+ gmrtd unsupported)
+        run: |
+          chmod +x scripts/verify_aa_ta_eac_smoke.sh
+          LOG_DIR=logs/aa-ta-eac-smoke bash scripts/verify_aa_ta_eac_smoke.sh
+
       - name: Run full sweep (gmrtd + JMRTD, 200 runs)
         run: python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json
 

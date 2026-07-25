@@ -14,6 +14,7 @@ import (
 	"github.com/gmrtd/gmrtd/password"
 	"github.com/gmrtd/gmrtd/utils"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/classifier"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/normfail"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/output"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/profile"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/provenance"
@@ -30,11 +31,12 @@ type traceEntry struct {
 
 type smokeResult struct {
 	output.Meta
-	ActiveAuthErr     string       `json:"active_auth_err"`
-	ActiveAuthSuccess bool         `json:"active_auth_success"`
-	Observability     int          `json:"observability_score"`
-	ObservabilityMe   string       `json:"observability_meaning"`
-	Trace             []traceEntry `json:"trace"`
+	ActiveAuthErr      string           `json:"active_auth_err"`
+	ActiveAuthSuccess  bool             `json:"active_auth_success"`
+	NormalizedFailure  normfail.Failure `json:"normalized_failure"`
+	Observability      int              `json:"observability_score"`
+	ObservabilityMe    string           `json:"observability_meaning"`
+	Trace              []traceEntry     `json:"trace"`
 }
 
 func main() {
@@ -97,6 +99,10 @@ func main() {
 	}
 
 	runID := runid.New(fmt.Sprintf("%s-gmrtd", p.ID))
+	nf := normfail.FromErr("AA", "internal_authenticate", aaErrStr, false)
+	if nf.Iso7816SW == "" && aaSW != "" {
+		nf = normfail.ChipSW("AA", "internal_authenticate", aaSW, false)
+	}
 	result := smokeResult{
 		Meta: output.Meta{
 			RunID: runID, TestCase: p.ID, Library: "gmrtd",
@@ -104,6 +110,7 @@ func main() {
 			Variant: *variant, FigureID: *figureID, Provenance: prov,
 		},
 		ActiveAuthErr: aaErrStr, ActiveAuthSuccess: aaOK,
+		NormalizedFailure: nf,
 		Observability: obs.Int(), ObservabilityMe: obsMeaning,
 		Trace: buildTrace(nfc.ApduLog()),
 	}

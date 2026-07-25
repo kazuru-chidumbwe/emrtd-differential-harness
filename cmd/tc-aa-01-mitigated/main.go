@@ -13,6 +13,7 @@ import (
 	"github.com/gmrtd/gmrtd/password"
 	"github.com/gmrtd/gmrtd/utils"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/classifier"
+	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/normfail"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/output"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/profile"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/provenance"
@@ -30,12 +31,13 @@ type traceEntry struct {
 
 type smokeResult struct {
 	output.Meta
-	ActiveAuthErr     string       `json:"active_auth_err"`
-	ActiveAuthSuccess bool         `json:"active_auth_success"`
-	MiddlewareErr     string       `json:"middleware_err,omitempty"`
-	Observability     int          `json:"observability_score"`
-	ObservabilityMe   string       `json:"observability_meaning"`
-	Trace             []traceEntry `json:"trace"`
+	ActiveAuthErr     string           `json:"active_auth_err"`
+	ActiveAuthSuccess bool             `json:"active_auth_success"`
+	MiddlewareErr     string           `json:"middleware_err,omitempty"`
+	NormalizedFailure normfail.Failure `json:"normalized_failure"`
+	Observability     int              `json:"observability_score"`
+	ObservabilityMe   string           `json:"observability_meaning"`
+	Trace             []traceEntry     `json:"trace"`
 }
 
 func main() {
@@ -97,6 +99,10 @@ func main() {
 		fatal("provenance", err)
 	}
 
+	nf := normfail.FromErr("AA", "internal_authenticate", aaErrStr, mwErrStr != "")
+	if nf.Iso7816SW == "" && aaSW != "" {
+		nf = normfail.ChipSW("AA", "internal_authenticate", aaSW, mwErrStr != "")
+	}
 	runID := runid.New(fmt.Sprintf("%s-gmrtd-mitigated", p.ID))
 	result := smokeResult{
 		Meta: output.Meta{
@@ -105,6 +111,7 @@ func main() {
 			Variant: *variant, FigureID: *figureID, Provenance: prov,
 		},
 		ActiveAuthErr: aaErrStr, ActiveAuthSuccess: aa.ActiveAuthOK, MiddlewareErr: mwErrStr,
+		NormalizedFailure: nf,
 		Observability: obs.Int(), ObservabilityMe: obsMeaning,
 		Trace: buildTrace(nfc.ApduLog()),
 	}

@@ -75,6 +75,8 @@ public final class TcEac01Runner {
         result.put("bac_success", bacSuccess);
         result.put("bac_err", bacErr);
         result.put("peer_support", profile.peerSupport);
+        result.put("normalized_failure",
+                NormalizedFailure.chipSw("EAC", "pso_verify_certificate", taSw, false));
         result.put("observability_score", obs);
         result.put("observability_meaning", Observability.meaning(obs));
         result.put("provenance", Provenance.collect(root, a.profilePath, a.suiteId, a.suiteSeed, a.suiteN, a.runIndex,
