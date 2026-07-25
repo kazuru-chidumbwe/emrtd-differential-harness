@@ -1,5 +1,6 @@
 package org.emrtd.harness.jmrtd;
 
+import net.sf.scuba.smartcards.CardServiceException;
 import net.sf.scuba.util.Hex;
 import org.jmrtd.BACKey;
 import org.jmrtd.PACEException;
@@ -38,7 +39,7 @@ public final class TcAc01MitigatedRunner {
         boolean paceThrown = false;
         try {
             service.doPACE(bacKey, oid, params, paceInfo.getParameterId());
-        } catch (PACEException e) {
+        } catch (PACEException | CardServiceException e) {
             paceThrown = true;
             paceErr = e.getMessage();
         }
