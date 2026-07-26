@@ -38,4 +38,4 @@ Maven shade of signed `bcprov` left `META-INF/*.{SF,RSA,…}` → all 20 JMRTD c
 
 ## Scope
 
-This is the **headline** Option A re-verify (sponsor soft deadline ~29 Jul). Full factorial N=200 (`ac-01-sweep-full`) is the robustness / Evaluation §6.1 scale claim — re-run separately on the same 0.8.6 pin; do not cite `fa84b9cd…` as live Option A evidence.
+This is the **headline** Option A re-verify (lab 20 Jul 2026). Full factorial N=200 (`ac-01-sweep-full`) is the robustness / Evaluation §6.1 scale claim — re-run separately on the same 0.8.6 pin; do not cite `fa84b9cd…` as live Option A evidence.

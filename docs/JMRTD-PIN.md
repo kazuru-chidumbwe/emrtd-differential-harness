@@ -15,7 +15,7 @@
 
 **Re-check before each paper-grade resolve:** re-read `maven-metadata.xml` — do not inherit version from search UI alone.
 
-## Why not Option B (sponsor lock)
+## Why not Option B (alternate pin)
 
 - E3V3A is **not** a plausible stand-in for “JMRTD as an integrator would encounter it in 2026.”
 - Reviewer can pull Central in ~30s; measuring a 2021 archive while live releases continue is a **credibility / cherry-pick risk**.

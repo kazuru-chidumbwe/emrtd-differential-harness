@@ -1,0 +1,230 @@
+{
+  "suite_id": "ac-01-headline-jmrtd-20",
+  "description": "JMRTD half of headline N=40 (5 SW \u00d7 2 injection \u00d7 2 variants, MRZ=orig). For Class B pace_exception_class\u00d7SW table when gmrtd half runs elsewhere.",
+  "seed": 1,
+  "n": 1,
+  "mrz_id": "orig",
+  "parent_suite": "ac-01-headline-40",
+  "entries": [
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6fff-mse_set_at-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6fff-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6fff-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6fff-mse_set_at-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6fff-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6fff-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6fff-general_authenticate-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6fff-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6fff-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6fff-general_authenticate-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6fff-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6fff-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6300-mse_set_at-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6300-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6300-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6300-mse_set_at-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6300-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6300-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6300-general_authenticate-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6300-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6300-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6300-general_authenticate-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6300-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6300-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6982-mse_set_at-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6982-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6982-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6982-mse_set_at-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6982-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6982-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6982-general_authenticate-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6982-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6982-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6982-general_authenticate-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6982-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6982-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a88-mse_set_at-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6a88-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a88-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a88-mse_set_at-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6a88-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a88-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a88-general_authenticate-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6a88-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a88-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a88-general_authenticate-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6a88-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a88-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a80-mse_set_at-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6a80-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a80-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a80-mse_set_at-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6a80-mse_set_at",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a80-mse_set_at.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a80-general_authenticate-jmrtd-baseline",
+      "test_case": "TC-AC-01-sweep-orig-6a80-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "baseline",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01Runner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a80-general_authenticate.json",
+      "n": 1
+    },
+    {
+      "scenario_id": "SCN-TC-AC-01-sweep-orig-6a80-general_authenticate-jmrtd-mitigated",
+      "test_case": "TC-AC-01-sweep-orig-6a80-general_authenticate",
+      "library": "jmrtd",
+      "tier": "wire",
+      "variant": "mitigated",
+      "driver": "java",
+      "main_class": "org.emrtd.harness.jmrtd.TcAc01MitigatedRunner",
+      "profile": "profiles/sweep/TC-AC-01-sweep-orig-6a80-general_authenticate.json",
+      "n": 1
+    }
+  ]
+}

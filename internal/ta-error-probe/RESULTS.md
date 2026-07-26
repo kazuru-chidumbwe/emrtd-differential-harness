@@ -14,4 +14,4 @@ Methods: `sendMSESetDST`, `sendPSOExtendedLengthMode`, `sendMSESetATExtAuth`, `s
 
 ## Implication
 
-TA APDU failures are loud at the JMRTD capable interface (same family as CA MSE fail). Harness TC-TA-01 uses SW-proxy on first PSO (honest CA-style), not full CVC crypto. Full `doEACTA` needs synthetic CVC chain — see [TA-SYNTHETIC-CVC-REQUIREMENTS](../../docs/TA-SYNTHETIC-CVC-REQUIREMENTS-2026-07-25.md).
+TA APDU failures are loud at the JMRTD capable interface (same family as CA MSE fail). Harness TC-TA-01 uses SW-proxy on first PSO (honest CA-style), not full CVC crypto. Full `doEACTA` / synthetic CVC chain remains out of scope.

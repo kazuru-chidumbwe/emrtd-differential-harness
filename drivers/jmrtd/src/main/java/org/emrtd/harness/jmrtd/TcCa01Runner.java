@@ -49,7 +49,7 @@ public final class TcCa01Runner {
             chipAuthSuccess = caRsp.getSW() == 0x9000;
             if (!chipAuthSuccess) {
                 chipAuthErr = "CA MSE:Set AT failed (synthetic chip)";
-                // Confirm BAC SM still usable after CA reject (sponsor check).
+                // Confirm BAC SM still usable after CA reject (bilateral SM continue-check).
                 if (service.getWrapper() == null) {
                     throw new IllegalStateException("wrapper cleared after CA MSE reject");
                 }

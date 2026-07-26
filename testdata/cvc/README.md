@@ -17,4 +17,4 @@ Smoke cells (TC-TA-01 / TC-EAC-01) use **APDU SW-proxy** and do not yet consume 
 
 - **Not generated** — full CVC crypto gated on programme need for `doEACTA` end-to-end.
 - SW-proxy profiles are sufficient for observability scoring of TA APDU failure / EAC access downgrade.
-- See [TA-SYNTHETIC-CVC-REQUIREMENTS-2026-07-25.md](../../docs/TA-SYNTHETIC-CVC-REQUIREMENTS-2026-07-25.md).
+- Full CVC generation remains a follow-on; not required for current paper cells.

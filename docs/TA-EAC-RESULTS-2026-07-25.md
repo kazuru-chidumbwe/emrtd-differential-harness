@@ -1,6 +1,6 @@
 # TC-TA-01 / TC-EAC-01 results lock (2026-07-25)
 
-JMRTD-asymmetric. gmrtd: **unsupported** (no TA). Grounding: [ta-error-probe/RESULTS.md](../internal/ta-error-probe/RESULTS.md). CVC: [TA-SYNTHETIC-CVC-REQUIREMENTS](TA-SYNTHETIC-CVC-REQUIREMENTS-2026-07-25.md).
+JMRTD-asymmetric. gmrtd: **unsupported** (no TA). Grounding: [ta-error-probe/RESULTS.md](../internal/ta-error-probe/RESULTS.md). Full synthetic CVC / end-to-end `doEACTA` remains out of scope (SW-proxy arms only).
 
 ## TC-TA-01
 
