@@ -17,7 +17,7 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 ## What remains pending public deposit under informal publication timing
 
-- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite cited as `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`, plus corroborating CA/AA/PA bundles).
+- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite `d8afa161…`, Option A `d505d521…`, plus corroborating CA/AA/PA bundles).
 - Those trees currently live on the lab host (`logs/suite-ac-01-sweep-full-20260709T052334Z/`, Option A re-run `…20260720T163501Z/`, and R1 arm dirs). They are **not** in the public git tree (`logs/` is gitignored).
 - Zenodo DOI for the archived package (planned at camera-ready or immediately after the gate).
 
@@ -29,7 +29,8 @@ Reviewers may request the locked primary package under journal confidential-revi
 | --- | --- |
 | Branch | `jmrtd-sweep-2026-07-09` |
 | Annotated tag | `paper-manifest-2026-07-25` @ `110c546` |
-| Primary PACE cite (manuscript) | `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0` |
+| Primary PACE cite (manuscript) | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` (Jul-9; earlier `fa84b9…` is not the review pin) |
+| Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
 | Success-path control | `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` |
 
 Tag `paper-manifest-2026-07-25` remains the **evidence pin**. Docs-only commits may land on the branch tip after that tag without retagging.
