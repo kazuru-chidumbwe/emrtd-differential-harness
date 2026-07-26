@@ -13,7 +13,7 @@ Forced AA failure after BAC. Grounding: [internal/aa-error-probe/RESULTS.md](../
 
 **Injection:** BAC succeeds; first INTERNAL AUTHENTICATE (`INS=0x88`) returns `aa_sw`.
 
-**Observability Score (by construction):** Baseline drivers set `FailureSurfacedToCaller=false` (naive host). Mitigated drivers set it true via explicit-reject middleware. Unlike TC-AC-01 (`BacSuccess`), TC-CA-01 (post-CA `session_continue_ok`), and TC-EAC-01 (`ProtectedDGAccessible`), AA has **no emergent continue-check** — scores are the designed naive-host / mitigated outcome, not a discovered library difference.
+**Observability Score (by construction):** Baseline drivers set `FailureSurfacedToCaller=false` (naive host). Mitigated drivers set it true via explicit-reject middleware. Unlike TC-AC-01 (`BacSuccess`, library-path emergent) and TC-CA-01 (SM-session continue-check under post-BAC keys), AA has **no continue-check** — scores are the designed naive-host / mitigated outcome, not a discovered library difference. TC-EAC-01 `ProtectedDGAccessible` is likewise by construction.
 
 | Library | Variant | Score | Cells |
 | --- | --- | ---: | ---: |

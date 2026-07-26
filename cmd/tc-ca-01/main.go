@@ -84,11 +84,12 @@ func main() {
 	chipErrStr := errString(caErr)
 	chipOK := caResult != nil && caResult.Success
 
-	// Emergent continue-check: READ BINARY after CA failure (parallel to EAC ProtectedDGAccessible).
+	// SM-session continue-check: READ BINARY after CA failure via BAC secure messaging.
 	sessionContinue := false
 	if chipErrStr != "" && !chipOK {
-		rapdu := tr.Transceive(0x00, 0xB0, 0x00, 0x00, nil, 8, nil)
-		sessionContinue = len(rapdu) >= 2 && rapdu[len(rapdu)-2] == 0x90 && rapdu[len(rapdu)-1] == 0x00
+		if _, err := nfc.ReadBinaryFromOffset(0, 5); err == nil {
+			sessionContinue = true
+		}
 	}
 
 	obs, obsMeaning := classifier.ClassifyTCCA01(classifier.TCCA01Input{

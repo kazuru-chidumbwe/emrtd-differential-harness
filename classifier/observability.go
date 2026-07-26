@@ -42,7 +42,9 @@ type TCCA01Input struct {
 }
 
 // ClassifyTCCA01 scores whether an EAC-CA failure is visible to a naive caller.
-// Silent requires an emergent continue-check (SessionContinueOK), parallel to BacSuccess / ProtectedDGAccessible.
+// Silent requires SessionContinueOK from an SM-session continue-check
+// (crypto-real under post-BAC keys; harness-probed). Distinct from BacSuccess
+// (library-path emergent) and from EAC ProtectedDGAccessible (by construction).
 func ClassifyTCCA01(in TCCA01Input) (Score, string) {
 	if in.ChipAuthFailed && !in.ChipAuthSuccess && in.SessionContinueOK && !in.FailureSurfacedToCaller {
 		return ScoreSilent, "silent — chip auth failure; session/DG still usable without surfaced error"

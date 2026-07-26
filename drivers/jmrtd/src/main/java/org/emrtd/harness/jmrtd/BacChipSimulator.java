@@ -25,6 +25,7 @@ final class BacChipSimulator {
     }
 
     private final BACKey bacKey;
+    private ChipSecureMessaging session;
 
     BacChipSimulator(BACKey bacKey) {
         this.bacKey = bacKey;
@@ -32,6 +33,14 @@ final class BacChipSimulator {
 
     byte[] getChallenge() {
         return Arrays.copyOf(RND_ICC, RND_ICC.length);
+    }
+
+    ChipSecureMessaging session() {
+        return session;
+    }
+
+    boolean sessionEstablished() {
+        return session != null;
     }
 
     byte[] mutualAuthResponse(byte[] cmd) throws GeneralSecurityException {
@@ -62,6 +71,7 @@ final class BacChipSimulator {
         cipher.init(Cipher.DECRYPT_MODE, kEnc, ZERO_IV);
         byte[] plain = cipher.doFinal(eIfd);
         byte[] rndIfd = Arrays.copyOfRange(plain, 0, 8);
+        byte[] kIfd = Arrays.copyOfRange(plain, 16, 32);
 
         byte[] s = new byte[32];
         System.arraycopy(RND_ICC, 0, s, 0, 8);
@@ -72,6 +82,8 @@ final class BacChipSimulator {
         byte[] eIcc = cipher.doFinal(s);
         mac.init(kMac);
         byte[] mIcc = Arrays.copyOf(mac.doFinal(Util.pad(eIcc, 8)), 8);
+
+        session = ChipSecureMessaging.establish(kIfd, K_ICC, RND_ICC, rndIfd);
         return concat(eIcc, mIcc);
     }
 

@@ -32,6 +32,10 @@ type TcAc01Transceiver struct {
 	paceFailOn string
 	pass       *password.Password
 	rndIcc     []byte
+	// Post-BAC session material (set on successful EXTERNAL AUTHENTICATE).
+	lastKIfd   []byte
+	lastRndIfd []byte
+	bacSession bool
 }
 
 func NewTcAc01Transceiver(paceStatusWord string, pass *password.Password) *TcAc01Transceiver {
@@ -121,7 +125,8 @@ func (t *TcAc01Transceiver) bacMutualAuthResponse(cApdu []byte) ([]byte, error) 
 		return nil, err
 	}
 	rndIfd := plain[0:8]
-	_ = plain[8:16]
+	_ = plain[8:16] // echoed RND.ICC
+	kIfd := bytes.Clone(plain[16:32])
 
 	kIcc := utils.HexToBytes("0B4F80323EB3191CB04970CB4052790B")
 	s := make([]byte, 32)
@@ -137,7 +142,19 @@ func (t *TcAc01Transceiver) bacMutualAuthResponse(cApdu []byte) ([]byte, error) 
 	if err != nil {
 		return nil, err
 	}
+	t.lastKIfd = kIfd
+	t.lastRndIfd = bytes.Clone(rndIfd)
+	t.bacSession = true
 	return append(eIcc, mIcc...), nil
+}
+
+// BacSessionMaterial returns K.IFD / RND.IFD after a successful EXTERNAL AUTHENTICATE.
+func (t *TcAc01Transceiver) BacSessionMaterial() (kIfd, rndIfd, rndIcc, kIcc []byte, ok bool) {
+	if !t.bacSession || len(t.lastKIfd) != 16 || len(t.lastRndIfd) != 8 {
+		return nil, nil, nil, nil, false
+	}
+	return bytes.Clone(t.lastKIfd), bytes.Clone(t.lastRndIfd), bytes.Clone(t.rndIcc),
+		utils.HexToBytes("0B4F80323EB3191CB04970CB4052790B"), true
 }
 
 func (t *TcAc01Transceiver) bacKseed() ([]byte, error) {

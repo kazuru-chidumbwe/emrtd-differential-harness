@@ -2,8 +2,10 @@ package org.emrtd.harness.jmrtd;
 
 import net.sf.scuba.smartcards.CardServiceException;
 import net.sf.scuba.smartcards.CommandAPDU;
+import net.sf.scuba.smartcards.ResponseAPDU;
 import org.jmrtd.BACKey;
 import org.jmrtd.PassportService;
+import org.jmrtd.protocol.SecureMessagingWrapper;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -37,13 +39,23 @@ public final class TcCa01Runner {
         boolean chipAuthSuccess = false;
         boolean sessionContinueOk = false;
         if (bacSuccess) {
-            card.transmit(new CommandAPDU(0x00, 0x22, 0x41, 0xA4, new byte[0], 0));
-            chipAuthSuccess = card.trace().stream()
-                    .anyMatch(t -> t.label.equals("MSE:Set AT (CA)") && t.success);
+            SecureMessagingWrapper wrapper = service.getWrapper();
+            if (wrapper == null) {
+                throw new IllegalStateException("PassportService.getWrapper() null after doBAC");
+            }
+            // CA MSE via BAC SM wrapper (not raw unprotected APDU).
+            ResponseAPDU caRsp = wrapper.unwrap(card.transmit(wrapper.wrap(
+                    new CommandAPDU(0x00, 0x22, 0x41, 0xA4, new byte[0], 0))));
+            chipAuthSuccess = caRsp.getSW() == 0x9000;
             if (!chipAuthSuccess) {
                 chipAuthErr = "CA MSE:Set AT failed (synthetic chip)";
-                var dg = card.transmit(new CommandAPDU(0x00, 0xB0, 0x00, 0x00, 8));
-                sessionContinueOk = dg.getSW() == 0x9000;
+                // Confirm BAC SM still usable after CA reject (sponsor check).
+                if (service.getWrapper() == null) {
+                    throw new IllegalStateException("wrapper cleared after CA MSE reject");
+                }
+                ResponseAPDU dg = wrapper.unwrap(card.transmit(wrapper.wrap(
+                        new CommandAPDU(0x00, 0xB0, 0x00, 0x00, 5))));
+                sessionContinueOk = dg.getSW() == 0x9000 && dg.getData() != null && dg.getData().length > 0;
             }
         }
 

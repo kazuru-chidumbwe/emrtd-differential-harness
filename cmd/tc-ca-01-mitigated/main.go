@@ -86,8 +86,10 @@ func main() {
 	mwErrStr := errString(ca.SurfacedError)
 	sessionContinue := false
 	if chipErrStr != "" && !ca.ChipAuthOK {
-		rapdu := tr.Transceive(0x00, 0xB0, 0x00, 0x00, nil, 8, nil)
-		sessionContinue = len(rapdu) >= 2 && rapdu[len(rapdu)-2] == 0x90 && rapdu[len(rapdu)-1] == 0x00
+		// SM-session continue-check via BAC secure messaging (not raw unprotected B0).
+		if _, err := nfc.ReadBinaryFromOffset(0, 5); err == nil {
+			sessionContinue = true
+		}
 	}
 	obs, obsMeaning := classifier.ClassifyTCCA01(classifier.TCCA01Input{
 		ChipAuthFailed:          chipErrStr != "",
