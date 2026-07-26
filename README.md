@@ -11,7 +11,7 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tag **`blog-b10-2026-07`** (`ef15b10`). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Suite pins and disclosure status: [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Evidence tag: **`paper-manifest-2026-07-25`** @ `110c546`.
+**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Suite pins and disclosure status: [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Live evidence tag: **`paper-manifest-2026-07-26`** @ `d91ddbe` (historical: `paper-manifest-2026-07-25` @ `110c546`).
 
 ```bash
 git checkout blog-b10-2026-07   # blog reproduction pin
@@ -107,6 +107,15 @@ See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAG
 | --- | --- | --- |
 | gmrtd | 50 / 50 | 50 / 50 |
 | JMRTD | 50 / 50 | 50 / 50 |
+
+**Equal scores ≠ identical library defects.** Both baselines score 0 under the stated naive-caller models, but silence is reached differently:
+
+| Stack | How baseline silence arises | Epistemic status |
+| --- | --- | --- |
+| **gmrtd** | Reference client / driver path records `PaceErr` at the session layer but does not branch on it before BAC — close to an unchecked-error omission in ordinary use | Demonstrated property of the shipped usage pattern |
+| **JMRTD** | `PassportService.doPACE` **throws**; the baseline harness `catch`es and continues to BAC (the API permits unconstrained catch). Mitigated runners do **not** catch-and-continue | API-permitted integrator pattern; attested in public third-party clients ([survey](docs/JMRTD-PUBLIC-CATCH-CONTINUE-SURVEY-2026-07-26.md)), not a shipped JMRTD demo defect |
+
+Do not read the 50/50 table as “both libraries behave identically.” Manuscript §5.3.1 spells out the same split.
 
 Lab-verified 2026-07-09 on `test-server` (64 s). Score table above is stable under regenerate; the **canonical suite pin** (SHA-256 of the locked Jul-9 `artifact-manifest.json`) and Option A corroboration live only in:
 
