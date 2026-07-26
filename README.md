@@ -9,7 +9,9 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 **Jul 2026 — case study (DEV Community):** [Differential Testing Revealed What Conformance Testing Missed: A Case Study with Open-Source eMRTD Libraries](https://dev.to/kazuru_73322ef9a7d6ed2b18/differential-testing-revealed-what-conformance-testing-missed-a-case-study-with-open-source-emrtd-1nie)
 
-The essay’s reproducibility claims match tag **`blog-b10-2026-07`** (`ef15b10`). `main` may advance for paper/suite work without changing what the post describes.
+The essay’s reproducibility claims match tag **`blog-b10-2026-07`** (`ef15b10`). `main` / paper branches may advance for suite work without changing what the post describes.
+
+**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). See [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Paper evidence pin: tag **`paper-manifest-2026-07-25`** @ `110c546`.
 
 ```bash
 git checkout blog-b10-2026-07   # blog reproduction pin
