@@ -23,6 +23,14 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 Reviewers may request the locked primary package under journal confidential-review access before the public gate.
 
+## Maintainer disclosure contacts (as of 2026-07-26)
+
+| Stack | Status |
+| --- | --- |
+| gmrtd | First effective notice 2026-07-19; PR https://github.com/gmrtd/gmrtd/pull/446 open |
+| JMRTD | First notice 2026-07-08; follow-up 2026-07-19 |
+| pymrtd (ZeroPass) | **Not yet contacted** (offline PA arm). Planned before 7 Aug public gate |
+
 ## Research pin (do not confuse with “first public release”)
 
 | Object | Value |
@@ -32,6 +40,8 @@ Reviewers may request the locked primary package under journal confidential-revi
 | Primary PACE cite (manuscript) | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` (Jul-9; earlier `fa84b9…` is not the review pin) |
 | Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
 | Success-path control | `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` |
+
+**Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Reviewers verify digests against the confidential supplementary package / lab drop until the 7 Aug public deposit.
 
 Tag `paper-manifest-2026-07-25` remains the **evidence pin**. Docs-only commits may land on the branch tip after that tag without retagging.
 

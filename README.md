@@ -99,7 +99,7 @@ See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAG
 
 ---
 
-## JISA sweep (AC-01 profile grid, Jul 2026)
+## Primary wire sweep (AC-01 profile grid, Jul 2026)
 
 **200-run wire-tier sweep** across 50 injection-point profiles, gmrtd + JMRTD, baseline + mitigated:
 
@@ -108,7 +108,11 @@ See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAG
 | gmrtd | 50 / 50 | 50 / 50 |
 | JMRTD | 50 / 50 | 50 / 50 |
 
-Lab-verified 2026-07-09 on `test-server` (64 s). Manifest SHA-256: `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`. Details: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
+Lab-verified 2026-07-09 on `test-server` (64 s). Suite `artifact-manifest.json` SHA-256 (review pin):
+
+`d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67`
+
+An earlier note recorded `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`; that digest does **not** match any retained file under the Jul-9 log directory and is **not** the review pin. Locked raw run-trees remain pending public deposit under informal publication timing (earlier on maintainer reply); see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md) and [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md). Option A corroboration (0.8.6, 2026-07-20): `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051`.
 
 ```bash
 python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json
