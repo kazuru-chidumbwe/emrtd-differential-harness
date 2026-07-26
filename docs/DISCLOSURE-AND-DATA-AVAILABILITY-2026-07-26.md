@@ -55,6 +55,6 @@ Tag `paper-manifest-2026-07-26` is the **live evidence pin** (SM-session CA cont
 ## Related
 
 - [`TAGS.md`](TAGS.md) — checkout policy  
-- [`R1-RESPONSE-EXPAND-EVIDENCE-2026-07-25.md`](R1-RESPONSE-EXPAND-EVIDENCE-2026-07-25.md) — evidence depth  
-- [`R5-RESPONSE-REMAINING-GAPS-2026-07-26.md`](R5-RESPONSE-REMAINING-GAPS-2026-07-26.md) — remaining-gaps triage  
 - [`SWEEP-RESULTS-2026-07-09.md`](SWEEP-RESULTS-2026-07-09.md) — Jul-9 lab sweep summary  
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) — harness layout  
+- [`SCHEMA.md`](SCHEMA.md) — artifact / classifier fields  
