@@ -2,14 +2,16 @@
 
 Annotated tags mark reproducible anchors. **`main` may advance** after a tag — always `git checkout <tag>` when reproducing a cited result.
 
+Short hashes below are the **post–history-scrub** commits the tags peel to (`git rev-parse <tag>^{}`). Prefer citing the **tag name**; short hashes can change if tags are moved.
+
 | Tag | Commit | Purpose |
 | --- | --- | --- |
-| [`blog-b10-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/blog-b10-2026-07) | `ef15b10` | **Dev.to B10 essay** — TC-AC-01 smoke (N=1), gmrtd + JMRTD baseline |
-| [`v0.1.0`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v0.1.0) | `ef15b10` | First public smoke-tier release (same tree as blog tag) |
-| [`paper-manifest-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07) | `e31d945` | **Stale (7 Jul)** — predates 9 Jul 200-run sweep; do not hand to reviewers |
-| [`paper-manifest-2026-07-25`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-25) | `110c546` | **Historical** — superseded by `paper-manifest-2026-07-26`. Kept so old links do not 404. At this commit, some docs still cite retired digest `fa84b9…`; do not hand to reviewers as the live pin. |
-| [`paper-manifest-2026-07-26`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-26) | 96526fa | **Live Access / paper review pin** — AC-01 primary digest `d8afa161…` (immutable suite object), Option A `d505d521…`, CA SM-session continue-check + bundle `43f9bd1d…`, digest correction docs. Source public; locked full-run JSON trees remain confidential Supplementary Material pending public deposit (see [`DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)). |
-| [`ac01-n100-lab`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/ac01-n100-lab) | `50154a7` | Lab-verified AC-01 wire suite N=100 (400 runs, 4 cells) |
+| [`blog-b10-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/blog-b10-2026-07) | `96fa6a4` | **Dev.to B10 essay** — TC-AC-01 smoke (N=1), gmrtd + JMRTD baseline |
+| [`v0.1.0`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v0.1.0) | `96fa6a4` | First public smoke-tier release (same tree as blog tag) |
+| [`paper-manifest-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07) | `9062a08` | **Stale (7 Jul)** — predates 9 Jul 200-run sweep; do not hand to reviewers |
+| [`paper-manifest-2026-07-25`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-25) | `42b4f1a` | **Historical** — superseded by `paper-manifest-2026-07-26`. Kept so old links do not 404. At this commit, some docs still cite retired digest `fa84b9…`; do not hand to reviewers as the live pin. |
+| [`paper-manifest-2026-07-26`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-26) | *(see tag)* | **Live Access / paper review pin** — AC-01 primary digest `d8afa161…` (immutable suite object), Option A `d505d521…`, CA SM-session continue-check + bundle `43f9bd1d…`, digest correction docs. Source public; locked full-run JSON trees remain confidential Supplementary Material pending public deposit (see [`DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)). |
+| [`ac01-n100-lab`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/ac01-n100-lab) | `9e3edcb` | Lab-verified AC-01 wire suite N=100 (400 runs, 4 cells) |
 
 ## Quick checkout
 

@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-26  
 **Branch:** `jmrtd-sweep-2026-07-09`  
-**Evidence pin:** tag `paper-manifest-2026-07-26` (supersedes `paper-manifest-2026-07-25` @ `110c546`)  
+**Evidence pin:** tag `paper-manifest-2026-07-26` (supersedes historical `paper-manifest-2026-07-25`)  
 **Venue (current):** IEEE Access retarget in progress (this note stays venue-agnostic for pin/disclosure facts)
 
 This note matches the manuscript Data Availability / §9 rewrite after review. It supersedes wording that implied the *entire* harness was still embargoed until 7 August 2026.
@@ -11,7 +11,7 @@ This note matches the manuscript Data Availability / §9 rewrite after review. I
 
 Harness **source** (profiles, generators, classifier, drivers, CI workflows, and documentation) has been public on GitHub since the July 2026 blog release:
 
-- Tag `blog-b10-2026-07` / `v0.1.0` (`ef15b10`)
+- Tag `blog-b10-2026-07` / `v0.1.0` (`96fa6a4` after history scrub)
 - Repository: https://github.com/kazuru-chidumbwe/emrtd-differential-harness
 
 Regenerating suites via `make paper` (or equivalent) reproduces **Observability Scores** and suite structure. Fresh runs embed new UTC timestamps, so they do **not** reproduce an identical historical suite hash.
@@ -38,7 +38,7 @@ Reviewers may request the locked primary package under journal confidential-revi
 | --- | --- |
 | Branch | `jmrtd-sweep-2026-07-09` |
 | Annotated tag (live) | `paper-manifest-2026-07-26` |
-| Historical tag | `paper-manifest-2026-07-25` @ `110c546` (do not hand to reviewers) |
+| Historical tag | `paper-manifest-2026-07-25` @ `42b4f1a` (do not hand to reviewers) |
 | Primary PACE cite (manuscript) | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` |
 | Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
 | CA SM-session bundle | `43f9bd1db0c26709d6a33015fdb82979a0e4f097911123cbac641c1d3eb3c050` |

@@ -9,9 +9,9 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 **Jul 2026 — case study (DEV Community):** [Differential Testing Revealed What Conformance Testing Missed: A Case Study with Open-Source eMRTD Libraries](https://dev.to/kazuru_73322ef9a7d6ed2b18/differential-testing-revealed-what-conformance-testing-missed-a-case-study-with-open-source-emrtd-1nie)
 
-The essay’s reproducibility claims match tag **`blog-b10-2026-07`** (`ef15b10`). `main` / paper branches may advance for suite work without changing what the post describes.
+The essay’s reproducibility claims match tag **`blog-b10-2026-07`**. `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Suite pins and disclosure status: [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Live evidence tag: **`paper-manifest-2026-07-26`** @ `96526fa` (historical: `paper-manifest-2026-07-25` @ `110c546`).
+**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Suite pins and disclosure status: [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Live evidence tag: **`paper-manifest-2026-07-26`** (historical: `paper-manifest-2026-07-25`).
 
 ```bash
 git checkout blog-b10-2026-07   # blog reproduction pin
@@ -58,7 +58,7 @@ The Dev.to essay (*Differential Testing Revealed What Conformance Testing Missed
 | Field | Value |
 | --- | --- |
 | Tag | [`blog-b10-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/blog-b10-2026-07) |
-| Commit | `ef15b10` |
+| Commit | `96fa6a4` |
 | Profile | `profiles/pace-then-bac-downgrade.json` |
 | Libraries | gmrtd + JMRTD (baseline drivers only) |
 
@@ -71,7 +71,7 @@ export GOTOOLCHAIN=auto
 make smoke
 ```
 
-Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade N=100 manifests use `make suite` / `make paper` on `main` (manifest freeze at `e31d945`).
+Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade N=100 manifests use `make suite` / `make paper` on `main` (stale paper freeze tag `paper-manifest-2026-07` @ `9062a08`; live review pin is `paper-manifest-2026-07-26`).
 
 ---
 
