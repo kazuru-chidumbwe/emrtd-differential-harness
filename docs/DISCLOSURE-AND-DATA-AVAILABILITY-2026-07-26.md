@@ -3,7 +3,7 @@
 **Date:** 2026-07-26  
 **Branch:** `jmrtd-sweep-2026-07-09`  
 **Evidence pin:** tag `paper-manifest-2026-07-25` @ commit `110c546`  
-**Venue (current):** IEEE Access retarget in progress (was previously prepared toward JISA; this note is venue-agnostic)
+**Venue (current):** IEEE Access retarget in progress (this note stays venue-agnostic for pin/disclosure facts)
 
 This note matches the manuscript Data Availability / §9 rewrite after review. It supersedes wording that implied the *entire* harness was still embargoed until 7 August 2026.
 
