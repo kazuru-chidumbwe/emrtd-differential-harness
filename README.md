@@ -11,7 +11,7 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tag **`blog-b10-2026-07`** (`ef15b10`). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Suite pins and disclosure status: [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Live evidence tag: **`paper-manifest-2026-07-26`** @ `d91ddbe` (historical: `paper-manifest-2026-07-25` @ `110c546`).
+**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Suite pins and disclosure status: [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Live evidence tag: **`paper-manifest-2026-07-26`** @ `cea2356` (historical: `paper-manifest-2026-07-25` @ `110c546`).
 
 ```bash
 git checkout blog-b10-2026-07   # blog reproduction pin
