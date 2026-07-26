@@ -29,7 +29,7 @@ Reviewers may request the locked primary package under journal confidential-revi
 | --- | --- |
 | gmrtd | First effective notice 2026-07-19; PR https://github.com/gmrtd/gmrtd/pull/446 open |
 | JMRTD | First notice 2026-07-08; follow-up 2026-07-19 |
-| pymrtd (ZeroPass) | **Not yet contacted** (offline PA arm). Planned before 7 Aug public gate |
+| pymrtd (ZeroPass) | First notice **2026-07-26** via GitHub Security vulnerability report |
 
 ## Research pin (do not confuse with “first public release”)
 
