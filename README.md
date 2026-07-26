@@ -11,7 +11,7 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tag **`blog-b10-2026-07`** (`ef15b10`). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). See [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Paper evidence pin: tag **`paper-manifest-2026-07-25`** @ `110c546`.
+**Disclosure (2026-07-26):** harness **source** is already public. What remains pending public deposit under informal publication timing is the locked full-run JSON trees for independent hash checks (not a first-time source release). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Suite pins and disclosure status: [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). Evidence tag: **`paper-manifest-2026-07-25`** @ `110c546`.
 
 ```bash
 git checkout blog-b10-2026-07   # blog reproduction pin
@@ -108,11 +108,11 @@ See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAG
 | gmrtd | 50 / 50 | 50 / 50 |
 | JMRTD | 50 / 50 | 50 / 50 |
 
-Lab-verified 2026-07-09 on `test-server` (64 s). Suite `artifact-manifest.json` SHA-256 (review pin):
+Lab-verified 2026-07-09 on `test-server` (64 s). Score table above is stable under regenerate; the **canonical suite pin** (SHA-256 of the locked Jul-9 `artifact-manifest.json`) and Option A corroboration live only in:
 
-`d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67`
+[`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)
 
-An earlier note recorded `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`; that digest does **not** match any retained file under the Jul-9 log directory and is **not** the review pin. Locked raw run-trees remain pending public deposit under informal publication timing (earlier on maintainer reply); see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md) and [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md). Option A corroboration (0.8.6, 2026-07-20): `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051`.
+Do not cite older draft digests from blog-era notes. Locked raw run-trees remain pending public deposit under informal publication timing (earlier on maintainer reply). Details of the Jul-9 lab pass: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
 
 ```bash
 python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json

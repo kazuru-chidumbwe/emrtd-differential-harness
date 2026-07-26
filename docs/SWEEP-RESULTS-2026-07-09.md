@@ -6,9 +6,7 @@
 
 **Wall clock:** 64.2 s (suite only)
 
-**Manifest SHA-256 (review pin):** `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67`
-
-Earlier drafts recorded `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`. That digest does not match retained Jul-9 bytes and is **not** the review pin (see [`DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)).
+**Manifest SHA-256 (review pin):** see [`DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md) (primary Jul-9 suite pin). Do not copy digest strings from older drafts.
 
 **Log directory (on lab):** `logs/suite-ac-01-sweep-full-20260709T052334Z/`
 
@@ -37,4 +35,4 @@ GitHub Actions workflow `.github/workflows/jmrtd-sweep.yml` runs the same suite 
 ## Notes
 
 - PA fixture (`TC-PA-01`) not run on this lab pass (PEP 668 pip restriction).
-- Full per-run JSON artifacts remain on the lab host; cite manifest SHA-256 above for paper tables.
+- Full per-run JSON artifacts remain on the lab host; cite the review pin in [`DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md) for paper tables.

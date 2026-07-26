@@ -1,6 +1,6 @@
 # JMRTD public-integrator catch-and-continue survey (2026-07-26)
 
-**Purpose:** Ground the JMRTD baseline for JISA (external review / Issue 1 option a).  
+**Purpose:** Ground the JMRTD baseline for the manuscript (external review / Issue 1 option a).  
 **Method:** GitHub Code Search (`doPACE` / `paceSucceeded` / `org.jmrtd`, Java), 2026-07-26. Manual open of integrator files (not vendored library clones). Indicative sample — **not** a prevalence estimate.
 
 ## Pattern of interest
