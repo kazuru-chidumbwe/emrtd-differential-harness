@@ -29,11 +29,12 @@ git checkout ac01-n100-lab && make suite
 
 ## Tag policy
 
-- **Blog citations** → `blog-b10-2026-07` only (not `main`, not `paper-manifest-*`).
+- **SemVer / SoftwarX C1** → `v0.1.0` (same tree as `blog-b10-2026-07`). See [`CHANGELOG.md`](../CHANGELOG.md).
+- **Blog citations** → `blog-b10-2026-07` only (not `main`, not `paper-manifest-*`). Dual-cite with `v0.1.0` when a package version is required.
 - **Paper evidence (reviewers)** → `paper-manifest-2026-07-26` (not `paper-manifest-2026-07-25`, not `paper-manifest-2026-07`, not `main`).
 - **N=100 rates in paper §VI** → `ac01-n100-lab` until re-verified at manifest freeze.
 - **Public locked-run deposit** → locked full-run packages / Zenodo, **not** a first-time source release (source already public via blog tags).
-- **Freeze rule** → never force-move a paper-manifest tag once handed to reviewers. Docs-only commits may land on the branch tip **without** retagging. New evidence semantics → new dated tag.
+- **Freeze rule** → never force-move a paper-manifest tag once handed to reviewers. Docs-only commits may land on the branch tip **without** retagging. New evidence semantics → new dated tag. SemVer advances (`v0.1.1`, `v0.2.0`) when the public release boundary changes.
 
 **Digest vs tag:** Suite digests (`d8afa161…`, `d505d521…`, CA `43f9bd1d…`) are hashes of locked evidence trees — the immutable reproduction objects. The review tag pins harness *source semantics* that match those claims. Regenerating suites reproduces Observability Scores but not identical timestamped hashes.
 
