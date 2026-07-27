@@ -24,9 +24,13 @@ public final class TcAc01MitigatedRunner {
         HarnessProfile profile = HarnessProfile.load(a.profilePath);
         String paceSw = profile.injection != null && profile.injection.paceSw != null
                 ? profile.injection.paceSw : "6FFF";
+        String paceFailOn = profile.injection != null && profile.injection.paceFailOn != null
+                ? profile.injection.paceFailOn : "mse_set_at";
+        String paceChannel = profile.injection != null && profile.injection.paceChannel != null
+                ? profile.injection.paceChannel : "sw";
 
         BACKey bacKey = new BACKey(profile.mrz.documentNumber, profile.mrz.dateOfBirth, profile.mrz.dateOfExpiry);
-        TcAc01CardService card = new TcAc01CardService(bacKey, paceSw);
+        TcAc01CardService card = new TcAc01CardService(bacKey, paceSw, paceFailOn, paceChannel);
         PassportService service = PassportServices.open(card);
         service.open();
 

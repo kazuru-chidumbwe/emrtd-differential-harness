@@ -70,7 +70,7 @@ func main() {
 		paceFailOn = "mse_set_at"
 	}
 
-	nfc := iso7816.NewNfcSession(simulator.NewTcAc01TransceiverWithInjection(paceSW, paceFailOn, pass))
+	nfc := iso7816.NewNfcSession(simulator.NewTcAc01TransceiverWithChannel(paceSW, paceFailOn, p.Injection.PaceChannel, pass))
 	doc := &document.Document{}
 	doc.Mf.CardAccess, err = document.NewCardAccess(utils.HexToBytes(p.CardAccessHex))
 	if err != nil {

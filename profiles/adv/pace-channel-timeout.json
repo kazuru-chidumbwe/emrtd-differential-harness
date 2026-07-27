@@ -1,0 +1,19 @@
+{
+  "id": "TC-AC-ADV-TIMEOUT",
+  "name": "PACE channel timeout then BAC (synthetic adversarial-channel arm)",
+  "mechanism": "PACE",
+  "condition": "pace_fail_then_bac",
+  "tier": "wire",
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "31143012060A04007F0007020204020402010202010D",
+  "injection": {
+    "pace_fail_on": "mse_set_at",
+    "pace_sw": "6FFF",
+    "pace_channel": "timeout",
+    "notes": "Synthetic adversarial-channel: timed empty PACE response at MSE:Set AT; BAC remains capable. Lab-only APDU-boundary abstraction — not RF."
+  }
+}

@@ -3,6 +3,7 @@ package simulator
 import (
 	"bytes"
 	"fmt"
+	"time"
 
 	"github.com/gmrtd/gmrtd/cryptoutils"
 	"github.com/gmrtd/gmrtd/iso7816"
@@ -10,9 +11,9 @@ import (
 	"github.com/gmrtd/gmrtd/utils"
 )
 
-// TcAc01Transceiver: PACE APDUs fail with paceSW; BAC uses dynamic chip-side mutual auth.
+// TcAc01Transceiver: PACE APDUs fail (SW or synthetic channel abort); BAC uses dynamic chip-side mutual auth.
 //
-// paceFailOn selects which PACE negotiation step returns paceSW:
+// paceFailOn selects which PACE negotiation step fails:
 //   - "mse_set_at" (default): MSE:Set AT itself fails immediately — PACE never begins key
 //     agreement.
 //   - "general_authenticate": MSE:Set AT succeeds (returns 9000), but the first General
@@ -20,18 +21,26 @@ import (
 //     a chip that accepts the PACE mechanism selection but fails partway through the
 //     key-agreement handshake, rather than rejecting PACE outright.
 //
+// paceChannel selects how that failure is delivered at the APDU boundary:
+//   - "" / "sw": return configured paceSW (honest synthetic chip).
+//   - "timeout": brief delay then empty response (timed-exchange abstraction; not wall-clock RF).
+//   - "no_response": empty frame (jammed / incomplete exchange abstraction).
+//   - "transport_abort": empty response (hard transport failure abstraction).
+//
+// Channel modes keep BAC capable afterward so E = PACE-fail ∧ BAC-ok remains well-defined.
+// They are deliberately distinct from returning a configured status word.
+//
 // This is a deliberate two-point simplification of the real four-exchange PACE state
-// machine (MSE:Set AT, then General Authenticate steps 1-4: nonce, mapping, key agreement,
-// mutual auth). We do not simulate failure at each of the four GA sub-steps individually;
-// "general_authenticate" fails at the first GA call encountered. This bound is stated
-// explicitly here and must be stated explicitly in the paper's methodology section — it is
-// not a full injection-point sweep of the PACE protocol, only pre-GA vs. in-GA.
+// machine (MSE:Set AT, then General Authenticate steps 1-4). We do not simulate failure at
+// each of the four GA sub-steps individually; "general_authenticate" fails at the first GA
+// call encountered.
 type TcAc01Transceiver struct {
-	paceFailed bool
-	paceSW     []byte
-	paceFailOn string
-	pass       *password.Password
-	rndIcc     []byte
+	paceFailed  bool
+	paceSW      []byte
+	paceFailOn  string
+	paceChannel string
+	pass        *password.Password
+	rndIcc      []byte
 	// Post-BAC session material (set on successful EXTERNAL AUTHENTICATE).
 	lastKIfd   []byte
 	lastRndIfd []byte
@@ -43,6 +52,10 @@ func NewTcAc01Transceiver(paceStatusWord string, pass *password.Password) *TcAc0
 }
 
 func NewTcAc01TransceiverWithInjection(paceStatusWord string, paceFailOn string, pass *password.Password) *TcAc01Transceiver {
+	return NewTcAc01TransceiverWithChannel(paceStatusWord, paceFailOn, "", pass)
+}
+
+func NewTcAc01TransceiverWithChannel(paceStatusWord, paceFailOn, paceChannel string, pass *password.Password) *TcAc01Transceiver {
 	// Only "general_authenticate" selects the alternate injection point. Every other value —
 	// including the empty string and the published blog profile's "first_pace_apdu" — maps to
 	// the original, pinned behavior (fail at MSE:Set AT). This preserves byte-for-byte
@@ -50,34 +63,57 @@ func NewTcAc01TransceiverWithInjection(paceStatusWord string, paceFailOn string,
 	if paceFailOn != "general_authenticate" {
 		paceFailOn = "mse_set_at"
 	}
+	switch paceChannel {
+	case "", "sw", "timeout", "no_response", "transport_abort":
+	default:
+		paceChannel = "sw"
+	}
+	if paceChannel == "" {
+		paceChannel = "sw"
+	}
 	return &TcAc01Transceiver{
-		paceSW:     utils.HexToBytes(paceStatusWord),
-		paceFailOn: paceFailOn,
-		pass:       pass,
-		rndIcc:     utils.HexToBytes("4608F91988702212"), // ICAO 9303 Part 11 D.3
+		paceSW:      utils.HexToBytes(paceStatusWord),
+		paceFailOn:  paceFailOn,
+		paceChannel: paceChannel,
+		pass:        pass,
+		rndIcc:      utils.HexToBytes("4608F91988702212"), // ICAO 9303 Part 11 D.3
 	}
 }
 
 var _ iso7816.Transceiver = (*TcAc01Transceiver)(nil)
+
+func (t *TcAc01Transceiver) deliverPaceFailure() []byte {
+	switch t.paceChannel {
+	case "timeout":
+		// Symbolic delay: in-process APDU boundary has no real NFC deadline; documents
+		// timed-exchange class without RF fidelity.
+		time.Sleep(50 * time.Millisecond)
+		return []byte{}
+	case "no_response", "transport_abort":
+		return []byte{}
+	default:
+		return append([]byte(nil), t.paceSW...)
+	}
+}
 
 func (t *TcAc01Transceiver) Transceive(cla, ins, p1, p2 int, data []byte, le int, encodedData []byte) []byte {
 	switch byte(ins) {
 	case iso7816.INS_MANAGE_SE:
 		if t.paceFailOn == "mse_set_at" && !t.paceFailed {
 			t.paceFailed = true
-			return append([]byte(nil), t.paceSW...)
+			return t.deliverPaceFailure()
 		}
 		// paceFailOn == "general_authenticate": MSE:Set AT is accepted.
 		return []byte{0x90, 0x00}
 	case iso7816.INS_GENERAL_AUTHENTICATE:
 		if t.paceFailOn == "general_authenticate" && !t.paceFailed {
 			t.paceFailed = true
-			return append([]byte(nil), t.paceSW...)
+			return t.deliverPaceFailure()
 		}
 		if t.paceFailOn == "mse_set_at" {
 			// MSE:Set AT already failed; PACE should not reach GA in a correct client,
 			// but return the same rejection defensively if it does.
-			return append([]byte(nil), t.paceSW...)
+			return t.deliverPaceFailure()
 		}
 	case iso7816.INS_GET_CHALLENGE:
 		return append(bytes.Clone(t.rndIcc), 0x90, 0x00)

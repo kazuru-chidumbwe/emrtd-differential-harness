@@ -88,7 +88,7 @@ func main() {
 		paceSW = "6FFF"
 	}
 
-	transceiver := simulator.NewTcAc01TransceiverWithInjection(paceSW, p.Injection.PaceFailOn, pass)
+	transceiver := simulator.NewTcAc01TransceiverWithChannel(paceSW, p.Injection.PaceFailOn, p.Injection.PaceChannel, pass)
 	nfc := iso7816.NewNfcSession(transceiver)
 
 	doc := &document.Document{}

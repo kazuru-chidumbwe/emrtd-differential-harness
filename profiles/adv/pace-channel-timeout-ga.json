@@ -1,0 +1,19 @@
+{
+  "id": "TC-AC-ADV-TIMEOUT-GA",
+  "name": "PACE timeout at first GA then BAC (adversarial-channel mid-handshake)",
+  "mechanism": "PACE",
+  "condition": "pace_fail_then_bac",
+  "tier": "wire",
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "31143012060A04007F0007020204020402010202010D",
+  "injection": {
+    "pace_fail_on": "general_authenticate",
+    "pace_sw": "6FFF",
+    "pace_channel": "timeout",
+    "notes": "Synthetic: MSE accepts; first GA times out empty; BAC capable. Adversarial-channel mid-handshake."
+  }
+}

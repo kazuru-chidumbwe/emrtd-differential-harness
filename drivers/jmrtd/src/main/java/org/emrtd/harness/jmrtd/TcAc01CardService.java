@@ -10,6 +10,14 @@ import org.jmrtd.BACKey;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Synthetic PACE-fail / BAC-ok card service.
+ *
+ * <p>paceChannel {@code sw} (default) returns configured status word.
+ * {@code timeout} / {@code no_response} / {@code transport_abort} throw
+ * CardServiceException (APDU-boundary adversarial-channel abstractions; not RF).
+ * BAC remains capable after PACE failure.
+ */
 public final class TcAc01CardService extends CardService {
     private static final long serialVersionUID = 1L;
 
@@ -29,13 +37,21 @@ public final class TcAc01CardService extends CardService {
 
     private final BacChipSimulator bac;
     private final int paceSw;
+    private final String paceFailOn;
+    private final String paceChannel;
     private boolean open;
     private boolean paceFailed;
     private final List<TraceEntry> trace = new ArrayList<>();
 
     public TcAc01CardService(BACKey bacKey, String paceStatusWordHex) {
+        this(bacKey, paceStatusWordHex, "mse_set_at", "sw");
+    }
+
+    public TcAc01CardService(BACKey bacKey, String paceStatusWordHex, String paceFailOn, String paceChannel) {
         this.bac = new BacChipSimulator(bacKey);
         this.paceSw = Integer.parseInt(paceStatusWordHex, 16);
+        this.paceFailOn = "general_authenticate".equals(paceFailOn) ? "general_authenticate" : "mse_set_at";
+        this.paceChannel = (paceChannel == null || paceChannel.isEmpty()) ? "sw" : paceChannel;
     }
 
     public List<TraceEntry> trace() {
@@ -62,6 +78,26 @@ public final class TcAc01CardService extends CardService {
         open = false;
     }
 
+    /** Deliver PACE failure via SW return body, or throw for channel modes. */
+    private byte[] failPace(String label, CommandAPDU capdu) throws CardServiceException {
+        paceFailed = true;
+        if ("timeout".equals(paceChannel)) {
+            try {
+                Thread.sleep(50L);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+            trace.add(new TraceEntry(label, toHex(capdu.getBytes()), "CHANNEL_TIMEOUT", false));
+            throw new CardServiceException("synthetic PACE timeout (adversarial-channel arm)");
+        }
+        if ("no_response".equals(paceChannel) || "transport_abort".equals(paceChannel)) {
+            String tag = "no_response".equals(paceChannel) ? "CHANNEL_NO_RESPONSE" : "CHANNEL_TRANSPORT_ABORT";
+            trace.add(new TraceEntry(label, toHex(capdu.getBytes()), tag, false));
+            throw new CardServiceException("synthetic PACE " + paceChannel + " (adversarial-channel arm)");
+        }
+        return swBytes(paceSw);
+    }
+
     @Override
     public ResponseAPDU transmit(CommandAPDU capdu) throws CardServiceException {
         int ins = capdu.getINS() & 0xFF;
@@ -71,10 +107,24 @@ public final class TcAc01CardService extends CardService {
             if (ins == 0xA4) {
                 label = "SELECT";
                 body = swBytes(ISO7816.SW_NO_ERROR);
-            } else if (ins == 0x22 || ins == 0x86) {
-                label = ins == 0x22 ? "MSE:Set AT" : "General Authenticate";
-                if (!paceFailed) {
-                    paceFailed = true;
+            } else if (ins == 0x22) {
+                label = "MSE:Set AT";
+                if ("mse_set_at".equals(paceFailOn) && !paceFailed) {
+                    body = failPace(label, capdu);
+                } else if ("general_authenticate".equals(paceFailOn)) {
+                    body = swBytes(ISO7816.SW_NO_ERROR);
+                } else {
+                    body = swBytes(ISO7816.SW_INS_NOT_SUPPORTED);
+                }
+            } else if (ins == 0x86) {
+                label = "General Authenticate";
+                if ("general_authenticate".equals(paceFailOn) && !paceFailed) {
+                    body = failPace(label, capdu);
+                } else if (paceFailed) {
+                    // Defensive: PACE already failed; reject further GA.
+                    if (!"sw".equals(paceChannel)) {
+                        throw new CardServiceException("synthetic PACE already aborted");
+                    }
                     body = swBytes(paceSw);
                 } else {
                     body = swBytes(ISO7816.SW_INS_NOT_SUPPORTED);
@@ -90,6 +140,8 @@ public final class TcAc01CardService extends CardService {
                 label = "Unknown";
                 body = swBytes(ISO7816.SW_INS_NOT_SUPPORTED);
             }
+        } catch (CardServiceException e) {
+            throw e;
         } catch (Exception e) {
             throw new CardServiceException(e.toString());
         }
@@ -121,6 +173,6 @@ public final class TcAc01CardService extends CardService {
 
     @Override
     public boolean isConnectionLost(Exception e) {
-        return false;
+        return e != null && e.getMessage() != null && e.getMessage().contains("adversarial-channel");
     }
 }

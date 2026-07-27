@@ -41,6 +41,10 @@ public final class HarnessProfile {
     public static final class Injection {
         @SerializedName("pace_sw")
         public String paceSw;
+        @SerializedName("pace_fail_on")
+        public String paceFailOn;
+        @SerializedName("pace_channel")
+        public String paceChannel;
     }
 
     public static final class CaInjection {

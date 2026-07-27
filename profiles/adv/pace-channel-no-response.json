@@ -1,0 +1,19 @@
+{
+  "id": "TC-AC-ADV-NORESP",
+  "name": "PACE no-response then BAC (synthetic jammed incomplete exchange)",
+  "mechanism": "PACE",
+  "condition": "pace_fail_then_bac",
+  "tier": "wire",
+  "mrz": {
+    "document_number": "L898902C",
+    "date_of_birth": "690806",
+    "date_of_expiry": "940623"
+  },
+  "card_access_hex": "31143012060A04007F0007020204020402010202010D",
+  "injection": {
+    "pace_fail_on": "mse_set_at",
+    "pace_sw": "6FFF",
+    "pace_channel": "no_response",
+    "notes": "Synthetic adversarial-channel: empty PACE frame (jammed/incomplete); BAC remains capable. Lab-only — not RF."
+  }
+}

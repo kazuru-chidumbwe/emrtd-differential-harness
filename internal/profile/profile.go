@@ -17,7 +17,14 @@ type MRZ struct {
 type Injection struct {
 	PaceFailOn string `json:"pace_fail_on"`
 	PaceSW     string `json:"pace_sw"`
-	Notes      string `json:"notes"`
+	// PaceChannel selects how PACE fails at the APDU boundary:
+	//   "" / "sw" (default): return configured pace_sw (honest synthetic chip).
+	//   "timeout": brief delay then empty response (timed exchange abstraction).
+	//   "no_response": empty frame / incomplete exchange (jammed mid-handshake).
+	//   "transport_abort": empty response treated as hard transport failure.
+	// Channel modes are lab-only synthetic abstractions — not RF/NFC fidelity.
+	PaceChannel string `json:"pace_channel,omitempty"`
+	Notes       string `json:"notes"`
 }
 
 type CAInjection struct {
