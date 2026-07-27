@@ -26,11 +26,13 @@ Reviewers may request the locked primary package under journal confidential-revi
 
 ## Maintainer disclosure contacts (as of 2026-07-26)
 
-| Stack | Status |
-| --- | --- |
-| gmrtd | First effective notice 2026-07-19; PR https://github.com/gmrtd/gmrtd/pull/446 open |
-| JMRTD | First notice 2026-07-08; follow-up 2026-07-19 |
-| pymrtd (ZeroPass) | First notice **2026-07-26** via GitHub Security vulnerability report |
+| Stack | Contact date | Status |
+| --- | --- | --- |
+| JMRTD | 2026-07-08 (first notice); follow-up 2026-07-19 | **No email/advisory reply** as of 2026-07-26; notices on record |
+| gmrtd | 2026-07-19 (first effective; 8 Jul bounced) | **No email/advisory reply** as of 2026-07-26; notices on record; PR https://github.com/gmrtd/gmrtd/pull/446 open (not an email reply) |
+| pymrtd (ZeroPass) | 2026-07-26 (GitHub Security vulnerability report) | **No advisory reply** as of 2026-07-26; report on record |
+
+**Publication timing:** public deposit of locked full-run trees + Zenodo DOI once authors judge a reasonable interval has elapsed (or earlier on maintainer reply). Reviewers of the manuscript are given these contact dates and the current non-response status; a second competing calendar (e.g. a longer courtesy window) is not a second public-release gate.
 
 ## Research pin (do not confuse with “first public release”)
 
@@ -50,7 +52,7 @@ Reviewers may request the locked primary package under journal confidential-revi
 
 Some July 2026 lab notes and early manuscript drafts recorded suite digest `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`. That string does **not** match any retained file under the Jul-9 log directory. It is **not** the review pin. Cite only `d8afa161…` (primary) or `d505d521…` (Option A) above.
 
-Tag `paper-manifest-2026-07-26` is the **live evidence pin** (SM-session CA continue-check + digest correction). Tag `paper-manifest-2026-07-25` is historical only.
+Tag `paper-manifest-2026-07-26` is the **live evidence pin** (SM-session CA continue-check + digest correction), currently peeling to `0c5e3df` after one history-scrub force-retarget on 2026-07-26. **Do not force-move it again**; cut a new dated tag if the pin must advance. Tag `paper-manifest-2026-07-25` is historical only.
 
 ## Related
 
