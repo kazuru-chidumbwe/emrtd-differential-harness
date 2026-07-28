@@ -42,7 +42,7 @@ Reviewers may request the locked primary package under journal confidential-revi
 | --- | --- |
 | Branch | `jmrtd-sweep-2026-07-09` |
 | Annotated tag (live) | `paper-manifest-2026-07-26` |
-| Historical tag | `paper-manifest-2026-07-25` @ `42b4f1a` (do not hand to reviewers) |
+| Historical tag | `paper-manifest-2026-07-25` @ `42b4f1a` (superseded; do not cite for new work) |
 | Primary PACE cite (manuscript) | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` |
 | Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
 | Success-path control | `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` |
