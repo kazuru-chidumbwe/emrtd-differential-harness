@@ -32,6 +32,7 @@ git checkout ac01-n100-lab && make suite
 - **SemVer / SoftwarX C1** → `v0.1.0` (same tree as `blog-b10-2026-07`). See [`CHANGELOG.md`](../CHANGELOG.md).
 - **Blog citations** → `blog-b10-2026-07` only (not `main`, not `paper-manifest-*`). Dual-cite with `v0.1.0` when a package version is required.
 - **Paper evidence (reviewers)** → `paper-manifest-2026-07-26` (not `paper-manifest-2026-07-25`, not `paper-manifest-2026-07`, not `main`).
+- **ADV channel-abort corroboration (shallow)** → commit `10137e5` on `jmrtd-sweep-2026-07-09` (`profiles/adv/`). Primary factorial pin remains `paper-manifest-2026-07-26`; ADV uses a separate manuscript suite digest (`99d38845…`), not a new paper-manifest tag.
 - **N=100 rates in paper §VI** → `ac01-n100-lab` until re-verified at manifest freeze.
 - **Public locked-run / Zenodo deposit** → judgment under informal publication timing; **not** a first-time source release (source already public via blog tags); **not** a hard maintainer-facing embargo date.
 - **Freeze rule** → suite digests are immutable. History scrubs that only rename commits (no digest change) may retarget this tag; new evidence semantics → new dated tag. SemVer advances (`v0.1.1`, `v0.2.0`) when the public release boundary changes.
