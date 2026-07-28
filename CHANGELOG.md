@@ -10,6 +10,10 @@ Prefer **SemVer** (`vX.Y.Z`) for SoftwarX / package citations; see [`docs/TAGS.m
 
 ## [Unreleased]
 
+### Added
+
+- TC-AC-ADV: synthetic APDU-boundary `pace_channel` modalities (`timeout`, `no_response`, `transport_abort`) + profiles under `profiles/adv/` (commit `10137e5`). Shallow Lab corroboration only; does **not** change primary AC-01 digest `d8afa161…`. Paper cites suite digest `99d38845…` for the 16-run arm. Not RF / silicon.
+
 ### Changed
 
 - Disclosure docs / README: removed hard dated maintainer-facing public-release gate language. Public locked-run deposit follows informal publication timing aligned with IEEE Access §9.1 (no fixed deadline communicated to maintainers). Suite digests unchanged.
