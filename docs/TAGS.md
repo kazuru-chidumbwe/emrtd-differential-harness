@@ -30,7 +30,7 @@ git checkout ac01-n100-lab && make suite
 
 ## Tag policy
 
-- **SemVer / SoftwarX C1** → `v0.1.0` (same tree as `blog-b10-2026-07`). See [`CHANGELOG.md`](../CHANGELOG.md).
+- **SemVer / SoftwareX C1** → `v0.1.0` (same tree as `blog-b10-2026-07`). See [`CHANGELOG.md`](../CHANGELOG.md).
 - **Blog citations** → `blog-b10-2026-07` only (not `main`, not `paper-manifest-*`). Dual-cite with `v0.1.0` when a package version is required.
 - **Paper evidence (reviewers)** → `paper-manifest-2026-07-26` (not `paper-manifest-2026-07-25`, not `paper-manifest-2026-07`, not `main`).
 - **ADV channel-abort corroboration (shallow)** → annotated tag [`tc-ac-adv-2026-07-28`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/tc-ac-adv-2026-07-28) (feature landed at `10137e5`, `profiles/adv/`). Primary factorial pin remains `paper-manifest-2026-07-26`; ADV uses manuscript suite digest `99d38845…`. Not RF / silicon.
