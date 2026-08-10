@@ -1,9 +1,9 @@
 # Disclosure and data availability
 
 **Date:** 2026-08-10 (venue-agnostic; no fixed maintainer-facing embargo)  
-**Evidence pin (cite):** tag `v1.0.5` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.5  
-**Locked-run deposit:** Release `locked-runs-2026-08-10b` (lab regen + relative paths)  
-**Historical SemVer:** `v1.0.4` / `v1.0.3` / `v1.0.2` / `v1.0.1` / `v1.0.0`  
+**Evidence pin (cite):** tag `v1.0.6` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.6  
+**Locked-run deposit:** Release `v1.0.6` / asset `emrtd-locked-runs-v1.0.6.zip`  
+**Historical SemVer:** `v1.0.5` / `v1.0.4` / `v1.0.3` / `v1.0.2` / `v1.0.1` / `v1.0.0`  
 **ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (also present on tip)
 
 This note records pin/disclosure facts for independent verification. It is intentionally **venue-agnostic**. An earlier alternate-venue draft for related manuscript text was explored and is now abandoned; it is not under concurrent consideration.
@@ -19,8 +19,8 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 ## Locked-run public deposit
 
-- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, success-path control, plus CA/AA/PA bundles) are **public** at GitHub Release [locked-runs-2026-08-10b](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-08-10b) (asset `emrtd-locked-runs-2026-08-10b.zip`). A Zenodo DOI will be minted from **this** archive when available; until then cite the Release URL for hash verification.
-- **2026-08-10b lab regen:** suites re-run on Lab Test Server against tip `4510c47` (real `harness_commit`, 1-based `run_index`, relative `profile_path`). Schema validation clean. Observability Scores unchanged vs prior factorial. Do not mint Zenodo from pre-sanitization or strip-only archives.
+- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, success-path control, plus CA/AA/PA bundles) are **public** at GitHub Release [v1.0.6](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.6) (asset `emrtd-locked-runs-v1.0.6.zip`). A Zenodo DOI will be minted from **this** archive when available; until then cite the Release URL for hash verification.
+- **Deposit gate:** Release zips are built only via `make package-locked-runs` (banned-term + abs-path + **full** run-artifact schema scan). As of `v1.0.6` that scan is **294/294** OK (including offline PA smoke under success-path). Do not mint Zenodo from older dated `…-10` / `…-10b` zips.
 - Those trees are **not** in the public git tree (`logs/` is gitignored).
 - Public deposit proceeds under author judgment after a reasonable interval from first effective contact per library (informally ~2–3 weeks), or earlier on any maintainer reply — consistent with informal notice rather than a formal embargo schedule. As of **2026-08-10** that interval has elapsed for all three libraries.
 
@@ -38,12 +38,12 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 | Object | Value |
 | --- | --- |
-| Annotated tag (live cite) | `v1.0.5` |
-| Locked-run Release | `locked-runs-2026-08-10b` |
+| Annotated tag (live cite) | `v1.0.6` |
+| Locked-run asset | `emrtd-locked-runs-v1.0.6.zip` on Release `v1.0.6` |
 | ADV corroboration tag | `tc-ac-adv-2026-07-28` |
 | Primary PACE cite | `c6f03d7e3de893ee30da853357f032402a580414284804864d67e4b65af5d35f` |
 | Option A (JMRTD 0.8.6) | Same as primary — tip regen uses Central `0.8.6` only |
-| Success-path control | `b98b354de6276bf08b3a75dac4ef37593a3ef728be65cb8218b21e8e4e787273` |
+| Success-path control | `a817198c2ee90a4092663fde6c1ef90e93a7cddad8dc0358e7e2b009aae050ad` |
 
 **Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Verify digests against the GitHub Release zip (or Zenodo DOI once minted).
 
@@ -51,13 +51,14 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 | Digest | Why retired |
 | --- | --- |
+| `b98b354de6276bf08b3a75dac4ef37593a3ef728be65cb8218b21e8e4e787273` | Success-path control before offline-pa included in fingerprint (`v1.0.5`) |
 | `6c6cbbd1959ec047980c1021c5d3ddf196c10b088d7884ab8ed80f56ae81c9b5` | Path-sanitized strip reissue (superseded by lab regen `c6f03d7e…`) |
 | `2efd190e80d90fd3c3793b3b481805a567f3630329cf434f8a4cd33fbe9bddd4` | Path-sanitized Option A strip (superseded; tip uses single primary digest) |
-| `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` | Prior success-path control (superseded by `b98b354d…`) |
+| `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` | Prior success-path control |
 | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` | Pre–path-sanitization primary manifest |
 | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` | Pre–path-sanitization Option A manifest |
 | `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0` | Draft/lab note only; never matched retained Jul-9 tree |
 
-Cite only `c6f03d7e…` (primary) or `b98b354d…` (success-path control) above.
+Cite only `c6f03d7e…` (primary) or `a817198c…` (success-path control) above.
 
-Tag `v1.0.5` is the **paper cite pin**. New evidence semantics or deposit changes require a new SemVer.
+Tag `v1.0.6` is the **paper cite pin**. New evidence semantics or deposit changes require a new SemVer.

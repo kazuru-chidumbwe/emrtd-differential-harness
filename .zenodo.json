@@ -1,7 +1,7 @@
 {
   "title": "eMRTD differential harness",
   "upload_type": "software",
-  "description": "Differential test harness for open-source eMRTD reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or specification-permitted downgrades reach a typical application caller (Observability Score). Synthetic APDU profiles only; not RF / silicon. Cite SemVer tag v1.0.5. Locked full-run trees for independent hash verification are published as a separate GitHub Release / Zenodo dataset deposit.",
+  "description": "Differential test harness for open-source eMRTD reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or specification-permitted downgrades reach a typical application caller (Observability Score). Synthetic APDU profiles only; not RF / silicon. Cite SemVer tag v1.0.6. Locked full-run trees: Release asset emrtd-locked-runs-v1.0.6.zip.",
   "creators": [
     {
       "name": "Kazuru, Seke",
@@ -29,10 +29,10 @@
       "resource_type": "publication-article"
     },
     {
-      "identifier": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-08-10b",
+      "identifier": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.6",
       "relation": "isSupplementedBy",
       "resource_type": "dataset"
     }
   ],
-  "notes": "When the JISA manuscript receives a DOI, add it here as related_identifiers with relation isDocumentedBy. Mint Zenodo only from Release locked-runs-2026-08-10b (lab regen); never from pre-sanitization or strip-only archives."
+  "notes": "When the JISA manuscript receives a DOI, add it here as related_identifiers with relation isDocumentedBy. Mint Zenodo only from emrtd-locked-runs-v1.0.6.zip on Release v1.0.6."
 }
