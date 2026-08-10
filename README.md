@@ -11,10 +11,10 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-07`** (same tree). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.6`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.6 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md).
+**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.7`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.7 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md).
 
 ```bash
-git checkout v1.0.6
+git checkout v1.0.7
 ```
 
 ---
@@ -94,11 +94,11 @@ Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `obs
 
 | Arm | Role | Where |
 | --- | --- | --- |
-| **TC-AC-01** 50-profile × 2 libs × 2 variants (**200 runs**) | Primary PACE→BAC observability factorial | `suites/ac-01-sweep-full.json` · pin `c6f03d7e…` |
-| **Option A** JMRTD **0.8.6** | Same factorial (tip uses Central 0.8.6 only) | same pin `c6f03d7e…` |
+| **TC-AC-01** 50-profile × 2 libs × 2 variants (**200 runs**) | Primary PACE→BAC observability factorial | `suites/ac-01-sweep-full.json` · pin `e15f4b57…` |
+| **Option A** JMRTD **0.8.6** | Same factorial (tip uses Central 0.8.6 only) | same pin `e15f4b57…` |
 | **TC-AC-ADV** (4 channel-fault profiles, *n*=16) | Adversarial corroborating; Not RF | `profiles/adv/` · tag `tc-ac-adv-2026-07-28` · digest `99d38845…` |
 | **CA / AA / PA** sweeps | Mechanism corroboration grids | `docs/CA-RESULTS-*`, `AA-RESULTS-*`, `PA-RESULTS-*` |
-| **TA-EAC** + success-path FP controls | Unsupported-path / non-false-reject checks | `docs/TA-EAC-*`, `docs/SUCCESS-PATH-*` · control `a817198c…` |
+| **TA-EAC** + success-path FP controls | Unsupported-path / non-false-reject checks | `docs/TA-EAC-*`, `docs/SUCCESS-PATH-*` · control `b029a9dc…` |
 | **Middleware** explicit-reject | Raises Score 0→2 without upstream patches | `middleware/` · mitigated runners |
 
 **N=100** (AC-01 wire suite): repeating each deterministic profile demonstrates **harness stability and reproducibility**, not behavioural variance / statistical power.
@@ -165,7 +165,7 @@ CI: push to `main` or manual dispatch of workflow **JMRTD sweep and CA-mitigated
 
 ## TC-AC-ADV (channel-abort corroboration)
 
-Shallow adversarial arm (*n*=16): four `profiles/adv/` modalities (`timeout` at MSE:Set AT / GENERAL AUTHENTICATE, `no_response`, `transport_abort`) × gmrtd+JMRTD × baseline+mitigated. Baseline Score **0** / mitigated Score **2** on all cells. Does **not** change primary AC-01 digest `c6f03d7e…`. Tag: `tc-ac-adv-2026-07-28`. **Not RF / silicon.**
+Shallow adversarial arm (*n*=16): four `profiles/adv/` modalities (`timeout` at MSE:Set AT / GENERAL AUTHENTICATE, `no_response`, `transport_abort`) × gmrtd+JMRTD × baseline+mitigated. Baseline Score **0** / mitigated Score **2** on all cells. Does **not** change primary AC-01 digest `e15f4b57…`. Tag: `tc-ac-adv-2026-07-28`. **Not RF / silicon.**
 
 ---
 

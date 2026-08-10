@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 All notable changes to this project are documented in this file.
 
@@ -6,13 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid historical anchors.
-Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.6`** — see [`docs/TAGS.md`](docs/TAGS.md).
+Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.7`** — see [`docs/TAGS.md`](docs/TAGS.md).
 
 ## [Unreleased]
 
 ### Changed
 
 - (none pending)
+
+## [1.0.7] — 2026-08-10
+
+### Fixed (JISA artifact review)
+
+- Baseline gmrtd arm drives shipped `reader.ReadDocument` (not hand-composed DoPACE/DoBAC); `PaceSurfacedToCaller` measured from return error.
+- Pin gmrtd to `8fea245` (release 0.45.0); bootstrap/paper verify; provenance `gmrtd_commit`.
+- Drop vacuous wire N=100 → N=1 (deterministic simulator); shared observability vectors; `SOURCE_DATE_EPOCH`; fence TC-FI-01 / fail-closed pymrtd.
+
+### Changed
+
+- Live cite pin `v1.0.7`. Deposit `emrtd-locked-runs-v1.0.7.zip`. Primary `e15f4b57f0226566d2257cf8912c8521493d678a8e866524150ff7d925e67006`; success-path `b029a9dcefb8277b5790c19fa6b13c19cfca9a9dc6e1786e72a3be4e04fda245`. Schema preflight **206/206** OK (AC-01 factorial + success-path control).
 
 ## [1.0.6] — 2026-08-10
 
