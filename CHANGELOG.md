@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 All notable changes to this project are documented in this file.
 
@@ -13,6 +13,7 @@ Prefer **SemVer** (`vX.Y.Z`) for package citations; see [`docs/TAGS.md`](docs/TA
 ### Changed
 
 - Disclosure / README / TAGS: venue-agnostic wording (prior IEEE Access packaging attempt dropped; not under concurrent consideration). Maintainer table updated for gmrtd replies (2026-07-29, 2026-08-03).
+- README: full paper arm set on default branch (TC-AC-ADV, CA/AA/PA, TA-EAC, grounding); Java package `org.emrtd.harness.jmrtd` (was programme-named).
 
 ## [tc-ac-adv-2026-07-28] — 2026-07-28
 

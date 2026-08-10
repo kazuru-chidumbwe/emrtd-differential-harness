@@ -59,7 +59,6 @@ The Dev.to essay (*Differential Testing Revealed What Conformance Testing Missed
 | --- | --- |
 | SemVer | [`v0.1.0`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v0.1.0) |
 | Essay tag | [`blog-b10-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/blog-b10-2026-07) |
-| Commit | `96fa6a4` |
 | Profile | `profiles/pace-then-bac-downgrade.json` |
 | Libraries | gmrtd + JMRTD (baseline drivers only) |
 
@@ -72,11 +71,43 @@ export GOTOOLCHAIN=auto
 make smoke
 ```
 
-Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade N=100 manifests use `make suite` / `make paper` on `main` (stale paper freeze tag `paper-manifest-2026-07` @ `9062a08`; live review pin is `paper-manifest-2026-07-26`).
+Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade N=100 manifests use `make suite` / `make paper` on `main` (stale paper freeze tag `paper-manifest-2026-07`; live review pin is `paper-manifest-2026-07-26`).
 
 ---
 
-## Middleware (§VIII contribution)
+## What this harness measures (and what it does not)
+
+**Object under test:** open-source **reader-library** negotiation and error-surfacing logic (call-boundary Observability Score), not the chip RF layer and not physical NFC silicon.
+
+**Real-world grounding (not RF):**
+
+- ICAO Doc 9303 Part 11 permits PACE→BAC fallback when CardAccess/PACE parameters are unavailable (inspection systems SHOULD try BAC).
+- Upstream gmrtd ships `--skipPace` as an explicit integrator control over whether PACE runs.
+- Public JMRTD integrator survey documents catch-and-continue around `doPACE` ([survey](docs/JMRTD-PUBLIC-CATCH-CONTINUE-SURVEY-2026-07-26.md)).
+- Coordinated disclosure contacts for gmrtd, JMRTD, and pymrtd are on record ([disclosure note](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)).
+
+**Synthetic only:** no physical passport, no NFC hardware, no live PKD. ADV profiles are lab APDU-boundary channel faults — **Not RF / silicon**.
+
+---
+
+## Paper arm set (on `main`)
+
+| Arm | Role | Where |
+| --- | --- | --- |
+| **TC-AC-01** 50-profile × 2 libs × 2 variants (**200 runs**) | Primary PACE→BAC observability factorial | `suites/ac-01-sweep-full.json` · pin `d8afa161…` |
+| **Option A** JMRTD **0.8.6** re-run | Same score table corroboration | pin `d505d521…` |
+| **TC-AC-ADV** (4 channel-fault profiles, *n*=16) | Adversarial corroborating; Not RF | `profiles/adv/` · tag `tc-ac-adv-2026-07-28` · digest `99d38845…` |
+| **CA / AA / PA** sweeps | Mechanism corroboration grids | `docs/CA-RESULTS-*`, `AA-RESULTS-*`, `PA-RESULTS-*` |
+| **TA-EAC** + success-path FP controls | Unsupported-path / non-false-reject checks | `docs/TA-EAC-*`, `docs/SUCCESS-PATH-*` · control `31aa96db…` |
+| **Middleware** explicit-reject | Raises Score 0→2 without upstream patches | `middleware/` · mitigated runners |
+
+**N=100** (AC-01 wire suite): repeating each deterministic profile demonstrates **harness stability and reproducibility**, not behavioural variance / statistical power.
+
+Evidence tag: **`paper-manifest-2026-07-26`**. Locked run-trees: Zenodo (see disclosure note).
+
+---
+
+## Middleware (explicit-reject)
 
 `middleware/` enforces explicit-reject on PACE→BAC downgrade (and EAC-CA failure). Mitigated drivers:
 
@@ -93,8 +124,8 @@ Before/after comparison is a diff of run artifacts, not a rewritten test.
 This harness replays **synthetic chip profiles** through in-process APDU transceivers. It does **not** exercise physical NFC hardware, real eMRTD silicon, or live PKD/CRL infrastructure.
 
 - **N=100 repetitions:** Repeating each deterministic profile N=100 demonstrates harness stability and result reproducibility rather than estimating behavioural variance.
-- **Blog scope:** `make suite` (TC-AC-01 wire tier).
-- **Paper scope:** `make suite-paper` (adds TC-CA-01, offline PA scaffold).
+- **Blog scope:** `make smoke` / TC-AC-01 single-profile.
+- **Paper scope:** full arm set above (`make suite-paper` / tagged evidence + Zenodo locked trees).
 
 See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAGS.md`](docs/TAGS.md).
 
@@ -122,13 +153,19 @@ Lab-verified 2026-07-09 on `test-server` (64 s). Score table above is stable und
 
 [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)
 
-Do not cite older draft digests from blog-era notes. Locked raw run-trees remain pending public deposit under informal publication timing (earlier on maintainer reply). Details of the Jul-9 lab pass: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
+Do not cite older draft digests from blog-era notes. Locked raw run-trees are deposited on Zenodo for independent hash verification (see disclosure note). Details of the Jul-9 lab pass: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
 
 ```bash
 python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json
 ```
 
-CI: push to `jmrtd-sweep-*` or manual dispatch of workflow **JMRTD sweep and CA-mitigated verification**.
+CI: push to `main` or manual dispatch of workflow **JMRTD sweep and CA-mitigated verification**.
+
+---
+
+## TC-AC-ADV (channel-abort corroboration)
+
+Shallow adversarial arm (*n*=16): four `profiles/adv/` modalities (`timeout` at MSE:Set AT / GENERAL AUTHENTICATE, `no_response`, `transport_abort`) × gmrtd+JMRTD × baseline+mitigated. Baseline Score **0** / mitigated Score **2** on all cells. Does **not** change primary AC-01 digest `d8afa161…`. Tag: `tc-ac-adv-2026-07-28`. **Not RF / silicon.**
 
 ---
 
