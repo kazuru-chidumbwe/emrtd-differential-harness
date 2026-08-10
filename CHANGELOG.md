@@ -12,7 +12,7 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 
 ### Changed
 
-- (none pending)
+- CI: pin Actions to full commit SHAs (`checkout` / `setup-go` / `setup-java` / `upload-artifact`) and declare least-privilege `permissions` (`contents: read`, `actions: write` for artifacts only).
 
 ## [1.0.7] — 2026-08-10
 

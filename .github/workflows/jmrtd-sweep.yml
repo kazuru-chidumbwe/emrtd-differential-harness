@@ -9,6 +9,9 @@ name: JMRTD sweep and CA-mitigated verification
 # Triggers: workflow_dispatch, push to main / jmrtd-sweep-*, and pull_request targeting main.
 # Results are uploaded as a downloadable build artifact — pull them from the Actions run page;
 # they don't need to be committed.
+#
+# CI supply-chain: actions pinned by full commit SHA (mutable tags can move). Dependabot
+# can refresh SHA pins the same way it refreshes go.mod.
 
 on:
   workflow_dispatch: {}
@@ -20,17 +23,21 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  actions: write  # upload-artifact only
+
 jobs:
   jmrtd-sweep:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
         with:
           go-version: '1.25'
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -69,7 +76,7 @@ jobs:
           pip install --break-system-packages git+https://github.com/ZeroPass/pymrtd.git
           python3 drivers/pymrtd-offline/run_case.py testdata/sod/tc-pa-01-weak-digest.json baseline 1 "" 1 1
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: jmrtd-sweep-results
           path: logs/
