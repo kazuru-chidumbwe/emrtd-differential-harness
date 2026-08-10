@@ -26,7 +26,7 @@ public final class Provenance {
         Map<String, Object> out = new LinkedHashMap<>();
         out.put("harness_commit", resolveHarnessCommit(root));
         out.put("harness_dirty", gitDirty(root));
-        out.put("profile_path", profilePath.toString().replace('\\', '/'));
+        out.put("profile_path", repoRelativePath(root, profilePath));
         out.put("profile_sha256", sha256(profilePath));
         out.put("suite_id", suiteId == null || suiteId.isEmpty() ? "unspecified" : suiteId);
         out.put("suite_seed", suiteSeed);
@@ -38,6 +38,28 @@ public final class Provenance {
         out.put("middleware", middleware == null || middleware.isEmpty() ? null : middleware);
         out.put("captured_at_utc", java.time.Instant.now().toString());
         return out;
+    }
+
+    /** Prefer path relative to harness root so deposits do not embed host absolute paths. */
+    static String repoRelativePath(Path root, Path profilePath) {
+        Path absProfile = profilePath.toAbsolutePath().normalize();
+        Path absRoot = root.toAbsolutePath().normalize();
+        try {
+            Path rel = absRoot.relativize(absProfile);
+            String s = rel.toString().replace('\\', '/');
+            if (!s.startsWith("..")) {
+                return s;
+            }
+        } catch (IllegalArgumentException ignored) {
+            // different roots
+        }
+        String s = absProfile.toString().replace('\\', '/');
+        String marker = "/emrtd-differential-harness/";
+        int idx = s.indexOf(marker);
+        if (idx >= 0) {
+            return s.substring(idx + marker.length());
+        }
+        return s;
     }
 
     /** Prefer EMRTD_HARNESS_COMMIT, then git rev-parse HEAD; never return empty. */

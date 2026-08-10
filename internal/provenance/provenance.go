@@ -65,7 +65,7 @@ func Collect(opts Options) (Record, error) {
 		GoVersion:     runtime.Version(),
 		JavaVersion:   opts.JavaVersion,
 		PythonVersion: opts.PythonVer,
-		ProfilePath:   filepath.ToSlash(opts.ProfilePath),
+		ProfilePath:   repoRelativePath(opts.ProfilePath),
 		ProfileSHA256: profSHA,
 		SuiteID:       opts.SuiteID,
 		SuiteSeed:     opts.SuiteSeed,
@@ -76,6 +76,23 @@ func Collect(opts Options) (Record, error) {
 		Middleware:    opts.Middleware,
 		CapturedAtUTC: time.Now().UTC().Format(time.RFC3339),
 	}, nil
+}
+
+// repoRelativePath stores profile_path relative to the harness module root when possible.
+func repoRelativePath(path string) string {
+	abs, err := filepath.Abs(path)
+	if err != nil {
+		return filepath.ToSlash(path)
+	}
+	root, err := findModuleRoot()
+	if err != nil {
+		return filepath.ToSlash(abs)
+	}
+	rel, err := filepath.Rel(root, abs)
+	if err != nil {
+		return filepath.ToSlash(abs)
+	}
+	return filepath.ToSlash(rel)
 }
 
 func resolveHarnessCommit() (string, bool) {

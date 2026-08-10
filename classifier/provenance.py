@@ -51,12 +51,20 @@ def collect(
     commit, dirty = _git_head(root)
     if run_index < 1:
         run_index = 1
+    try:
+        rel = profile_path.resolve().relative_to(root.resolve())
+        profile_stored = rel.as_posix()
+    except ValueError:
+        profile_stored = profile_path.as_posix()
+        marker = "/emrtd-differential-harness/"
+        if marker in profile_stored:
+            profile_stored = profile_stored.split(marker, 1)[1]
     return {
         "harness_commit": commit or "unknown",
         "harness_dirty": dirty,
         "python_version": platform.python_version(),
         "java_version": java_version or None,
-        "profile_path": profile_path.as_posix(),
+        "profile_path": profile_stored,
         "profile_sha256": file_sha256(profile_path),
         "suite_id": suite_id,
         "suite_seed": suite_seed,
