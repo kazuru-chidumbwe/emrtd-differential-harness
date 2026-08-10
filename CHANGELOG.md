@@ -6,13 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid historical anchors.
-Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.1`** — see [`docs/TAGS.md`](docs/TAGS.md).
+Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.2`** — see [`docs/TAGS.md`](docs/TAGS.md).
 
 ## [Unreleased]
 
 ### Changed
 
 - (none pending)
+
+## [1.0.2] — 2026-08-10
+
+### Fixed
+
+- Regenerated TC-PA-01/03/04 `.pem` + `.hex` fixtures so embedded DER Subject/Issuer / CMS signer certs use `EMRTD Harness Synthetic Fixture` (stale outputs had retained a private programme codename).
+- `generate_pa04_chained_fixture.py`: compatible `not_valid_after` print on older cryptography.
+
+### Changed
+
+- Live paper cite pin is `v1.0.2` (AC-01 suite digests unchanged).
 
 ## [1.0.1] — 2026-08-10
 
@@ -56,6 +67,7 @@ Paper corroboration pin for the shallow TC-AC-ADV arm. **Does not** replace `pap
 - Tagged at the same commit as essay pin `blog-b10-2026-07` (`96fa6a4`).
 - Keep a Changelog + SemVer discipline documented on the default branch.
 
+[1.0.2]: https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.2
 [1.0.1]: https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.1
 [1.0.0]: https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.0
 [tc-ac-adv-2026-07-28]: https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/tc-ac-adv-2026-07-28

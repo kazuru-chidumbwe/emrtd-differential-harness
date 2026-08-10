@@ -10,6 +10,7 @@ drivers/jmrtd/target/
 
 # Python
 .venv/
+.venv-pa-regen/
 __pycache__/
 *.pyc
 

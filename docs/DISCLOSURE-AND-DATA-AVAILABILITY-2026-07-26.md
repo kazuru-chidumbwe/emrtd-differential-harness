@@ -1,10 +1,10 @@
 # Disclosure and data availability
 
 **Date:** 2026-08-10 (venue-agnostic; no fixed maintainer-facing embargo)  
-**Evidence pin (cite):** tag `v1.0.1` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.1  
-**Historical SemVer:** `v1.0.0` (suite digests unchanged)  
+**Evidence pin (cite):** tag `v1.0.2` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.2  
+**Historical SemVer:** `v1.0.1` / `v1.0.0` (AC-01 suite digests unchanged)  
 **Historical evidence freeze:** `paper-manifest-2026-07-26` (suite digests unchanged)  
-**ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (also present on `v1.0.1` tip)
+**ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (also present on `v1.0.2` tip)
 
 This note records pin/disclosure facts for independent verification. It is intentionally **venue-agnostic**. An earlier alternate-venue draft for related manuscript text was explored and is now abandoned; it is not under concurrent consideration.
 
@@ -37,9 +37,9 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 | Object | Value |
 | --- | --- |
-| Annotated tag (live cite) | `v1.0.1` |
-| Historical SemVer | `v1.0.0` (suite digests unchanged) |
-| Historical evidence freeze | `paper-manifest-2026-07-26` (suite digests; superseded for cite by `v1.0.1`) |
+| Annotated tag (live cite) | `v1.0.2` |
+| Historical SemVer | `v1.0.1` / `v1.0.0` (AC-01 suite digests unchanged) |
+| Historical evidence freeze | `paper-manifest-2026-07-26` (suite digests; superseded for cite by `v1.0.2`) |
 | ADV corroboration tag | `tc-ac-adv-2026-07-28` |
 | Primary PACE cite | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` |
 | Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
@@ -51,4 +51,4 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 Some July 2026 lab notes and early manuscript drafts recorded suite digest `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`. That string does **not** match any retained file under the Jul-9 log directory. It is **not** the review pin. Cite only `d8afa161…` (primary) or `d505d521…` (Option A) above.
 
-Tag `v1.0.1` is the **paper cite pin**. Suite digests remain immutable; docs-only commits after `v1.0.1` require a new SemVer for cite updates.
+Tag `v1.0.2` is the **paper cite pin**. Suite digests remain immutable; docs-only commits after `v1.0.2` require a new SemVer for cite updates.

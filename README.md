@@ -11,10 +11,10 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-07`** (same tree). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.1`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.1 · See [`CHANGELOG.md`](CHANGELOG.md) and [`docs/TAGS.md`](docs/TAGS.md).
+**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.2`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.2 · See [`CHANGELOG.md`](CHANGELOG.md) and [`docs/TAGS.md`](docs/TAGS.md).
 
 ```bash
-git checkout v1.0.1
+git checkout v1.0.2
 ```
 
 ---
@@ -71,7 +71,7 @@ export GOTOOLCHAIN=auto
 make smoke
 ```
 
-Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade work cites **`v1.0.1`** (historical freeze tags `paper-manifest-*` / SemVer `v1.0.0` remain aliases).
+Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade work cites **`v1.0.2`** (historical freeze tags `paper-manifest-*` / earlier SemVer remain aliases).
 
 ---
 
@@ -103,7 +103,7 @@ Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `obs
 
 **N=100** (AC-01 wire suite): repeating each deterministic profile demonstrates **harness stability and reproducibility**, not behavioural variance / statistical power.
 
-Evidence pin: **`v1.0.1`**. Locked run-trees: GitHub Release (see disclosure note).
+Evidence pin: **`v1.0.2`**. Locked run-trees: GitHub Release (see disclosure note).
 
 ---
 

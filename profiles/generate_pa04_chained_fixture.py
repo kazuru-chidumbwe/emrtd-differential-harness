@@ -197,9 +197,10 @@ def write_case(tag: str, *, expired: bool, csca_key, csca_cert) -> None:
     (FIXTURE_DIR / f"tc-pa-04{tag}-sod.hex").write_text(sod_der.hex() + "\n", encoding="utf-8")
     (FIXTURE_DIR / f"tc-pa-04{tag}-csca.pem").write_text(header + csca_pem, encoding="utf-8")
     (FIXTURE_DIR / f"tc-pa-04{tag}-dsc.pem").write_text(header + dsc_pem, encoding="utf-8")
+    na = getattr(dsc_cert, "not_valid_after_utc", None) or dsc_cert.not_valid_after
     print(
         f"Wrote TC-PA-04{tag}: SOD {len(sod_der)} bytes; "
-        f"DSC notAfter={dsc_cert.not_valid_after_utc.date()}"
+        f"DSC notAfter={na.date() if hasattr(na, 'date') else na}"
     )
 
 
