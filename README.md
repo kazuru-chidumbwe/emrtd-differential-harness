@@ -11,10 +11,10 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-07`** (same tree). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.3`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.3 · See [`CHANGELOG.md`](CHANGELOG.md) and [`docs/TAGS.md`](docs/TAGS.md).
+**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.4`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.4 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md).
 
 ```bash
-git checkout v1.0.3
+git checkout v1.0.4
 ```
 
 ---

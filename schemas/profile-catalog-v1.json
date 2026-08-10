@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/schemas/profile-catalog-v1.json",
+  "title": "profiles/catalog.json (catalog_version 1)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["catalog_version", "profiles"],
+  "properties": {
+    "catalog_version": { "type": "integer", "const": 1 },
+    "profile_format_version": { "type": "integer" },
+    "default_seed": { "type": "integer" },
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["id", "path", "tier", "mechanism", "condition"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "tier": { "type": "string", "minLength": 1 },
+          "mechanism": { "type": "string", "minLength": 1 },
+          "condition": { "type": "string", "minLength": 1 },
+          "seed": { "type": "integer" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}

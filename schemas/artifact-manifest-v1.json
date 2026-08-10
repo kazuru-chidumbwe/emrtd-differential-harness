@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/schemas/artifact-manifest-v1.json",
+  "title": "Suite artifact-manifest.json (v1)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "artifact_version",
+    "provenance_version",
+    "run_schema_version",
+    "profile_catalog_version",
+    "suite",
+    "commit",
+    "harness_dirty",
+    "methodology_note",
+    "entries"
+  ],
+  "properties": {
+    "artifact_version": { "type": "integer", "const": 1 },
+    "provenance_version": { "type": "integer", "const": 1 },
+    "run_schema_version": { "type": "integer", "const": 1 },
+    "profile_catalog_version": { "type": "integer", "const": 1 },
+    "suite": { "type": "string", "minLength": 1 },
+    "commit": { "type": "string", "minLength": 1 },
+    "harness_dirty": { "type": "boolean" },
+    "suite_seed": { "type": "integer" },
+    "generated_at": { "type": "string", "minLength": 1 },
+    "methodology_note": { "type": "string", "minLength": 1 },
+    "pipeline": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "per_run": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["run_id", "path", "sha256"],
+        "properties": {
+          "run_id": { "type": "string" },
+          "path": { "type": "string" },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          },
+          "figure_id": { "type": "string" },
+          "scenario_id": { "type": "string" },
+          "observability_score": { "type": "integer", "enum": [0, 1, 2] }
+        }
+      }
+    },
+    "entries": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["finding", "table", "summary", "manifest"]
+          },
+          "scenario": { "type": "object" },
+          "execution": { "type": "object" },
+          "observation": { "type": "object" },
+          "finding": { "type": "object" },
+          "artifact_refs": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "bundle_sha256": { "type": "string" },
+          "path": { "type": "string" },
+          "sha256": { "type": "string" },
+          "suite": { "type": "string" },
+          "commit": { "type": "string" }
+        }
+      }
+    }
+  }
+}

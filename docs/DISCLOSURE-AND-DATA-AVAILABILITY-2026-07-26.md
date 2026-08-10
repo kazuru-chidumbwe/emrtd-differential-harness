@@ -38,7 +38,7 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 | Object | Value |
 | --- | --- |
-| Annotated tag (live cite) | `v1.0.3` |
+| Annotated tag (live cite) | `v1.0.4` |
 | Locked-run Release | `locked-runs-2026-08-10` |
 | ADV corroboration tag | `tc-ac-adv-2026-07-28` |
 | Primary PACE cite | `6c6cbbd1959ec047980c1021c5d3ddf196c10b088d7884ab8ed80f56ae81c9b5` |
@@ -57,4 +57,4 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 Cite only `6c6cbbd1…` (primary) or `2efd190e…` (Option A) above.
 
-Tag `v1.0.3` is the **paper cite pin**. New evidence semantics or deposit changes require a new SemVer.
+Tag `v1.0.4` is the **paper cite pin**. New evidence semantics or deposit changes require a new SemVer.

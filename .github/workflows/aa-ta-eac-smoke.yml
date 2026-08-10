@@ -7,7 +7,11 @@ on:
   workflow_dispatch: {}
   push:
     branches:
+      - main
       - 'jmrtd-sweep-*'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   aa-ta-eac-smoke:
@@ -37,7 +41,8 @@ jobs:
       - name: Unit tests (classifiers + middleware + normfail)
         run: |
           go test ./classifier/ ./middleware/ ./internal/normfail/
-          (cd classifier && python3 -m unittest test_observability -v)
+          pip install --break-system-packages -r classifier/requirements-verify.txt
+          (cd classifier && python3 -m unittest test_observability test_schemas -v)
           (cd drivers/jmrtd && mvn -q test)
 
       - name: AA + TA/EAC smoke (+ gmrtd unsupported)

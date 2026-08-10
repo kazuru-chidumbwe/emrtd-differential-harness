@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/schemas/provenance-v1.json",
+  "title": "Per-run provenance block (v1)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "harness_commit",
+    "harness_dirty",
+    "profile_path",
+    "profile_sha256",
+    "suite_id",
+    "suite_seed",
+    "driver",
+    "variant"
+  ],
+  "properties": {
+    "harness_commit": { "type": "string", "minLength": 1 },
+    "harness_dirty": { "type": "boolean" },
+    "go_version": { "type": ["string", "null"] },
+    "java_version": { "type": ["string", "null"] },
+    "python_version": { "type": ["string", "null"] },
+    "profile_path": { "type": "string", "minLength": 1 },
+    "profile_sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "suite_id": { "type": "string", "minLength": 1 },
+    "suite_seed": { "type": "integer" },
+    "suite_n": { "type": "integer", "minimum": 1 },
+    "run_index": { "type": "integer", "minimum": 1 },
+    "driver": { "type": "string", "minLength": 1 },
+    "variant": { "type": "string", "minLength": 1 },
+    "middleware": { "type": ["string", "null"] },
+    "captured_at_utc": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/schemas/run-artifact-v1.json",
+  "title": "Per-run artifact JSON (v1)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "run_id",
+    "test_case",
+    "library",
+    "mechanism",
+    "condition",
+    "tier",
+    "variant",
+    "provenance",
+    "observability_score"
+  ],
+  "properties": {
+    "run_id": { "type": "string", "minLength": 1 },
+    "test_case": { "type": "string", "minLength": 1 },
+    "library": { "type": "string", "minLength": 1 },
+    "mechanism": { "type": "string", "minLength": 1 },
+    "condition": { "type": "string", "minLength": 1 },
+    "tier": { "type": "string", "minLength": 1 },
+    "variant": { "type": "string", "minLength": 1 },
+    "observability_score": { "type": "integer", "enum": [0, 1, 2] },
+    "observability_meaning": { "type": "string" },
+    "provenance": {
+      "$ref": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/schemas/provenance-v1.json"
+    },
+    "trace": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["label", "success"],
+        "properties": {
+          "label": { "type": "string" },
+          "capdu": { "type": "string" },
+          "rapdu": { "type": "string" },
+          "success": { "type": "boolean" }
+        }
+      }
+    },
+    "normalized_failure": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["mechanism", "failure_class", "surfaced"],
+      "properties": {
+        "mechanism": { "type": "string" },
+        "step": { "type": "string" },
+        "iso7816_sw": { "type": "string" },
+        "failure_class": {
+          "type": "string",
+          "enum": ["chip_sw_reject", "protocol_exception", "peer_unsupported"]
+        },
+        "surfaced": { "type": "boolean" }
+      }
+    },
+    "pace_err": { "type": "string" },
+    "bac_err": { "type": "string" },
+    "bac_success": { "type": "boolean" },
+    "active_auth_err": { "type": "string" },
+    "active_auth_success": { "type": "boolean" }
+  }
+}

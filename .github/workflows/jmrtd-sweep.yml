@@ -6,15 +6,19 @@ name: JMRTD sweep and CA-mitigated verification
 # outbound access to Maven Central and proxy.golang.org, which is the only thing this job
 # needed that the drafting environment didn't have.
 #
-# Trigger manually (Actions tab -> this workflow -> Run workflow) or on push to a branch
-# matching jmrtd-sweep-*. Results are uploaded as a downloadable build artifact — pull them
-# from the Actions run page, they don't need to be committed.
+# Triggers: workflow_dispatch, push to main / jmrtd-sweep-*, and pull_request targeting main.
+# Results are uploaded as a downloadable build artifact — pull them from the Actions run page;
+# they don't need to be committed.
 
 on:
   workflow_dispatch: {}
   push:
     branches:
+      - main
       - 'jmrtd-sweep-*'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   jmrtd-sweep:

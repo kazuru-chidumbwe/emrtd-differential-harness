@@ -6,13 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid historical anchors.
-Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.3`** — see [`docs/TAGS.md`](docs/TAGS.md).
+Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.4`** — see [`docs/TAGS.md`](docs/TAGS.md).
 
 ## [Unreleased]
 
 ### Changed
 
 - (none pending)
+
+## [1.0.4] — 2026-08-10
+
+### Added
+
+- `CITATION.cff` + `.zenodo.json` — author/ORCID/keywords for GitHub “Cite this repository” and Zenodo GitHub-integration metadata (do not rely on auto-generated About text).
+- `SECURITY.md` — harness vulnerability reporting channel; points to disclosure log for third-party library notices.
+- Frozen JSON Schema files under `schemas/` (`artifact-manifest-v1`, `run-artifact-v1`, `provenance-v1`, `profile-catalog-v1`) with `classifier/schema_validate.py` enforcement from `verify_manifest.py` + `test_schemas`.
+- CI: `aa-ta-eac-smoke.yml` and `jmrtd-sweep.yml` also run on `push`/`pull_request` to `main` (not only `jmrtd-sweep-*` / manual dispatch).
+- `scripts/preflight_banned_terms.py` + `make preflight-locked-runs` — fail Release staging if programme/lab provenance strings remain.
+
+### Changed
+
+- Live paper cite pin is `v1.0.4` (suite digests unchanged from `v1.0.3` path-sanitized deposit).
 
 ## [1.0.3] — 2026-08-10
 

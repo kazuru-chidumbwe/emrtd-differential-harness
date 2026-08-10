@@ -56,7 +56,7 @@ See in-repo Class B re-verify notes under `docs/` (Option A / 0.8.6 pin).
 3. Re-run headline N=40 — **done** (test-server 20 Jul) → see [`OPTION-A-HEADLINE-40-2026-07-20.md`](OPTION-A-HEADLINE-40-2026-07-20.md)  
 4. New headline manifest SHA — **`3A8D18ADE8A66DDFFAF3344606AD5382F80F544A6831A08A47DBE1202775176B`** (replaces `fa84b9cd…` for Option A headline claims)  
 5. Paper methods: coordinate **0.8.6** + jar SHA-256 + fetch date  
-6. Full factorial N=200 (`ac-01-sweep-full`) — **done** (20 Jul) → [`OPTION-A-SWEEP-FULL-2026-07-20.md`](OPTION-A-SWEEP-FULL-2026-07-20.md) · SHA `D505D5212480A68B2253020A6C701C4F50FA71EE8A7DA23000F970C573C60051`
+6. Full factorial N=200 (`ac-01-sweep-full`) — **done** (20 Jul) → [`OPTION-A-SWEEP-FULL-2026-07-20.md`](OPTION-A-SWEEP-FULL-2026-07-20.md) · SHA `2EFD190E80D90FD3C3793B3B481805A567F3630329CF434F8A4CD33FBE9BDDD4` (path-sanitized reissue 2026-08-10; retired `D505D521…`)
 
 **Pre-commit:** diverge from 0.5.2-era = **finding**. Headline soft deadline **~29 Jul 2026** — **met** (20 Jul). Full factorial also met same day.
 

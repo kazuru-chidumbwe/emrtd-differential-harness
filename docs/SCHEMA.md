@@ -49,7 +49,9 @@ Never use prose numbering (“Figure 2”) in the repository.
 
 ## CI: `make paper`
 
-Runs tests → smoke → suite → manifest → verify. Fails if any gate fails or `harness_dirty=true`. Copies verified manifest to `artifacts/`.
+Runs tests → smoke → suite → manifest → verify (including JSON Schema checks against `schemas/*-v1.json`). Fails if any gate fails or `harness_dirty=true`. Copies verified manifest to `artifacts/`.
+
+Schema files live under [`schemas/`](../schemas/); `classifier/verify_manifest.py` imports `schema_validate.py` (requires `pip install -r classifier/requirements-verify.txt`).
 
 ## Version bumps
 

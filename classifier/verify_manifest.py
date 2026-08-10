@@ -11,19 +11,31 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from constants import ARTIFACT_MANIFEST_VERSION, METHODOLOGY_NOTE  # noqa: E402
+from schema_validate import (  # noqa: E402
+    SchemaUnavailableError,
+    validate_artifact_manifest,
+    validate_run_artifact,
+)
 
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def verify(log_dir: Path, suite_manifest: Path | None) -> list[str]:
+def verify(log_dir: Path, suite_manifest: Path | None, *, skip_schema: bool = False) -> list[str]:
     errors: list[str] = []
     manifest_path = log_dir / "artifact-manifest.json"
     if not manifest_path.is_file():
         return ["missing artifact-manifest.json (canonical object)"]
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    if not skip_schema:
+        try:
+            for msg in validate_artifact_manifest(manifest):
+                errors.append(f"schema artifact-manifest: {msg}")
+        except SchemaUnavailableError as e:
+            errors.append(str(e))
 
     if manifest.get("artifact_version") != ARTIFACT_MANIFEST_VERSION:
         errors.append(f"artifact_version must be {ARTIFACT_MANIFEST_VERSION}")
@@ -80,6 +92,29 @@ def verify(log_dir: Path, suite_manifest: Path | None) -> list[str]:
     if "MANIFEST-01" not in entries:
         errors.append("missing MANIFEST-01 self-reference")
 
+    # Schema-check per-run JSON listed in the manifest (bounded sample if huge)
+    if not skip_schema:
+        per_run = manifest.get("per_run") or []
+        for rec in per_run:
+            rel = rec.get("path")
+            if not rel:
+                continue
+            run_path = log_dir / rel
+            if not run_path.is_file():
+                errors.append(f"per_run missing file: {rel}")
+                continue
+            try:
+                run_obj = json.loads(run_path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                errors.append(f"per_run JSON error {rel}: {e}")
+                continue
+            try:
+                for msg in validate_run_artifact(run_obj):
+                    errors.append(f"schema run {rel}: {msg}")
+            except SchemaUnavailableError as e:
+                errors.append(str(e))
+                break
+
     return errors
 
 
@@ -87,9 +122,14 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("log_dir", type=Path)
     parser.add_argument("--manifest", type=Path, default=None)
+    parser.add_argument(
+        "--skip-schema",
+        action="store_true",
+        help="Skip JSON Schema validation (not for paper/CI gates)",
+    )
     args = parser.parse_args()
 
-    errors = verify(args.log_dir, args.manifest)
+    errors = verify(args.log_dir, args.manifest, skip_schema=args.skip_schema)
     if errors:
         for e in errors:
             print(f"VERIFY FAIL: {e}", file=sys.stderr)
