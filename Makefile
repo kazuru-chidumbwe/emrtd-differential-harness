@@ -1,4 +1,4 @@
-.PHONY: smoke suite suite-paper paper repro test test-middleware verify-manifest preflight-locked-runs
+.PHONY: smoke suite suite-paper paper repro test test-middleware verify-manifest preflight-locked-runs package-locked-runs
 
 smoke:
 	bash scripts/quick_test.sh
@@ -35,3 +35,10 @@ verify-manifest:
 preflight-locked-runs:
 	@test -n "$(STAGING)" || (echo "usage: make preflight-locked-runs STAGING=path/to/staging" && exit 1)
 	python3 scripts/preflight_banned_terms.py "$(STAGING)"
+
+# Hard release-build gate: banned-term + abs-path + schema scan, then SemVer-named zip.
+# Usage: make package-locked-runs STAGING=path/to/staging VERSION=1.0.6
+package-locked-runs:
+	@test -n "$(STAGING)" || (echo "usage: make package-locked-runs STAGING=... VERSION=1.0.6" && exit 1)
+	@test -n "$(VERSION)" || (echo "usage: make package-locked-runs STAGING=... VERSION=1.0.6" && exit 1)
+	bash scripts/package_locked_runs.sh "$(STAGING)" "$(VERSION)"

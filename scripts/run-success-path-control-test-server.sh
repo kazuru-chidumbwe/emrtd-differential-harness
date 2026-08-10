@@ -57,6 +57,21 @@ run_one profiles/success-path/bac-only.json false bac-only-allow-false
 run_one profiles/success-path/bac-only.json true bac-only-allow-true
 run_one profiles/success-path/pace-fail-allow.json true pace-fail-allow-true
 
+# Offline PA smoke before directory fingerprint so outputs are included when present.
+if command -v python3 >/dev/null 2>&1 && [[ -f drivers/pymrtd-offline/run_smoke.py ]]; then
+  status "PHASE offline-pa-smoke"
+  mkdir -p "$LOG_DIR/offline-pa"
+  if SUITE_ID=ac-01-success-path-control LOG_DIR="$LOG_DIR/offline-pa" \
+      python3 drivers/pymrtd-offline/run_smoke.py \
+      >"$LOG_DIR/offline-pa-smoke.stdout.txt" 2>"$LOG_DIR/offline-pa-smoke.stderr.txt"; then
+    status "OK offline-pa-smoke"
+  else
+    status "WARN offline-pa-smoke exit=$? (pymrtd may be missing; wire pin still valid)"
+  fi
+else
+  status "SKIP offline-pa-smoke"
+fi
+
 status "PHASE manifest"
 (
   cd "$LOG_DIR"
@@ -68,18 +83,6 @@ MANIFEST_SHA="$(sha256sum "$LOG_DIR/file-sha256sums.txt" | awk '{print $1}')"
 echo "$MANIFEST_SHA" | tee "$LOG_DIR/MANIFEST.sha256"
 status "MANIFEST_SHA256=$MANIFEST_SHA"
 status "LOG_DIR=$HARNESS_ROOT/$LOG_DIR"
-
-if command -v python3 >/dev/null 2>&1 && [[ -f drivers/pymrtd-offline/run_smoke.py ]]; then
-  status "PHASE offline-pa-smoke (best-effort)"
-  if LOG_DIR="$LOG_DIR/offline-pa" python3 drivers/pymrtd-offline/run_smoke.py \
-      >"$LOG_DIR/offline-pa-smoke.stdout.txt" 2>"$LOG_DIR/offline-pa-smoke.stderr.txt"; then
-    status "OK offline-pa-smoke"
-  else
-    status "WARN offline-pa-smoke exit=$? (pymrtd may be missing; wire pin still valid)"
-  fi
-else
-  status "SKIP offline-pa-smoke"
-fi
 
 status "DONE OK"
 exit 0

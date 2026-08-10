@@ -10,9 +10,18 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- `drivers/pymrtd-offline/run_smoke.py`: emit `variant` + `provenance` (same contract as `run_case.py`) so offline PA smoke validates under `schemas/run-artifact-v1.json`.
+- Success-path control script: run offline PA smoke **before** directory fingerprint.
+
+### Added
+
+- `scripts/package_locked_runs.sh` + `make package-locked-runs` — hard release gate (banned-term + abs-path + schema scan) producing SemVer-named `emrtd-locked-runs-vX.Y.Z.zip`.
+
 ### Changed
 
-- (none pending)
+- (deposit re-package to `v1.0.6` pending after lab refresh)
 
 ## [1.0.5] — 2026-08-10
 
