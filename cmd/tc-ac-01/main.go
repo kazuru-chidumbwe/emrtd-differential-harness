@@ -6,11 +6,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gmrtd/gmrtd/bac"
-	"github.com/gmrtd/gmrtd/document"
+	"github.com/gmrtd/gmrtd/cms"
 	"github.com/gmrtd/gmrtd/iso7816"
 	"github.com/gmrtd/gmrtd/password"
-	"github.com/gmrtd/gmrtd/pace"
+	"github.com/gmrtd/gmrtd/reader"
 	"github.com/gmrtd/gmrtd/utils"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/classifier"
 	"github.com/kazuru-chidumbwe/emrtd-differential-harness/internal/output"
@@ -32,6 +31,7 @@ type smokeResult struct {
 	PaceErr         string       `json:"pace_err"`
 	BacErr          string       `json:"bac_err"`
 	BacSuccess      bool         `json:"bac_success"`
+	ReadDocumentErr string       `json:"read_document_err"`
 	Observability   int          `json:"observability_score"`
 	ObservabilityMe string       `json:"observability_meaning"`
 	Trace           []traceEntry `json:"trace"`
@@ -47,6 +47,10 @@ type suiteFlags struct {
 	runIndex    int
 	figureID    string
 }
+
+type silentStatus struct{}
+
+func (silentStatus) Status(string) {}
 
 func parseFlags() suiteFlags {
 	profilePath := flag.String("profile", "profiles/pace-then-bac-downgrade.json", "synthetic chip profile JSON")
@@ -88,31 +92,28 @@ func main() {
 		paceSW = "6FFF"
 	}
 
-	transceiver := simulator.NewTcAc01TransceiverWithChannel(paceSW, p.Injection.PaceFailOn, p.Injection.PaceChannel, pass)
+	// Drive gmrtd's shipped ReadDocument (not hand-composed DoPACE/DoBAC).
+	// PaceSurfacedToCaller is measured from the top-level return error.
+	transceiver := simulator.NewTcAc01DocumentTransceiver(
+		paceSW, p.Injection.PaceFailOn, p.Injection.PaceChannel, p.CardAccessHex, pass,
+	)
 	nfc := iso7816.NewNfcSession(transceiver)
+	r := reader.NewReader(silentStatus{}, nfc, &cms.GenericCertPool{})
+	docEx, _, readErr := r.ReadDocument(pass, nil, nil)
 
-	doc := &document.Document{}
-	doc.Mf.CardAccess, err = document.NewCardAccess(utils.HexToBytes(p.CardAccessHex))
-	if err != nil {
-		fatal("card access", err)
+	paceErrStr := ""
+	bacErrStr := ""
+	bacOK := false
+	if docEx != nil {
+		paceErrStr = errString(docEx.Session.PaceErr)
+		bacErrStr = errString(docEx.Session.BacErr)
+		bacOK = docEx.Session.BacResult != nil && docEx.Session.BacResult.Success
 	}
-
-	docEx := &document.DocumentEx{Document: *doc}
-	docEx.Session.PaceResult, docEx.Session.PaceCamResult, docEx.Session.PaceErr =
-		pace.NewPace(nfc, doc, pass).DoPACE()
-
-	if nfc.SM() == nil {
-		docEx.Session.BacResult, docEx.Session.BacErr = bac.NewBAC(nfc, doc, pass).DoBAC()
-	}
-
-	paceErrStr := errString(docEx.Session.PaceErr)
-	bacErrStr := errString(docEx.Session.BacErr)
-	bacOK := docEx.Session.BacResult != nil && docEx.Session.BacResult.Success
 	obs, obsMeaning := classifier.ClassifyTCAC01(classifier.TCAC01Input{
 		PaceFailed:           paceErrStr != "",
 		BacSuccess:           bacOK,
 		BacErr:               bacErrStr,
-		PaceSurfacedToCaller: false,
+		PaceSurfacedToCaller: readErr != nil,
 	})
 
 	prov, err := provenance.Collect(provenance.Options{
@@ -144,6 +145,7 @@ func main() {
 		PaceErr:         paceErrStr,
 		BacErr:          bacErrStr,
 		BacSuccess:      bacOK,
+		ReadDocumentErr: errString(readErr),
 		Observability:   obs.Int(),
 		ObservabilityMe: obsMeaning,
 		Trace:           buildTrace(nfc.ApduLog()),
@@ -157,8 +159,9 @@ func main() {
 	enc.SetIndent("", "  ")
 	_ = enc.Encode(result)
 
-	if paceErrStr == "" || !bacOK {
-		fmt.Fprintf(os.Stderr, "TC-AC-01 gate failed: pace_err=%q bac_success=%v\n", paceErrStr, bacOK)
+	if paceErrStr == "" || !bacOK || readErr != nil {
+		fmt.Fprintf(os.Stderr, "TC-AC-01 gate failed: pace_err=%q bac_success=%v read_document_err=%v\n",
+			paceErrStr, bacOK, readErr)
 		os.Exit(1)
 	}
 }

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "ac01-silent",
+    "mechanism": "TC-AC-01",
+    "input": {
+      "pace_failed": true,
+      "bac_success": true,
+      "bac_err": "",
+      "pace_surfaced_to_caller": false
+    },
+    "expected_score": 0
+  },
+  {
+    "id": "ac01-logged",
+    "mechanism": "TC-AC-01",
+    "input": {
+      "pace_failed": true,
+      "bac_success": false,
+      "bac_err": "bac failed",
+      "pace_surfaced_to_caller": false
+    },
+    "expected_score": 1
+  },
+  {
+    "id": "ac01-surfaced",
+    "mechanism": "TC-AC-01",
+    "input": {
+      "pace_failed": true,
+      "bac_success": false,
+      "bac_err": "",
+      "pace_surfaced_to_caller": true
+    },
+    "expected_score": 2
+  },
+  {
+    "id": "ca01-silent",
+    "mechanism": "TC-CA-01",
+    "input": {
+      "chip_auth_failed": true,
+      "chip_auth_success": false,
+      "session_continue_ok": true,
+      "failure_surfaced_to_caller": false
+    },
+    "expected_score": 0
+  },
+  {
+    "id": "aa01-silent",
+    "mechanism": "TC-AA-01",
+    "input": {
+      "active_auth_failed": true,
+      "active_auth_success": false,
+      "failure_surfaced_to_caller": false
+    },
+    "expected_score": 0
+  }
+]

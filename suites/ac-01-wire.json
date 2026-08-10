@@ -2,7 +2,7 @@
   "suite_id": "ac-01-wire",
   "description": "TC-AC-01 wire tier — blog scope (baseline + gmrtd/jmrtd mitigation)",
   "seed": 1,
-  "n": 100,
+  "n": 1,
   "table_id": "TABLE-01",
   "profile": "profiles/pace-then-bac-downgrade.json",
   "entries": [

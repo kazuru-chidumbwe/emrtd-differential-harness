@@ -26,6 +26,7 @@ public final class Provenance {
         Map<String, Object> out = new LinkedHashMap<>();
         out.put("harness_commit", resolveHarnessCommit(root));
         out.put("harness_dirty", gitDirty(root));
+        out.put("jmrtd_version", "0.8.6");
         out.put("profile_path", repoRelativePath(root, profilePath));
         out.put("profile_sha256", sha256(profilePath));
         out.put("suite_id", suiteId == null || suiteId.isEmpty() ? "unspecified" : suiteId);
@@ -36,8 +37,25 @@ public final class Provenance {
         out.put("driver", driver);
         out.put("variant", variant);
         out.put("middleware", middleware == null || middleware.isEmpty() ? null : middleware);
-        out.put("captured_at_utc", java.time.Instant.now().toString());
+        out.put("captured_at_utc", capturedAtUtc());
         return out;
+    }
+
+    /** Honor SOURCE_DATE_EPOCH when set (reproducible manifests). */
+    static String capturedAtUtc() {
+        String epoch = System.getenv("SOURCE_DATE_EPOCH");
+        if (epoch != null) {
+            String trimmed = epoch.trim();
+            if (!trimmed.isEmpty()) {
+                try {
+                    long sec = Long.parseLong(trimmed);
+                    return java.time.Instant.ofEpochSecond(sec).toString();
+                } catch (NumberFormatException ignored) {
+                    // fall through
+                }
+            }
+        }
+        return java.time.Instant.now().toString();
     }
 
     /** Prefer path relative to harness root so deposits do not embed host absolute paths. */

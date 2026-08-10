@@ -82,7 +82,8 @@
       "mechanism": "FI",
       "condition": "truncated_cardaccess",
       "seed": 1,
-      "description": "Truncated EF.CardAccess parse probe (scaffold)"
+      "description": "DEFERRED scaffold — truncated EF.CardAccess parse probe (not paper evidence; no driver)",
+      "status": "deferred"
     }
   ],
   "offline_cases": [

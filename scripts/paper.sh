@@ -26,6 +26,9 @@ p.write_text(json.dumps({
 "
 }
 
+echo "==> [0/5] gmrtd pin"
+bash "$ROOT/scripts/verify_gmrtd_pin.sh"
+
 echo "==> [1/5] tests"
 if make test; then
   TESTS=pass

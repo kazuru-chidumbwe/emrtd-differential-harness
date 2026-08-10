@@ -2,7 +2,7 @@
   "suite_id": "paper-matrix-v1",
   "description": "Full library × mechanism matrix for paper (wire + offline tiers)",
   "seed": 1,
-  "n": 100,
+  "n": 1,
   "table_id": "TABLE-01",
   "entries": [
     {

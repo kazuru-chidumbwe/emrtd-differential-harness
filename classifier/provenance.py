@@ -35,6 +35,38 @@ def file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _captured_at_utc() -> str:
+    raw = (os.environ.get("SOURCE_DATE_EPOCH") or "").strip()
+    if raw:
+        try:
+            return datetime.fromtimestamp(int(raw), tz=timezone.utc).strftime(
+                "%Y-%m-%dT%H:%M:%SZ"
+            )
+        except ValueError:
+            pass
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _gmrtd_commit(root: Path) -> str | None:
+    env = (os.environ.get("GMRTD_COMMIT") or "").strip()
+    if env:
+        return env
+    for candidate in (
+        (os.environ.get("GMRTD_PATH") or "").strip(),
+        str(root.parent / "_vendor" / "gmrtd"),
+        str(root / "_vendor" / "gmrtd"),
+    ):
+        if not candidate:
+            continue
+        try:
+            return subprocess.check_output(
+                ["git", "-C", candidate, "rev-parse", "HEAD"], text=True
+            ).strip()
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            continue
+    return None
+
+
 def collect(
     *,
     root: Path,
@@ -62,6 +94,7 @@ def collect(
     return {
         "harness_commit": commit or "unknown",
         "harness_dirty": dirty,
+        "gmrtd_commit": _gmrtd_commit(root),
         "python_version": platform.python_version(),
         "java_version": java_version or None,
         "profile_path": profile_stored,
@@ -73,7 +106,7 @@ def collect(
         "driver": driver,
         "variant": variant,
         "middleware": middleware or None,
-        "captured_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "captured_at_utc": _captured_at_utc(),
     }
 
 

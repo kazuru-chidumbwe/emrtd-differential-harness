@@ -17,6 +17,7 @@
   "properties": {
     "harness_commit": { "type": "string", "minLength": 1 },
     "harness_dirty": { "type": "boolean" },
+    "gmrtd_commit": { "type": ["string", "null"] },
     "go_version": { "type": ["string", "null"] },
     "java_version": { "type": ["string", "null"] },
     "python_version": { "type": ["string", "null"] },

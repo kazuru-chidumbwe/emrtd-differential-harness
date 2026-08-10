@@ -1,6 +1,10 @@
 package classifier
 
-import "testing"
+import (
+	"encoding/json"
+	"os"
+	"testing"
+)
 
 func TestClassifyTCAC01_gmrtdSilentDowngrade(t *testing.T) {
 	score, _ := ClassifyTCAC01(TCAC01Input{
@@ -161,5 +165,55 @@ func TestClassifyTCEAC01_surfaced(t *testing.T) {
 	})
 	if score != ScoreSurfaced {
 		t.Fatalf("got %d want surfaced", score)
+	}
+}
+
+func TestObservabilityVectorsJSON(t *testing.T) {
+	raw, err := os.ReadFile("../testdata/observability-vectors.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []struct {
+		ID       string `json:"id"`
+		Mech     string `json:"mechanism"`
+		Input    map[string]any `json:"input"`
+		Expected int    `json:"expected_score"`
+	}
+	if err := json.Unmarshal(raw, &rows); err != nil {
+		t.Fatal(err)
+	}
+	for _, row := range rows {
+		row := row
+		t.Run(row.ID, func(t *testing.T) {
+			var score Score
+			switch row.Mech {
+			case "TC-AC-01":
+				bacErr, _ := row.Input["bac_err"].(string)
+				score, _ = ClassifyTCAC01(TCAC01Input{
+					PaceFailed:           row.Input["pace_failed"].(bool),
+					BacSuccess:           row.Input["bac_success"].(bool),
+					BacErr:               bacErr,
+					PaceSurfacedToCaller: row.Input["pace_surfaced_to_caller"].(bool),
+				})
+			case "TC-CA-01":
+				score, _ = ClassifyTCCA01(TCCA01Input{
+					ChipAuthFailed:          row.Input["chip_auth_failed"].(bool),
+					ChipAuthSuccess:         row.Input["chip_auth_success"].(bool),
+					SessionContinueOK:       row.Input["session_continue_ok"].(bool),
+					FailureSurfacedToCaller: row.Input["failure_surfaced_to_caller"].(bool),
+				})
+			case "TC-AA-01":
+				score, _ = ClassifyTCAA01(TCAA01Input{
+					ActiveAuthFailed:        row.Input["active_auth_failed"].(bool),
+					ActiveAuthSuccess:       row.Input["active_auth_success"].(bool),
+					FailureSurfacedToCaller: row.Input["failure_surfaced_to_caller"].(bool),
+				})
+			default:
+				t.Fatalf("unsupported %s", row.Mech)
+			}
+			if int(score) != row.Expected {
+				t.Fatalf("got %d want %d", score, row.Expected)
+			}
+		})
 	}
 }

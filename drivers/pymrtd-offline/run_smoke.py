@@ -84,7 +84,7 @@ def try_pymrtd_verify(case: dict[str, Any]) -> tuple[bool, Optional[str]]:
 
 def classify(case: dict[str, Any], verify_err: Optional[str], attempted: bool) -> tuple[int, str]:
     if not attempted:
-        return 1, "fixture scaffold — pymrtd verify not run (install pymrtd to execute)"
+        return 1, "deferred — verify not run"
     if verify_err:
         return 2, "surfaced — verify raised or returned error"
     if case.get("expect_policy_rejection"):
@@ -112,6 +112,10 @@ def main() -> int:
             attempted, verify_err = try_pymrtd_verify(case)
         else:
             verify_err = "fixture files pending code-signing lab pass"
+
+        if verify_err == "pymrtd not installed":
+            print("FATAL: pymrtd is required for offline PA smoke", file=sys.stderr)
+            return 2
 
         obs, meaning = classify(case, verify_err, attempted and ready)
         run_id = (

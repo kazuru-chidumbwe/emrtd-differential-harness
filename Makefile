@@ -1,6 +1,9 @@
-.PHONY: smoke suite suite-paper paper repro test test-middleware verify-manifest preflight-locked-runs package-locked-runs
+.PHONY: smoke suite suite-paper paper repro test test-middleware verify-manifest verify-gmrtd-pin preflight-locked-runs package-locked-runs
 
-smoke:
+verify-gmrtd-pin:
+	bash scripts/verify_gmrtd_pin.sh
+
+smoke: verify-gmrtd-pin
 	bash scripts/quick_test.sh
 
 suite:
@@ -19,7 +22,7 @@ test-classifier:
 	go test ./classifier/...
 	python3 -c "import sys; sys.path.insert(0,'classifier'); from observability import TCAC01Outcome, classify_tc_ac_01, ObservabilityScore; assert classify_tc_ac_01(TCAC01Outcome(True,True,None,False))==ObservabilityScore.SILENT"
 	python3 -m pip install -q -r classifier/requirements-verify.txt
-	cd classifier && python3 -m unittest test_schemas -v
+	cd classifier && python3 -m unittest test_schemas test_observability test_observability_vectors -v
 
 test-middleware:
 	go test ./middleware/...

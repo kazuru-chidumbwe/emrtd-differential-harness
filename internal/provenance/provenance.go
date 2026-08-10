@@ -16,6 +16,7 @@ import (
 type Record struct {
 	HarnessCommit string `json:"harness_commit"`
 	HarnessDirty  bool   `json:"harness_dirty"`
+	GmrtdCommit   string `json:"gmrtd_commit,omitempty"`
 	GoVersion     string `json:"go_version,omitempty"`
 	JavaVersion   string `json:"java_version,omitempty"`
 	PythonVersion string `json:"python_version,omitempty"`
@@ -62,6 +63,7 @@ func Collect(opts Options) (Record, error) {
 	return Record{
 		HarnessCommit: commit,
 		HarnessDirty:  dirty,
+		GmrtdCommit:   resolveGmrtdCommit(),
 		GoVersion:     runtime.Version(),
 		JavaVersion:   opts.JavaVersion,
 		PythonVersion: opts.PythonVer,
@@ -74,8 +76,45 @@ func Collect(opts Options) (Record, error) {
 		Driver:        opts.Driver,
 		Variant:       opts.Variant,
 		Middleware:    opts.Middleware,
-		CapturedAtUTC: time.Now().UTC().Format(time.RFC3339),
+		CapturedAtUTC: capturedAtUTC(),
 	}, nil
+}
+
+// capturedAtUTC honors SOURCE_DATE_EPOCH when set (reproducible manifests).
+func capturedAtUTC() string {
+	if v := strings.TrimSpace(os.Getenv("SOURCE_DATE_EPOCH")); v != "" {
+		var sec int64
+		if _, err := fmt.Sscanf(v, "%d", &sec); err == nil && sec >= 0 {
+			return time.Unix(sec, 0).UTC().Format(time.RFC3339)
+		}
+	}
+	return time.Now().UTC().Format(time.RFC3339)
+}
+
+func resolveGmrtdCommit() string {
+	if env := strings.TrimSpace(os.Getenv("GMRTD_COMMIT")); env != "" {
+		return env
+	}
+	root, err := findModuleRoot()
+	if err != nil {
+		return ""
+	}
+	candidates := []string{
+		os.Getenv("GMRTD_PATH"),
+		filepath.Join(root, "..", "_vendor", "gmrtd"),
+		filepath.Join(root, "_vendor", "gmrtd"),
+	}
+	for _, dir := range candidates {
+		dir = strings.TrimSpace(dir)
+		if dir == "" {
+			continue
+		}
+		out, err := exec.Command("git", "-C", dir, "rev-parse", "HEAD").Output()
+		if err == nil {
+			return strings.TrimSpace(string(out))
+		}
+	}
+	return ""
 }
 
 // repoRelativePath stores profile_path relative to the harness module root when possible.

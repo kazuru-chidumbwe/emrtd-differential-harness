@@ -82,7 +82,8 @@ def try_pymrtd_verify(case: dict[str, Any]) -> tuple[bool, Optional[str]]:
 
 def classify(case: dict[str, Any], verify_err: Optional[str], attempted: bool) -> tuple[int, str]:
     if not attempted:
-        return 1, "fixture scaffold — pymrtd verify not run"
+        # Intentional stub fixtures only — paper/CI must install pymrtd (fail closed below).
+        return 1, "deferred — verify not run (non-paper scaffold path)"
     if verify_err:
         return 2, "surfaced — verify raised or returned error"
     if case.get("expect_policy_rejection"):
@@ -122,6 +123,11 @@ def main() -> int:
         attempted, verify_err = try_pymrtd_verify(case)
     else:
         verify_err = "fixture files pending"
+
+    # Fail closed: missing pymrtd must not score as evidence.
+    if verify_err == "pymrtd not installed":
+        print("FATAL: pymrtd is required for offline PA evidence runs", file=sys.stderr)
+        return 2
 
     obs, meaning = classify(case, verify_err, attempted and ready)
     run_id = f"{case['id']}-pymrtd-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')}-{run_index:06d}"

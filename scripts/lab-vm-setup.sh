@@ -25,20 +25,14 @@ python3 --version
 echo "==> Directory layout"
 mkdir -p "$VENDOR_DIR" "$HARNESS_DIR/logs"
 
-echo "==> Vendor clones (pinned refs for G1 static audit)"
-if [[ ! -d "$VENDOR_DIR/JMRTD/.git" ]]; then
-  git clone --depth 1 --branch 0.5.2 https://github.com/E3V3A/JMRTD.git "$VENDOR_DIR/JMRTD"
-fi
-if [[ ! -d "$VENDOR_DIR/gmrtd/.git" ]]; then
-  git clone --depth 1 https://github.com/gmrtd/gmrtd.git "$VENDOR_DIR/gmrtd"
-fi
+echo "==> Vendor: gmrtd pin + Option A JMRTD (Maven) + pymrtd"
+# Prefer paper bootstrap (gmrtd pin + go mod). JMRTD is Maven Central 0.8.6 — not E3V3A 0.5.2.
+bash "$HARNESS_DIR/scripts/bootstrap-vendor.sh"
+bash "$HARNESS_DIR/scripts/install-jmrtd-local.sh" || true
+
 if [[ ! -d "$VENDOR_DIR/pymrtd/.git" ]]; then
   git clone --depth 1 --branch v0.6.6 https://github.com/ZeroPass/pymrtd.git "$VENDOR_DIR/pymrtd"
 fi
-
-echo "==> JMRTD build (smoke)"
-cd "$VENDOR_DIR/JMRTD/jmrtd"
-mvn -q -DskipTests package
 
 echo "==> gmrtd build (smoke)"
 cd "$VENDOR_DIR/gmrtd"
@@ -57,9 +51,8 @@ echo "==> Harness classifier smoke"
 python3 -c "
 import sys
 sys.path.insert(0, '$HARNESS_DIR/classifier')
-from observability import RunOutcome, classify, ObservabilityScore
-o = RunOutcome('gmrtd', 'PACE', 'TC-AC-01', None, True, False)
-assert classify(o) == ObservabilityScore.LOGGED
+from observability import TCAC01Outcome, classify_tc_ac_01, ObservabilityScore
+assert classify_tc_ac_01(TCAC01Outcome(True, True, None, False)) == ObservabilityScore.SILENT
 print('classifier smoke OK')
 "
 

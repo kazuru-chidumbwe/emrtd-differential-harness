@@ -6,9 +6,11 @@ RUN_ARTIFACT_VERSION = 1
 PROFILE_CATALOG_VERSION = 1
 
 METHODOLOGY_NOTE = (
-    "Repeating each deterministic profile N=100 demonstrates harness stability and "
-    "result reproducibility rather than estimating behavioural variance."
+    "In-process simulators are deterministic (no RNG, no concurrency). "
+    "Each profile is therefore run at N=1; multi-profile cells (e.g. the 50-profile "
+    "AC-01 sweep) establish consistency across profiles, not repeated identical trials. "
+    "The ≥95% finding threshold applies to multi-profile cells."
 )
 
 FINDING_THRESHOLD_PCT = 95.0
-SUITE_N_DEFAULT = 100
+SUITE_N_DEFAULT = 1

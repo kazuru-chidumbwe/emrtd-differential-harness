@@ -154,12 +154,27 @@ def build_manifest(
         "commit": commit,
         "harness_dirty": prov.get("harness_dirty", False),
         "suite_seed": suite_seed,
-        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "generated_at": _utc_now_rfc3339(),
         "methodology_note": METHODOLOGY_NOTE,
         "pipeline": pipeline or {},
         "per_run": per_run_records,
         "entries": entries,
     }
+
+
+def _utc_now_rfc3339() -> str:
+    """Honor SOURCE_DATE_EPOCH when set (reproducible generated_at)."""
+    import os
+
+    raw = (os.environ.get("SOURCE_DATE_EPOCH") or "").strip()
+    if raw:
+        try:
+            return datetime.fromtimestamp(int(raw), tz=timezone.utc).strftime(
+                "%Y-%m-%dT%H:%M:%SZ"
+            )
+        except ValueError:
+            pass
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def attach_derived_artifacts(
@@ -170,6 +185,8 @@ def attach_derived_artifacts(
     summary_md: Path,
     table_id: str = "TABLE-01",
 ) -> dict[str, Any]:
+    """Attach TABLE/SUMMARY entries only; MANIFEST-01 is hashed in write_canonical_manifest."""
+    del log_dir  # reserved for callers that pass staging dir
     manifest = dict(manifest)
     entries = dict(manifest.get("entries", {}))
 
@@ -187,25 +204,13 @@ def attach_derived_artifacts(
         "suite": manifest["suite"],
         "commit": manifest["commit"],
     }
-
-    # Canonical root: manifest references itself after entries are fixed
-    manifest_path = log_dir / "artifact-manifest.json"
     manifest["entries"] = entries
-    body = json.dumps(manifest, indent=2, sort_keys=True) + "\n"
-    manifest["entries"]["MANIFEST-01"] = {
-        "type": "manifest",
-        "path": "artifact-manifest.json",
-        "sha256": sha256_text(body),
-        "suite": manifest["suite"],
-        "commit": manifest["commit"],
-    }
     return manifest
 
 
 def write_canonical_manifest(manifest: dict[str, Any], log_dir: Path) -> Path:
-    """Write artifact-manifest.json; re-hash MANIFEST-01 entry."""
+    """Write artifact-manifest.json; single MANIFEST-01 self-hash (no sort_keys)."""
     out = log_dir / "artifact-manifest.json"
-    # Drop self-entry for first write, then add with correct hash
     entries = dict(manifest.get("entries", {}))
     entries.pop("MANIFEST-01", None)
     manifest = dict(manifest)

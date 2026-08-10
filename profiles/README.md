@@ -10,6 +10,6 @@ Catalog: [`catalog.json`](catalog.json) lists profile IDs, paths, seeds, and tie
 | `pace-then-bac-downgrade-alt-mrz.json` | TC-AC-01 | wire | alternate MRZ |
 | `ca-v1-v2-skew.json` | TC-CA-01 | wire | gmrtd + jmrtd |
 | `ca-v2-terminal-v1.json` | TC-CA-01 | wire | variant SW 6985 |
-| `fi-cardaccess-truncated.json` | TC-FI-01 | wire | scaffold |
+| `fi-cardaccess-truncated.json` | TC-FI-01 | wire | **deferred scaffold** (not paper evidence) |
 
 Offline PA fixtures live under `testdata/sod/` (pymrtd tier — stratified, not pooled with wire).
