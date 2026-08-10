@@ -29,7 +29,7 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 | Stack | Contact date | Status |
 | --- | --- | --- |
 | JMRTD | 2026-07-08 (first notice, informal, no deadline stated); follow-up 2026-07-19 | **No email/advisory reply** as of 2026-08-10; notices on record |
-| gmrtd | 2026-07-19 (first effective; 8 Jul bounced; informal, no deadline stated) | **Maintainer email replies** 2026-07-29 and 2026-08-03 (Oscar): confirms record-and-continue; constructive discussion of optional PR https://github.com/gmrtd/gmrtd/pull/446 (open; maintainer may ask to move surfacing into shared `reader`) |
+| gmrtd | 2026-07-19 (first effective; 8 Jul bounced; informal, no deadline stated) | **Maintainer email replies** 2026-07-29 and 2026-08-03 (Oscar): confirms record-and-continue; constructive discussion of optional PR https://github.com/gmrtd/gmrtd/pull/446 (open; maintainer may ask to move surfacing into shared `reader`). **Paper evaluates upstream pin `8fea245` (release 0.45.0)** — pre–PR-446 CLI surfacing — see [`GMRTD-PIN.md`](GMRTD-PIN.md). |
 | pymrtd (ZeroPass) | 2026-07-26 (GitHub Security vulnerability report) | **No advisory reply** as of 2026-08-10; report on record |
 
 **Publication timing:** no fixed date was committed to maintainers. Public deposit of locked full-run trees + Zenodo DOI proceeds under author judgment after a reasonable interval for this severity class (informally on the order of two to three weeks from first effective contact per library), or earlier on any maintainer reply.
@@ -40,6 +40,7 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 | --- | --- |
 | Annotated tag (live cite) | `v1.0.7` |
 | Locked-run asset | `emrtd-locked-runs-v1.0.7.zip` on Release `v1.0.7` |
+| gmrtd library pin | `8fea245048d3b4e76483d048b202ff7f5269728c` (release 0.45.0; [`GMRTD-PIN.md`](GMRTD-PIN.md); verified in `make paper`) |
 | ADV corroboration tag | `tc-ac-adv-2026-07-28` |
 | Primary PACE cite | `e15f4b57f0226566d2257cf8912c8521493d678a8e866524150ff7d925e67006` |
 | Option A (JMRTD 0.8.6) | Same as primary — tip regen uses Central `0.8.6` only |
