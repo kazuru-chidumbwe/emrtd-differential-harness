@@ -1,11 +1,10 @@
-# Disclosure and data availability (aligned with manuscript)
+# Disclosure and data availability
 
-**Date:** 2026-07-27 (aligned with Access §9.1 rewrite — no fixed maintainer-facing embargo)  
-**Branch:** `jmrtd-sweep-2026-07-09`  
+**Date:** 2026-08-10 (venue-agnostic; no fixed maintainer-facing embargo)  
 **Evidence pin:** tag `paper-manifest-2026-07-26` (supersedes historical `paper-manifest-2026-07-25`)  
-**Venue (current):** IEEE Access retarget in progress (this note stays venue-agnostic for pin/disclosure facts)
+**ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (does not replace the primary pin)
 
-This note matches the manuscript Data Availability / §9 rewrite after sponsor clarification: **no fixed deadline was communicated to maintainers**. It supersedes wording that implied a hard dated public-release gate or that the *entire* harness remained embargoed.
+This note records pin/disclosure facts for independent verification. It is intentionally **venue-agnostic**. An earlier IEEE Access packaging attempt for related manuscript text was explored and **dropped**; it is not under concurrent consideration.
 
 ## What is already public
 
@@ -14,40 +13,36 @@ Harness **source** (profiles, generators, classifier, drivers, CI workflows, and
 - Tag `blog-b10-2026-07` / `v0.1.0` (`96fa6a4` after history scrub)
 - Repository: https://github.com/kazuru-chidumbwe/emrtd-differential-harness
 
-Regenerating suites via `make paper` (or equivalent) reproduces **Observability Scores** and suite structure. Fresh runs embed new UTC timestamps, so they do **not** reproduce an identical historical suite hash.
+Regenerating suites via `make paper` (or equivalent) reproduces **Observability Scores** and suite structure. Fresh runs embed new UTC timestamps, so they do **not** reproduce an identical historical suite hash. Cite locked-run digests (below) or the Zenodo deposit for byte-identical verification.
 
-## What remains pending public deposit
+## Locked-run public deposit
 
-- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, Option A corroboration, plus CA/AA/PA bundles).
-- Those trees currently live on the lab host (`logs/suite-ac-01-sweep-full-20260709T052334Z/`, Option A re-run `…20260720T163501Z/`, and R1 arm dirs). They are **not** in the public git tree (`logs/` is gitignored).
-- Zenodo DOI for the archived package (planned once authors judge a reasonable interval has elapsed — informally ~2–3 weeks from first effective contact per library — or earlier on any maintainer reply; see manuscript §9.1).
+- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, Option A corroboration, success-path control, plus CA/AA/PA bundles) are deposited on Zenodo (DOI recorded here once minted; see deposit README in the archive).
+- Those trees are **not** in the public git tree (`logs/` is gitignored).
+- Public deposit proceeds under author judgment after a reasonable interval from first effective contact per library (informally ~2–3 weeks), or earlier on any maintainer reply — consistent with informal notice rather than a formal embargo schedule. As of **2026-08-10** that interval has elapsed for all three libraries.
 
-Internal planning may use a target date; that date is **not** a maintainer-facing commitment and must not appear in the paper as a hard embargo trigger.
-
-Reviewers may request the locked primary package under journal confidential-review access before public deposit.
-
-## Maintainer disclosure contacts (as of 2026-07-26)
+## Maintainer disclosure contacts (as of 2026-08-10)
 
 | Stack | Contact date | Status |
 | --- | --- | --- |
-| JMRTD | 2026-07-08 (first notice, informal, no deadline stated); follow-up 2026-07-19 | **No email/advisory reply** as of 2026-07-26; notices on record |
-| gmrtd | 2026-07-19 (first effective; 8 Jul bounced; informal, no deadline stated) | **No email/advisory reply** as of 2026-07-26; notices on record; PR https://github.com/gmrtd/gmrtd/pull/446 open (not an email reply) |
-| pymrtd (ZeroPass) | 2026-07-26 (GitHub Security vulnerability report) | **No advisory reply** as of 2026-07-26; report on record |
+| JMRTD | 2026-07-08 (first notice, informal, no deadline stated); follow-up 2026-07-19 | **No email/advisory reply** as of 2026-08-10; notices on record |
+| gmrtd | 2026-07-19 (first effective; 8 Jul bounced; informal, no deadline stated) | **Maintainer email replies** 2026-07-29 and 2026-08-03 (Oscar): confirms record-and-continue; constructive discussion of optional PR https://github.com/gmrtd/gmrtd/pull/446 (open; maintainer may ask to move surfacing into shared `reader`) |
+| pymrtd (ZeroPass) | 2026-07-26 (GitHub Security vulnerability report) | **No advisory reply** as of 2026-08-10; report on record |
 
-**Publication timing:** no fixed date was committed to maintainers. Public deposit of locked full-run trees + Zenodo DOI proceeds under author judgment after a reasonable interval for this severity class (informally on the order of two to three weeks from first effective contact per library), or earlier on any maintainer reply — consistent with informal notice rather than a formal embargo schedule.
+**Publication timing:** no fixed date was committed to maintainers. Public deposit of locked full-run trees + Zenodo DOI proceeds under author judgment after a reasonable interval for this severity class (informally on the order of two to three weeks from first effective contact per library), or earlier on any maintainer reply.
 
 ## Research pin (do not confuse with “first public release”)
 
 | Object | Value |
 | --- | --- |
-| Branch | `jmrtd-sweep-2026-07-09` |
 | Annotated tag (live) | `paper-manifest-2026-07-26` |
-| Historical tag | `paper-manifest-2026-07-25` @ `42b4f1a` (superseded; do not cite for new work) |
-| Primary PACE cite (manuscript) | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` |
+| Historical tag | `paper-manifest-2026-07-25` (superseded; do not cite for new work) |
+| ADV corroboration tag | `tc-ac-adv-2026-07-28` |
+| Primary PACE cite | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` |
 | Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
 | Success-path control | `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` |
 
-**Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Reviewers verify digests against the confidential supplementary package / lab drop until public deposit.
+**Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Verify digests against the Zenodo package (or confidential supplementary access before deposit completes).
 
 ### Retired draft digest (do not cite)
 

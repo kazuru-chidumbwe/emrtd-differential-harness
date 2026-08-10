@@ -11,7 +11,7 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-07`** (same tree). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-07-27):** harness **source** is already public. Locked full-run JSON trees for independent hash checks remain confidential Supplementary Material for IEEE Access review; public deposit follows informal publication timing (no fixed maintainer-facing embargo date — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)). Paper evidence branch: **`jmrtd-sweep-2026-07-09`**. Live evidence tag: **`paper-manifest-2026-07-26`** (historical: `paper-manifest-2026-07-25`). See [`CHANGELOG.md`](CHANGELOG.md) and [`docs/TAGS.md`](docs/TAGS.md).
+**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are released via Zenodo under informal publication timing (no fixed maintainer-facing embargo — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)). Live evidence tag: **`paper-manifest-2026-07-26`** (historical: `paper-manifest-2026-07-25`). Default branch carries the full paper arm set (including TC-AC-ADV). See [`CHANGELOG.md`](CHANGELOG.md) and [`docs/TAGS.md`](docs/TAGS.md).
 
 ```bash
 git checkout v0.1.0   # or blog-b10-2026-07
