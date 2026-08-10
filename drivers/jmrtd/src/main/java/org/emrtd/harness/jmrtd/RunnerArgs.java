@@ -26,7 +26,7 @@ final class RunnerArgs {
     String suiteId = "";
     int suiteSeed = 1;
     int suiteN = 1;
-    int runIndex = 0;
+    int runIndex = 1;
     String figureId = "";
 
     static RunnerArgs parse(String[] args) {

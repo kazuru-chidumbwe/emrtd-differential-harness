@@ -1,7 +1,7 @@
 {
   "title": "eMRTD differential harness",
   "upload_type": "software",
-  "description": "Differential test harness for open-source eMRTD reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or specification-permitted downgrades reach a typical application caller (Observability Score). Synthetic APDU profiles only; not RF / silicon. Cite SemVer tag v1.0.4. Locked full-run trees for independent hash verification are published as a separate GitHub Release / Zenodo dataset deposit.",
+  "description": "Differential test harness for open-source eMRTD reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or specification-permitted downgrades reach a typical application caller (Observability Score). Synthetic APDU profiles only; not RF / silicon. Cite SemVer tag v1.0.4 (or later). Locked full-run trees for independent hash verification are published as a separate GitHub Release / Zenodo dataset deposit.",
   "creators": [
     {
       "name": "Kazuru, Seke",
@@ -24,15 +24,15 @@
   "access_right": "open",
   "related_identifiers": [
     {
-      "identifier": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.4",
+      "identifier": "https://dev.to/kazuru_73322ef9a7d6ed2b18/differential-testing-revealed-what-conformance-testing-missed-a-case-study-with-open-source-emrtd-1nie",
       "relation": "isDocumentedBy",
-      "resource_type": "software"
+      "resource_type": "publication-article"
     },
     {
       "identifier": "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-08-10",
-      "relation": "isSupplementTo",
+      "relation": "isSupplementedBy",
       "resource_type": "dataset"
     }
   ],
-  "notes": "When the JISA manuscript receives a DOI, add it here as related_identifiers with relation isSupplementTo (software) / isDocumentedBy (paper) as appropriate. Do not mint a Zenodo DOI for locked-run trees from a pre-sanitization archive."
+  "notes": "When the JISA manuscript receives a DOI, add it here as related_identifiers with relation isDocumentedBy. Do not mint a Zenodo DOI for locked-run trees from a pre-sanitization archive. Do not mint software/dataset DOIs until primary/Option A suites re-validate clean under schemas/*-v1.json after provenance driver fixes."
 }

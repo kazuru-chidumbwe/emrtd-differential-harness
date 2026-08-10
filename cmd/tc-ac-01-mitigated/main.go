@@ -45,7 +45,7 @@ func main() {
 	suiteID := flag.String("suite-id", "", "suite id")
 	suiteSeed := flag.Int("suite-seed", 1, "suite seed")
 	suiteN := flag.Int("suite-n", 1, "suite N")
-	runIndex := flag.Int("run-index", 0, "run index")
+	runIndex := flag.Int("run-index", 1, "run index")
 	figureID := flag.String("figure-id", "", "figure id")
 	allowBAC := flag.Bool("allow-bac-fallback", false, "AllowBACFallback middleware option")
 	successPath := flag.Bool("success-path", false, "success-path FP control: expect no SurfacedError and BAC success")

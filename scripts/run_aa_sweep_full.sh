@@ -18,15 +18,16 @@ if [[ ${#profiles[@]} -eq 0 ]]; then
 fi
 echo "==> AA full sweep: ${#profiles[@]} profiles × 4 arms → $LOG_DIR"
 g_base=0; g_mit=0; j_base=0; j_mit=0
+idx=1
 for p in "${profiles[@]}"; do
-  go run ./cmd/tc-aa-01 -profile "$p" -log-dir "$LOG_DIR" -variant baseline -suite-id aa-01-sweep >/dev/null
-  g_base=$((g_base+1))
-  go run ./cmd/tc-aa-01-mitigated -profile "$p" -log-dir "$LOG_DIR" -variant mitigated -suite-id aa-01-sweep >/dev/null
-  g_mit=$((g_mit+1))
-  java -cp "$JAR" org.emrtd.harness.jmrtd.TcAa01Runner -profile "$p" -log-dir "$LOG_DIR" -variant baseline -suite-id aa-01-sweep >/dev/null
-  j_base=$((j_base+1))
-  java -cp "$JAR" org.emrtd.harness.jmrtd.TcAa01MitigatedRunner -profile "$p" -log-dir "$LOG_DIR" -variant mitigated -suite-id aa-01-sweep >/dev/null
-  j_mit=$((j_mit+1))
+  go run ./cmd/tc-aa-01 -profile "$p" -log-dir "$LOG_DIR" -variant baseline -suite-id aa-01-sweep -run-index "$idx" >/dev/null
+  g_base=$((g_base+1)); idx=$((idx+1))
+  go run ./cmd/tc-aa-01-mitigated -profile "$p" -log-dir "$LOG_DIR" -variant mitigated -suite-id aa-01-sweep -run-index "$idx" >/dev/null
+  g_mit=$((g_mit+1)); idx=$((idx+1))
+  java -cp "$JAR" org.emrtd.harness.jmrtd.TcAa01Runner -profile "$p" -log-dir "$LOG_DIR" -variant baseline -suite-id aa-01-sweep -run-index "$idx" >/dev/null
+  j_base=$((j_base+1)); idx=$((idx+1))
+  java -cp "$JAR" org.emrtd.harness.jmrtd.TcAa01MitigatedRunner -profile "$p" -log-dir "$LOG_DIR" -variant mitigated -suite-id aa-01-sweep -run-index "$idx" >/dev/null
+  j_mit=$((j_mit+1)); idx=$((idx+1))
 done
 python3 - <<PY
 import json, sys

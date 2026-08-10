@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import platform
 import subprocess
 import sys
@@ -13,10 +14,15 @@ from typing import Any
 
 
 def _git_head(root: Path) -> tuple[str, bool]:
+    env = (os.environ.get("EMRTD_HARNESS_COMMIT") or "").strip()
+    if env:
+        return env, False
     try:
         commit = subprocess.check_output(
             ["git", "-C", str(root), "rev-parse", "HEAD"], text=True
         ).strip()
+        if not commit:
+            return "unknown", False
         status = subprocess.check_output(
             ["git", "-C", str(root), "status", "--porcelain"], text=True
         ).strip()
@@ -43,8 +49,10 @@ def collect(
     java_version: str = "",
 ) -> dict[str, Any]:
     commit, dirty = _git_head(root)
+    if run_index < 1:
+        run_index = 1
     return {
-        "harness_commit": commit,
+        "harness_commit": commit or "unknown",
         "harness_dirty": dirty,
         "python_version": platform.python_version(),
         "java_version": java_version or None,

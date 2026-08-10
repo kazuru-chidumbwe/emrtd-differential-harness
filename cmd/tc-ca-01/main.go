@@ -45,7 +45,7 @@ func main() {
 	suiteID := flag.String("suite-id", "", "suite id")
 	suiteSeed := flag.Int("suite-seed", 1, "seed")
 	suiteN := flag.Int("suite-n", 1, "N")
-	runIndex := flag.Int("run-index", 0, "index")
+	runIndex := flag.Int("run-index", 1, "index")
 	figureID := flag.String("figure-id", "", "figure")
 	flag.Parse()
 

@@ -10,9 +10,16 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Java `Provenance`: never emit empty `harness_commit` (check `git` exit code; walk to `.git`; optional `EMRTD_HARNESS_COMMIT`); clamp `run_index` to ≥1 (1-based).
+- Go/Python provenance: same `run_index` floor + env override; always emit `run_index` (drop omitempty-zero hole).
+- AA/CA sweep scripts: pass incrementing `-run-index` (was defaulting to 0).
+- `.zenodo.json` related_identifiers: `isDocumentedBy` → DEV.to case study; locked-runs → `isSupplementedBy`.
+
 ### Changed
 
-- (none pending)
+- (Headline suite digests **not** regenerated yet — lab unreachable; Zenodo still blocked until primary/Option A re-validate at 0 invalid.)
 
 ## [1.0.4] — 2026-08-10
 

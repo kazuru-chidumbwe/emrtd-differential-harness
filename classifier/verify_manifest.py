@@ -111,6 +111,12 @@ def verify(log_dir: Path, suite_manifest: Path | None, *, skip_schema: bool = Fa
             try:
                 for msg in validate_run_artifact(run_obj):
                     errors.append(f"schema run {rel}: {msg}")
+                hc = (run_obj.get("provenance") or {}).get("harness_commit")
+                if hc in ("", None):
+                    errors.append(f"provenance harness_commit empty: {rel}")
+                elif hc == "unknown":
+                    # Soft gate: paper deposits should carry a real rev-parse HEAD
+                    print(f"VERIFY WARN: harness_commit=unknown in {rel}", file=sys.stderr)
             except SchemaUnavailableError as e:
                 errors.append(str(e))
                 break

@@ -55,7 +55,7 @@ func parseFlags() suiteFlags {
 	suiteID := flag.String("suite-id", "", "suite manifest id")
 	suiteSeed := flag.Int("suite-seed", 1, "suite PRNG seed (metadata)")
 	suiteN := flag.Int("suite-n", 1, "suite repetition count (metadata)")
-	runIndex := flag.Int("run-index", 0, "1-based run index within suite entry")
+	runIndex := flag.Int("run-index", 1, "1-based run index within suite entry")
 	figureID := flag.String("figure-id", "", "published figure identifier")
 	flag.Parse()
 	return suiteFlags{
