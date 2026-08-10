@@ -2,43 +2,39 @@
 
 Annotated tags mark reproducible anchors. **`main` may advance** after a tag — always `git checkout <tag>` when reproducing a cited result.
 
-Prefer citing the **tag name**. Short hashes below are the commits the tags currently peel to (`git rev-parse <tag>^{}`).
+**Paper / package cite (bpfix-style):** tag **`v1.0.0`** · permanent link  
+https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.0
 
-| Tag | Commit | Purpose |
-| --- | --- | --- |
-| [`blog-b10-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/blog-b10-2026-07) | `96fa6a4` | **Dev.to B10 essay** — TC-AC-01 smoke (N=1), gmrtd + JMRTD baseline |
-| [`v0.1.0`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v0.1.0) | `96fa6a4` | First public smoke-tier release (same tree as blog tag) |
-| [`paper-manifest-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07) | `9062a08` | **Stale (7 Jul)** — predates 9 Jul 200-run sweep; superseded, do not cite for new work |
-| [`paper-manifest-2026-07-25`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-25) | `42b4f1a` | **Historical** — superseded by `paper-manifest-2026-07-26`. Kept so old links do not 404. At this commit, some docs still cite retired digest `fa84b9…`; use `paper-manifest-2026-07-26` instead. |
-| [`paper-manifest-2026-07-26`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-26) | *(see `git rev-parse paper-manifest-2026-07-26^{}`)* | **Live paper evidence pin** — AC-01 primary digest `d8afa161…` (immutable suite object), Option A `d505d521…`, CA SM-session continue-check + bundle `43f9bd1d…`. Source public; locked full-run JSON trees are on Zenodo for independent hash checks ([`DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)). Force-retargeted for history scrub(s) only (commit-hash rename; suite digests unchanged). **Cite the tag name**, not a short hash. New evidence semantics → new dated tag. |
-| [`tc-ac-adv-2026-07-28`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/tc-ac-adv-2026-07-28) | *(tip at tag time; peels to ADV docs + `10137e5` feature)* | **Shallow ADV corroboration pin** — `profiles/adv/`, suite digest `99d38845…` in manuscript §6.1.1. Does **not** replace `paper-manifest-2026-07-26`. Not RF / silicon. |
-| [locked-runs-2026-07-26](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-07-26) | *(main tip at deposit)* | **Public locked-run deposit** — zip of primary/Option A/control + CA/AA/PA trees; pins d8afa161… / d505d521… / 31aa96db…. |
-| [`ac01-n100-lab`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/ac01-n100-lab) | `9e3edcb` | Lab-verified AC-01 wire suite N=100 (400 runs, 4 cells) |
+Prefer citing the **tag name**. Short hashes below are illustrative; peel with `git rev-parse <tag>^{}`.
+
+| Tag | Purpose |
+| --- | --- |
+| [`v1.0.0`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.0) | **Live paper cite pin** — venue-agnostic tip; full arm set (incl. TC-AC-ADV); `org.emrtd.harness.jmrtd`; locked-run deposit documented. Cite this for manuscripts. |
+| [`v0.1.0`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v0.1.0) | First public **smoke-tier** SemVer (same tree as `blog-b10-2026-07`) |
+| [`blog-b10-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/blog-b10-2026-07) | **Dev.to B10 essay** — TC-AC-01 smoke (N=1) |
+| [`paper-manifest-2026-07-26`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-26) | **Historical** evidence freeze (AC-01 digests `d8afa161…` / Option A `d505d521…`). Superseded for *cite* by `v1.0.0`; kept for digests / old links. |
+| [`paper-manifest-2026-07-25`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07-25) | Historical; superseded |
+| [`paper-manifest-2026-07`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/paper-manifest-2026-07) | Stale (7 Jul); do not cite |
+| [`tc-ac-adv-2026-07-28`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/tc-ac-adv-2026-07-28) | Historical ADV feature pin (`profiles/adv/`; digest `99d38845…`). Covered by `v1.0.0` tip. |
+| [`locked-runs-2026-07-26`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-07-26) | Public locked-run zip deposit (also attached to `v1.0.0` Release) |
+| [`ac01-n100-lab`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/ac01-n100-lab) | Lab-verified AC-01 wire suite N=100 |
 
 ## Quick checkout
 
 ```bash
-# Blog / smoke reproduction
-git checkout blog-b10-2026-07 && make smoke
+# Paper reproduction (cite this)
+git checkout v1.0.0
+bash scripts/bootstrap-vendor.sh && export GOTOOLCHAIN=auto && make smoke
 
-# Paper evidence pin (source public; locked run-trees on Zenodo)
-git checkout paper-manifest-2026-07-26
-docker build -t emrtd-harness . && docker run --rm emrtd-harness
-
-# N=100 AC-01 wire evidence (longer run)
-git checkout ac01-n100-lab && make suite
+# Blog / smoke only
+git checkout v0.1.0 && make smoke
 ```
 
 ## Tag policy
 
-- **SemVer package citation** → `v0.1.0` (same tree as `blog-b10-2026-07`). See [`CHANGELOG.md`](../CHANGELOG.md).
-- **Blog citations** → `blog-b10-2026-07` only (not `main`, not `paper-manifest-*`). Dual-cite with `v0.1.0` when a package version is required.
-- **Paper evidence (reviewers)** → `paper-manifest-2026-07-26` (not `paper-manifest-2026-07-25`, not `paper-manifest-2026-07`, not `main`).
-- **ADV channel-abort corroboration (shallow)** → annotated tag [`tc-ac-adv-2026-07-28`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/tc-ac-adv-2026-07-28) (feature landed at `10137e5`, `profiles/adv/`). Primary factorial pin remains `paper-manifest-2026-07-26`; ADV uses manuscript suite digest `99d38845…`. Not RF / silicon.
-- **N=100 rates in paper §VI** → `ac01-n100-lab` until re-verified at manifest freeze.
-- **Public locked-run / Zenodo deposit** → judgment under informal publication timing; **not** a first-time source release (source already public via blog tags); **not** a hard maintainer-facing embargo date.
-- **Freeze rule** → suite digests are immutable. History scrubs that only rename commits (no digest change) may retarget this tag; new evidence semantics → new dated tag. SemVer advances (`v0.1.1`, `v0.2.0`) when the public release boundary changes.
+- **Paper / package citation** → **`v1.0.0`** (permanent tree URL above). See [`CHANGELOG.md`](../CHANGELOG.md).
+- **Blog citations** → `blog-b10-2026-07` / `v0.1.0` only.
+- **Dated `paper-manifest-*` / `locked-runs-*` / `tc-ac-adv-*`** → historical aliases; suite digests remain the hash-verification objects.
+- **Freeze rule** → suite digests are immutable. New evidence semantics → new SemVer (`v1.0.1`, `v1.1.0`, …).
 
-**Digest vs tag:** Suite digests (`d8afa161…`, `d505d521…`, CA `43f9bd1d…`) are hashes of locked evidence trees — the immutable reproduction objects. The review tag pins harness *source semantics* that match those claims. Regenerating suites reproduces Observability Scores but not identical timestamped hashes.
-
-New tags are added when a reproducibility boundary changes — not on every doc commit.
+**Digest vs tag:** Suite digests (`d8afa161…`, `d505d521…`, CA `43f9bd1d…`) are hashes of locked evidence trees. `v1.0.0` pins harness *source semantics* that match those claims. Regenerating suites reproduces Observability Scores but not identical timestamped hashes.

@@ -1,8 +1,9 @@
 # Disclosure and data availability
 
 **Date:** 2026-08-10 (venue-agnostic; no fixed maintainer-facing embargo)  
-**Evidence pin:** tag `paper-manifest-2026-07-26` (supersedes historical `paper-manifest-2026-07-25`)  
-**ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (does not replace the primary pin)
+**Evidence pin (cite):** tag `v1.0.0` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.0  
+**Historical evidence freeze:** `paper-manifest-2026-07-26` (suite digests unchanged)  
+**ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (also present on `v1.0.0` tip)
 
 This note records pin/disclosure facts for independent verification. It is intentionally **venue-agnostic**. An earlier IEEE Access packaging attempt for related manuscript text was explored and **dropped**; it is not under concurrent consideration.
 
@@ -35,8 +36,8 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 | Object | Value |
 | --- | --- |
-| Annotated tag (live) | `paper-manifest-2026-07-26` |
-| Historical tag | `paper-manifest-2026-07-25` (superseded; do not cite for new work) |
+| Annotated tag (live cite) | `v1.0.0` |
+| Historical evidence freeze | `paper-manifest-2026-07-26` (suite digests; superseded for cite by `v1.0.0`) |
 | ADV corroboration tag | `tc-ac-adv-2026-07-28` |
 | Primary PACE cite | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` |
 | Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
@@ -48,4 +49,4 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 Some July 2026 lab notes and early manuscript drafts recorded suite digest `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`. That string does **not** match any retained file under the Jul-9 log directory. It is **not** the review pin. Cite only `d8afa161…` (primary) or `d505d521…` (Option A) above.
 
-Tag `paper-manifest-2026-07-26` remains the **evidence pin**. Docs-only commits may land on the branch tip after that tag without retagging.
+Tag `v1.0.0` is the **paper cite pin**. Suite digests remain immutable; docs-only commits after `v1.0.0` require a new SemVer for cite updates.

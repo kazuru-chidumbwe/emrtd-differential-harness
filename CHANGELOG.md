@@ -5,15 +5,28 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid reproducibility anchors.
-Prefer **SemVer** (`vX.Y.Z`) for package citations; see [`docs/TAGS.md`](docs/TAGS.md).
+Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid historical anchors.
+Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.0`** — see [`docs/TAGS.md`](docs/TAGS.md).
 
 ## [Unreleased]
 
 ### Changed
 
-- Disclosure / README / TAGS: venue-agnostic wording (prior IEEE Access packaging attempt dropped; not under concurrent consideration). Maintainer table updated for gmrtd replies (2026-07-29, 2026-08-03).
-- README: full paper arm set on default branch (TC-AC-ADV, CA/AA/PA, TA-EAC, grounding); Java package `org.emrtd.harness.jmrtd` (was programme-named).
+- (none pending)
+
+## [1.0.0] — 2026-08-10
+
+### Added
+
+- SemVer paper cite pin `v1.0.0` (bpfix-style permanent tree URL).
+- Public locked-run deposit (Release asset; digests `d8afa161…` / `d505d521…` / `31aa96db…`).
+
+### Changed
+
+- Default branch is the research tip (`main`); Java package `org.emrtd.harness.jmrtd`.
+- Disclosure / README / TAGS: venue-agnostic wording (prior IEEE Access packaging attempt dropped).
+- README: full paper arm set (TC-AC-ADV, CA/AA/PA, TA-EAC, grounding).
+- Paper citations prefer `v1.0.0` over dated `paper-manifest-*` tag names.
 
 ## [tc-ac-adv-2026-07-28] — 2026-07-28
 
@@ -36,5 +49,6 @@ Paper corroboration pin for the shallow TC-AC-ADV arm. **Does not** replace `pap
 - Tagged at the same commit as essay pin `blog-b10-2026-07` (`96fa6a4`).
 - Keep a Changelog + SemVer discipline documented on the default branch.
 
+[1.0.0]: https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.0
 [tc-ac-adv-2026-07-28]: https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/tc-ac-adv-2026-07-28
 [0.1.0]: https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v0.1.0
