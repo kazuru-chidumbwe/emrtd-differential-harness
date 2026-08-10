@@ -17,7 +17,7 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 ## Locked-run public deposit
 
-- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, Option A corroboration, success-path control, plus CA/AA/PA bundles) are deposited on Zenodo (DOI recorded here once minted; see deposit README in the archive).
+- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, Option A corroboration, success-path control, plus CA/AA/PA bundles) are **public** at GitHub Release [locked-runs-2026-07-26](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-07-26) (asset emrtd-locked-runs-2026-07-26.zip). A Zenodo DOI will be minted from the same archive when available; until then cite the Release URL for hash verification.
 - Those trees are **not** in the public git tree (`logs/` is gitignored).
 - Public deposit proceeds under author judgment after a reasonable interval from first effective contact per library (informally ~2–3 weeks), or earlier on any maintainer reply — consistent with informal notice rather than a formal embargo schedule. As of **2026-08-10** that interval has elapsed for all three libraries.
 
@@ -42,7 +42,7 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 | Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
 | Success-path control | `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` |
 
-**Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Verify digests against the Zenodo package (or confidential supplementary access before deposit completes).
+**Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Verify digests against the GitHub Release zip (or Zenodo DOI once minted).
 
 ### Retired draft digest (do not cite)
 
