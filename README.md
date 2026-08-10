@@ -11,10 +11,10 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-07`** (same tree). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.2`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.2 · See [`CHANGELOG.md`](CHANGELOG.md) and [`docs/TAGS.md`](docs/TAGS.md).
+**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.3`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.3 · See [`CHANGELOG.md`](CHANGELOG.md) and [`docs/TAGS.md`](docs/TAGS.md).
 
 ```bash
-git checkout v1.0.2
+git checkout v1.0.3
 ```
 
 ---
@@ -71,7 +71,7 @@ export GOTOOLCHAIN=auto
 make smoke
 ```
 
-Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade work cites **`v1.0.2`** (historical freeze tags `paper-manifest-*` / earlier SemVer remain aliases).
+Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade work cites **`v1.0.3`** (historical freeze tags `paper-manifest-*` / earlier SemVer remain aliases).
 
 ---
 
@@ -94,8 +94,8 @@ Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `obs
 
 | Arm | Role | Where |
 | --- | --- | --- |
-| **TC-AC-01** 50-profile × 2 libs × 2 variants (**200 runs**) | Primary PACE→BAC observability factorial | `suites/ac-01-sweep-full.json` · pin `d8afa161…` |
-| **Option A** JMRTD **0.8.6** re-run | Same score table corroboration | pin `d505d521…` |
+| **TC-AC-01** 50-profile × 2 libs × 2 variants (**200 runs**) | Primary PACE→BAC observability factorial | `suites/ac-01-sweep-full.json` · pin `6c6cbbd1…` |
+| **Option A** JMRTD **0.8.6** re-run | Same score table corroboration | pin `2efd190e…` |
 | **TC-AC-ADV** (4 channel-fault profiles, *n*=16) | Adversarial corroborating; Not RF | `profiles/adv/` · tag `tc-ac-adv-2026-07-28` · digest `99d38845…` |
 | **CA / AA / PA** sweeps | Mechanism corroboration grids | `docs/CA-RESULTS-*`, `AA-RESULTS-*`, `PA-RESULTS-*` |
 | **TA-EAC** + success-path FP controls | Unsupported-path / non-false-reject checks | `docs/TA-EAC-*`, `docs/SUCCESS-PATH-*` · control `31aa96db…` |
@@ -103,7 +103,7 @@ Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `obs
 
 **N=100** (AC-01 wire suite): repeating each deterministic profile demonstrates **harness stability and reproducibility**, not behavioural variance / statistical power.
 
-Evidence pin: **`v1.0.2`**. Locked run-trees: GitHub Release (see disclosure note).
+Evidence pin: **`v1.0.3`**. Locked run-trees: GitHub Release (see disclosure note).
 
 ---
 
@@ -165,7 +165,7 @@ CI: push to `main` or manual dispatch of workflow **JMRTD sweep and CA-mitigated
 
 ## TC-AC-ADV (channel-abort corroboration)
 
-Shallow adversarial arm (*n*=16): four `profiles/adv/` modalities (`timeout` at MSE:Set AT / GENERAL AUTHENTICATE, `no_response`, `transport_abort`) × gmrtd+JMRTD × baseline+mitigated. Baseline Score **0** / mitigated Score **2** on all cells. Does **not** change primary AC-01 digest `d8afa161…`. Tag: `tc-ac-adv-2026-07-28`. **Not RF / silicon.**
+Shallow adversarial arm (*n*=16): four `profiles/adv/` modalities (`timeout` at MSE:Set AT / GENERAL AUTHENTICATE, `no_response`, `transport_abort`) × gmrtd+JMRTD × baseline+mitigated. Baseline Score **0** / mitigated Score **2** on all cells. Does **not** change primary AC-01 digest `6c6cbbd1…`. Tag: `tc-ac-adv-2026-07-28`. **Not RF / silicon.**
 
 ---
 

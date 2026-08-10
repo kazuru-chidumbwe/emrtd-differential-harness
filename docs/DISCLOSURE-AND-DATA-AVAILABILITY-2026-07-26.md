@@ -1,10 +1,10 @@
 # Disclosure and data availability
 
 **Date:** 2026-08-10 (venue-agnostic; no fixed maintainer-facing embargo)  
-**Evidence pin (cite):** tag `v1.0.2` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.2  
-**Historical SemVer:** `v1.0.1` / `v1.0.0` (AC-01 suite digests unchanged)  
-**Historical evidence freeze:** `paper-manifest-2026-07-26` (suite digests unchanged)  
-**ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (also present on `v1.0.2` tip)
+**Evidence pin (cite):** tag `v1.0.3` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.3  
+**Locked-run deposit:** Release `locked-runs-2026-08-10` (path-sanitized)  
+**Historical SemVer:** `v1.0.2` / `v1.0.1` / `v1.0.0`  
+**ADV corroboration pin:** tag `tc-ac-adv-2026-07-28` (also present on `v1.0.3` tip)
 
 This note records pin/disclosure facts for independent verification. It is intentionally **venue-agnostic**. An earlier alternate-venue draft for related manuscript text was explored and is now abandoned; it is not under concurrent consideration.
 
@@ -19,7 +19,8 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 ## Locked-run public deposit
 
-- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, Option A corroboration, success-path control, plus CA/AA/PA bundles) are **public** at GitHub Release [locked-runs-2026-07-26](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-07-26) (asset emrtd-locked-runs-2026-07-26.zip). A Zenodo DOI will be minted from the same archive when available; until then cite the Release URL for hash verification.
+- The **locked full-run trees** needed for independent hash verification of the paper pins (primary PACE suite, Option A corroboration, success-path control, plus CA/AA/PA bundles) are **public** at GitHub Release [locked-runs-2026-08-10](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/locked-runs-2026-08-10) (asset `emrtd-locked-runs-2026-08-10.zip`). A Zenodo DOI will be minted from **this** archive when available; until then cite the Release URL for hash verification.
+- **2026-08-10 path sanitization:** absolute lab filesystem paths were removed from run JSON / manifests; `per_run` SHA-256 and primary/Option A suite digests were recomputed. Observability Scores are unchanged. Do not mint Zenodo from any pre-sanitization zip.
 - Those trees are **not** in the public git tree (`logs/` is gitignored).
 - Public deposit proceeds under author judgment after a reasonable interval from first effective contact per library (informally ~2–3 weeks), or earlier on any maintainer reply — consistent with informal notice rather than a formal embargo schedule. As of **2026-08-10** that interval has elapsed for all three libraries.
 
@@ -37,18 +38,23 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 
 | Object | Value |
 | --- | --- |
-| Annotated tag (live cite) | `v1.0.2` |
-| Historical SemVer | `v1.0.1` / `v1.0.0` (AC-01 suite digests unchanged) |
-| Historical evidence freeze | `paper-manifest-2026-07-26` (suite digests; superseded for cite by `v1.0.2`) |
+| Annotated tag (live cite) | `v1.0.3` |
+| Locked-run Release | `locked-runs-2026-08-10` |
 | ADV corroboration tag | `tc-ac-adv-2026-07-28` |
-| Primary PACE cite | `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` |
-| Option A corroboration | `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` |
+| Primary PACE cite | `6c6cbbd1959ec047980c1021c5d3ddf196c10b088d7884ab8ed80f56ae81c9b5` |
+| Option A corroboration | `2efd190e80d90fd3c3793b3b481805a567f3630329cf434f8a4cd33fbe9bddd4` |
 | Success-path control | `31aa96db837a5d2d947da4f8d01d3263dc5a44dbb73a46bf4cddd3195da7e726` |
 
 **Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Verify digests against the GitHub Release zip (or Zenodo DOI once minted).
 
-### Retired draft digest (do not cite)
+### Retired digests (do not cite)
 
-Some July 2026 lab notes and early manuscript drafts recorded suite digest `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0`. That string does **not** match any retained file under the Jul-9 log directory. It is **not** the review pin. Cite only `d8afa161…` (primary) or `d505d521…` (Option A) above.
+| Digest | Why retired |
+| --- | --- |
+| `fa84b9cdef61f2eb4dbb4d01816e949464d1ce12801b42119cb177aa9c0777e0` | Draft/lab note only; never matched retained Jul-9 tree |
+| `d8afa16137b79877de1e8dc42de5b2136be2d832651b0aee0bd6071b499f6b67` | Pre–path-sanitization primary manifest (2026-08-10 reissue) |
+| `d505d5212480a68b2253020a6c701c4f50fa71ee8a7da23000f970c573c60051` | Pre–path-sanitization Option A manifest (2026-08-10 reissue) |
 
-Tag `v1.0.2` is the **paper cite pin**. Suite digests remain immutable; docs-only commits after `v1.0.2` require a new SemVer for cite updates.
+Cite only `6c6cbbd1…` (primary) or `2efd190e…` (Option A) above.
+
+Tag `v1.0.3` is the **paper cite pin**. New evidence semantics or deposit changes require a new SemVer.
