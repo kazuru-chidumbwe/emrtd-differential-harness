@@ -222,7 +222,7 @@ JMRTD is resolved from Maven Central (`drivers/jmrtd/pom.xml`); see [docs/JMRTD-
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Upstream libraries (gmrtd, JMRTD) retain their own licenses.
+MIT - see [LICENSE](LICENSE). Upstream libraries (gmrtd, JMRTD) retain their own licenses.
 
 ---
 
