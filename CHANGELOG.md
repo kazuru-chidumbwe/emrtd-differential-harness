@@ -16,7 +16,7 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 
 ## [1.0.7] — 2026-08-10
 
-### Fixed (JISA artifact review)
+### Fixed (C&S / CoSe artifact review)
 
 - Baseline gmrtd arm drives shipped `reader.ReadDocument` (not hand-composed DoPACE/DoBAC); `PaceSurfacedToCaller` measured from return error.
 - Pin gmrtd to `8fea245` (release 0.45.0); bootstrap/paper verify; provenance `gmrtd_commit`.

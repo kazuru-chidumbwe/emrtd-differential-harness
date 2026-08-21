@@ -9,7 +9,7 @@ Prefer citing the **tag name**. Deposit zip: **`emrtd-locked-runs-v1.0.7.zip`** 
 
 | Tag | Purpose |
 | --- | --- |
-| [`v1.0.7`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.7) | **Live paper cite pin** — JISA M1–M4: ReadDocument baseline + gmrtd pin; AC-01+control deposit; SemVer-named zip. |
+| [`v1.0.7`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.7) | **Live paper cite pin** — C&S / CoSe M1–M4: ReadDocument baseline + gmrtd pin; AC-01+control deposit; SemVer-named zip. |
 | [`v1.0.6`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.6) | Historical — pre–ReadDocument baseline; superseded by `v1.0.7`. |
 | [`v1.0.5`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.5) | Lab regen; dated `…-10b` zip. Offline-pa smoke still schema-incomplete. Historical. |
 | [`v1.0.4`](https://github.com/kazuru-chidumbwe/emrtd-differential-harness/releases/tag/v1.0.4) | CITATION/SECURITY/schemas/CI. Historical. |

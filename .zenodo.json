@@ -34,5 +34,5 @@
       "resource_type": "dataset"
     }
   ],
-  "notes": "When the JISA manuscript receives a DOI, add it here as related_identifiers with relation isDocumentedBy. Mint Zenodo only from emrtd-locked-runs-v1.0.7.zip on Release v1.0.7."
+  "notes": "When the Computers & Security (C&S / CoSe) manuscript receives a DOI, add it here as related_identifiers with relation isDocumentedBy. Mint Zenodo only from emrtd-locked-runs-v1.0.7.zip on Release v1.0.7."
 }
