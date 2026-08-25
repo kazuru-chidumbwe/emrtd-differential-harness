@@ -6,13 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid historical anchors.
-Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.7`** — see [`docs/TAGS.md`](docs/TAGS.md).
+Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.8`** — see [`docs/TAGS.md`](docs/TAGS.md).
 
 ## [Unreleased]
 
+## [1.0.8] — 2026-08-25
+
+### Added
+
+- Remasurement of locked TC-AC-01 (gmrtd-only, 100 runs) against upstream `v1.1.3` (`64bd6ab`): baseline and mitigated each **50/50 Score 2** (fail-closed). Manifest SHA-256 `04cdd3dd61f983e90140cc2bc16913aa4f0f3fc5dd040cd271fd2f72387f93e3`.
+
 ### Changed
 
-- CI: pin Actions to full commit SHAs (`checkout` / `setup-go` / `setup-java` / `upload-artifact`) and declare least-privilege `permissions` (`contents: read`, `actions: write` for artifacts only).
+- `cmd/tc-ac-01`: `ReaderStatus` implements `Status(reader.Status)` for gmrtd ≥ typed-status API; gate accepts Score-0 silent path **or** Score-2 fail-closed path.
+- Unit test expects fail-closed Score 2 under the remasurement pin.
+- Docs: dual gmrtd pins (defect `8fea245` / remasurement `v1.1.3`).
+
+### Note
+
+- Historical 200-run defect factorial remains under tag `v1.0.7` + pin `8fea245` (digest `e15f4b57…`). Do not conflate the two pins.
 
 ## [1.0.7] — 2026-08-10
 

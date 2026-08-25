@@ -14,9 +14,12 @@ import (
 
 type silentStatus struct{}
 
-func (silentStatus) Status(string) {}
+func (silentStatus) Status(reader.Status) {}
 
-func TestTcAc01ReadDocumentBaselineScore0(t *testing.T) {
+// At gmrtd v1.1.3+, ReadDocument fails closed after a recorded PACE error unless
+// AllowBacFallbackOnPaceError is set. Historical Score-0 behaviour at pin 8fea245
+// is preserved under harness tag v1.0.7.
+func TestTcAc01ReadDocumentBaselineScore2FailClosed(t *testing.T) {
 	p, err := profile.Load("../profiles/pace-then-bac-downgrade.json")
 	if err != nil {
 		t.Fatal(err)
@@ -29,23 +32,23 @@ func TestTcAc01ReadDocumentBaselineScore0(t *testing.T) {
 	nfc := iso7816.NewNfcSession(tr)
 	r := reader.NewReader(silentStatus{}, nfc, &cms.GenericCertPool{})
 	docEx, _, readErr := r.ReadDocument(pass, nil, nil)
-	if readErr != nil {
-		t.Fatalf("ReadDocument err=%v (want nil — library swallows PaceErr)", readErr)
+	if readErr == nil {
+		t.Fatal("expected ReadDocument error (fail-closed after PACE)")
 	}
 	if docEx == nil || docEx.Session.PaceErr == nil {
-		t.Fatal("expected Session.PaceErr set")
+		t.Fatal("expected Session.PaceErr set on partial DocumentEx")
 	}
 	bacOK := docEx.Session.BacResult != nil && docEx.Session.BacResult.Success
-	if !bacOK {
-		t.Fatalf("expected BAC success; bacErr=%v", docEx.Session.BacErr)
+	if bacOK {
+		t.Fatal("expected BAC not completed under fail-closed default")
 	}
 	obs, _ := classifier.ClassifyTCAC01(classifier.TCAC01Input{
 		PaceFailed:           true,
-		BacSuccess:           true,
+		BacSuccess:           bacOK,
 		BacErr:               "",
 		PaceSurfacedToCaller: readErr != nil,
 	})
-	if obs.Int() != 0 {
-		t.Fatalf("observability=%d want 0", obs.Int())
+	if obs.Int() != 2 {
+		t.Fatalf("observability=%d want 2", obs.Int())
 	}
 }

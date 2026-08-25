@@ -50,7 +50,7 @@ type suiteFlags struct {
 
 type silentStatus struct{}
 
-func (silentStatus) Status(string) {}
+func (silentStatus) Status(reader.Status) {}
 
 func parseFlags() suiteFlags {
 	profilePath := flag.String("profile", "profiles/pace-then-bac-downgrade.json", "synthetic chip profile JSON")
@@ -159,9 +159,13 @@ func main() {
 	enc.SetIndent("", "  ")
 	_ = enc.Encode(result)
 
-	if paceErrStr == "" || !bacOK || readErr != nil {
-		fmt.Fprintf(os.Stderr, "TC-AC-01 gate failed: pace_err=%q bac_success=%v read_document_err=%v\n",
-			paceErrStr, bacOK, readErr)
+	// Accept either historical Score-0 path (PACE fail + BAC ok + no return error)
+	// or gmrtd v1.1.3+ fail-closed Score-2 path (PACE fail + BAC skipped + return error).
+	silentPath := paceErrStr != "" && bacOK && readErr == nil
+	failClosedPath := paceErrStr != "" && !bacOK && readErr != nil
+	if !silentPath && !failClosedPath {
+		fmt.Fprintf(os.Stderr, "TC-AC-01 gate failed: pace_err=%q bac_success=%v read_document_err=%v score=%d\n",
+			paceErrStr, bacOK, readErr, result.Observability)
 		os.Exit(1)
 	}
 }
