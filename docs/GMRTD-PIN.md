@@ -15,7 +15,7 @@ At this commit:
 
 Default `scripts/gmrtd-pin.sh` and `make paper` on tag `v1.0.7` use this pin.
 
-## Remediation remasurement pin (v1.1.3)
+## Remediation remeasurement pin (v1.1.3)
 
 **Pinned commit:** `64bd6ab8fbf8802c718a6da0dcc6f6312a3404ca`  
 **Short:** `64bd6ab`  
@@ -27,7 +27,7 @@ Default `scripts/gmrtd-pin.sh` and `make paper` on tag `v1.0.7` use this pin.
 At this commit:
 
 - Default is **fail-closed**: a recorded PACE error stops `ReadDocument` before BAC unless `AllowBacFallbackOnPaceError()` is set.
-- Locked remasurement (`ac-01-sweep-gmrtd-only`, 100 runs): baseline **50/50 Score 2**; mitigated **50/50 Score 2**.
+- Locked remeasurement (`ac-01-sweep-gmrtd-only`, 100 runs): baseline **50/50 Score 2**; mitigated **50/50 Score 2**.
 
 ```bash
 GMRTD_COMMIT=64bd6ab8fbf8802c718a6da0dcc6f6312a3404ca bash scripts/bootstrap-vendor.sh

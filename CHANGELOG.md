@@ -14,13 +14,13 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 
 ### Added
 
-- Remasurement of locked TC-AC-01 (gmrtd-only, 100 runs) against upstream `v1.1.3` (`64bd6ab`): baseline and mitigated each **50/50 Score 2** (fail-closed). Manifest SHA-256 `04cdd3dd61f983e90140cc2bc16913aa4f0f3fc5dd040cd271fd2f72387f93e3`.
+- Remeasurement of locked TC-AC-01 (gmrtd-only, 100 runs) against upstream `v1.1.3` (`64bd6ab`): baseline and mitigated each **50/50 Score 2** (fail-closed). Manifest SHA-256 `04cdd3dd61f983e90140cc2bc16913aa4f0f3fc5dd040cd271fd2f72387f93e3`.
 
 ### Changed
 
 - `cmd/tc-ac-01`: `ReaderStatus` implements `Status(reader.Status)` for gmrtd ≥ typed-status API; gate accepts Score-0 silent path **or** Score-2 fail-closed path.
-- Unit test expects fail-closed Score 2 under the remasurement pin.
-- Docs: dual gmrtd pins (defect `8fea245` / remasurement `v1.1.3`).
+- Unit test expects fail-closed Score 2 under the remeasurement pin.
+- Docs: dual gmrtd pins (defect `8fea245` / remeasurement `v1.1.3`).
 
 ### Note
 
