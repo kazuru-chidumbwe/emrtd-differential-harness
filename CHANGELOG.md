@@ -6,9 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid historical anchors.
-Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.8`** — see [`docs/TAGS.md`](docs/TAGS.md).
+Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.9`** — see [`docs/TAGS.md`](docs/TAGS.md).
 
 ## [Unreleased]
+
+## [1.0.9] — 2026-08-25
+
+### Changed
+
+- Cite-surface sync: `CITATION.cff`, `.zenodo.json`, `README.md`, and `docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md` now declare live pin **`v1.0.9`**.
+- DAS: PR #446 recorded as **merged** (`v1.1.3` / `1701e74`); remeasurement digest `04cdd3dd…` listed; Zenodo described as **pending** (GitHub Releases are the canonical deposits).
+- `scripts/preflight_banned_terms.py`: skip self when scanning a tree that includes this script.
+
+### Note
+
+- Defect factorial deposit remains Release **`v1.0.7`**. Remeasurement bytes remain digest `04cdd3dd…` (asset also on `v1.0.8`).
 
 ## [1.0.8] — 2026-08-25
 

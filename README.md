@@ -11,10 +11,10 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-07`** (same tree). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-08-10):** harness **source** is already public. Locked full-run JSON trees for independent hash verification are on GitHub Release (Zenodo DOI pending) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.7`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.7 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md).
+**Disclosure (2026-08-25):** harness **source** is public. Locked full-run JSON trees for independent hash verification are on GitHub Releases (Zenodo DOI **pending**) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.9`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md).
 
 ```bash
-git checkout v1.0.7
+git checkout v1.0.9
 ```
 
 ---
@@ -29,7 +29,7 @@ cd emrtd-differential-harness
 bash scripts/bootstrap-vendor.sh
 export GOTOOLCHAIN=auto
 make smoke          # single-run smoke gate
-make suite          # AC-01 wire manifest, N=100 + provenance-linked summary
+make suite          # AC-01 wire manifest, N=1 per profile + provenance-linked summary
 make suite-paper    # full paper matrix manifest
 make paper          # CI: tests → smoke → suite → verify → artifacts/
 ```
@@ -71,7 +71,7 @@ export GOTOOLCHAIN=auto
 make smoke
 ```
 
-Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade work cites **`v1.0.3`** (historical freeze tags `paper-manifest-*` / earlier SemVer remain aliases).
+Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `observability_score: 0`, ~6 s wall clock. Paper-grade work cites **`v1.0.9`** (historical freeze tags `paper-manifest-*` / earlier SemVer remain aliases; defect factorial digests remain on `v1.0.7`).
 
 ---
 
@@ -95,15 +95,15 @@ Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `obs
 | Arm | Role | Where |
 | --- | --- | --- |
 | **TC-AC-01** 50-profile × 2 libs × 2 variants (**200 runs**) | Primary PACE→BAC observability factorial | `suites/ac-01-sweep-full.json` · pin `e15f4b57…` |
-| **Option A** JMRTD **0.8.6** | Same factorial (tip uses Central 0.8.6 only) | same pin `e15f4b57…` |
+| **JMRTD** Maven Central **0.8.6** | Tip wire path (single JMRTD pin; no separate Option A arm) | same pin `e15f4b57…` |
 | **TC-AC-ADV** (4 channel-fault profiles, *n*=16) | Adversarial corroborating; Not RF | `profiles/adv/` · tag `tc-ac-adv-2026-07-28` · digest `99d38845…` |
 | **CA / AA / PA** sweeps | Mechanism corroboration grids | `docs/CA-RESULTS-*`, `AA-RESULTS-*`, `PA-RESULTS-*` |
 | **TA-EAC** + success-path FP controls | Unsupported-path / non-false-reject checks | `docs/TA-EAC-*`, `docs/SUCCESS-PATH-*` · control `b029a9dc…` |
 | **Middleware** explicit-reject | Raises Score 0→2 without upstream patches | `middleware/` · mitigated runners |
 
-**N=100** (AC-01 wire suite): repeating each deterministic profile demonstrates **harness stability and reproducibility**, not behavioural variance / statistical power.
+**N=1** (AC-01 wire suite): in-process simulators are deterministic; each profile runs once. Diversity is the factorial profile grid (50 profiles × 2 libraries × 2 variants = 200 runs), not repeated identical trials.
 
-Evidence pin: **`v1.0.3`**. Locked run-trees: GitHub Release (see disclosure note).
+Evidence pin (live cite): **`v1.0.9`**. Defect locked-run trees: GitHub Release `v1.0.7`. Remeasurement asset: Release `v1.0.9` (see disclosure note). Zenodo DOI pending.
 
 ---
 
@@ -123,9 +123,9 @@ Before/after comparison is a diff of run artifacts, not a rewritten test.
 
 This harness replays **synthetic chip profiles** through in-process APDU transceivers. It does **not** exercise physical NFC hardware, real eMRTD silicon, or live PKD/CRL infrastructure.
 
-- **N=100 repetitions:** Repeating each deterministic profile N=100 demonstrates harness stability and result reproducibility rather than estimating behavioural variance.
+- **N=1 per profile:** Deterministic APDU replay; multi-profile cells establish cross-profile consistency, not repeated-trial variance.
 - **Blog scope:** `make smoke` / TC-AC-01 single-profile.
-- **Paper scope:** full arm set above (`make suite-paper` / tagged evidence + Zenodo locked trees).
+- **Paper scope:** full arm set above (`make suite-paper` / tagged evidence + GitHub Release locked trees; Zenodo DOI pending).
 
 See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAGS.md`](docs/TAGS.md).
 
@@ -149,11 +149,11 @@ See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAG
 
 Do not read the 50/50 table as “both libraries behave identically.” Manuscript §5.3.1 spells out the same split.
 
-Lab-verified 2026-07-09 on `test-server` (64 s). Score table above is stable under regenerate; the **canonical suite pin** (SHA-256 of the locked Jul-9 `artifact-manifest.json`) and Option A corroboration live only in:
+Lab-verified 2026-07-09 on `test-server` (64 s). Score table above is stable under regenerate; the **canonical suite pin** (SHA-256 of the locked Jul-9 `artifact-manifest.json`) lives only in:
 
 [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)
 
-Do not cite older draft digests from blog-era notes. Locked raw run-trees are deposited on Zenodo for independent hash verification (see disclosure note). Details of the Jul-9 lab pass: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
+Do not cite older draft digests from blog-era notes. Locked raw run-trees are on GitHub Releases for independent hash verification (Zenodo DOI pending; see disclosure note). Details of the Jul-9 lab pass: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
 
 ```bash
 python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json
@@ -212,7 +212,7 @@ Makefile      smoke | suite | suite-paper | paper | repro | test
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `GMRTD_PATH` | `../_vendor/gmrtd` | gmrtd source checkout |
-| `JMRTD_VERSION` | `0.8.6` | Maven Central `org.jmrtd:jmrtd` pin (Option A) |
+| `JMRTD_VERSION` | `0.8.6` | Maven Central `org.jmrtd:jmrtd` pin (tip / sole JMRTD path) |
 | `PROFILE` | profile-specific | Override chip profile path |
 | `LOG_DIR` | `logs` | Trace output directory |
 

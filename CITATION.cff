@@ -28,8 +28,8 @@ keywords:
   - gmrtd
   - pymrtd
 license: MIT
-version: "1.0.6"
-date-released: "2026-08-10"
+version: "1.0.9"
+date-released: "2026-08-25"
 preferred-citation:
   type: software
   authors:
@@ -37,7 +37,7 @@ preferred-citation:
       given-names: Seke
       orcid: "https://orcid.org/0009-0002-4099-1059"
   title: "eMRTD differential harness"
-  version: "1.0.6"
-  url: "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.7"
+  version: "1.0.9"
+  url: "https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9"
   year: 2026
   month: 8

@@ -24,8 +24,17 @@ BANNED = (
 
 def scan(root: Path) -> list[tuple[str, str, int]]:
     hits: list[tuple[str, str, int]] = []
+    self_path = Path(__file__).resolve()
     for path in root.rglob("*"):
         if not path.is_file():
+            continue
+        # Skip this guard script itself (embeds banned literals by design).
+        try:
+            if path.resolve() == self_path:
+                continue
+        except OSError:
+            pass
+        if path.name == "preflight_banned_terms.py":
             continue
         raw = path.read_bytes()
         for needle in BANNED:

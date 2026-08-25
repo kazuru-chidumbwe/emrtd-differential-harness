@@ -21,7 +21,7 @@ Default `scripts/gmrtd-pin.sh` and `make paper` on tag `v1.0.7` use this pin.
 **Short:** `64bd6ab`  
 **Upstream tag:** `v1.1.3` (24 Aug 2026)  
 **PR #446 merge commit:** `1701e74a746a260a5e1707f0c5ef34e100feb32b`  
-**Harness cite:** `v1.0.8` · gmrtd-only digest `04cdd3dd…`  
+**Harness cite:** `v1.0.9` · gmrtd-only digest `04cdd3dd…`  
 **Lab deposit:** 2026-08-25
 
 At this commit:
@@ -31,7 +31,7 @@ At this commit:
 
 ```bash
 GMRTD_COMMIT=64bd6ab8fbf8802c718a6da0dcc6f6312a3404ca bash scripts/bootstrap-vendor.sh
-# requires harness ≥ v1.0.8 (ReaderStatus API + TC-AC-01 gate accepts fail-closed)
+# requires harness ≥ v1.0.9 (ReaderStatus API + TC-AC-01 gate accepts fail-closed)
 python3 classifier/run_suite.py --manifest suites/ac-01-sweep-gmrtd-only.json
 ```
 
