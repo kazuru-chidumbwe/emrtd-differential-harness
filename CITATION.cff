@@ -2,7 +2,8 @@ cff-version: 1.2.0
 title: "eMRTD differential harness"
 message: >-
   If you use this software or its locked-run artifacts, please cite it using
-  the metadata below.
+  the metadata below. Paper evidence pin remains GitHub tag v1.0.9
+  (Zenodo 10.5281/zenodo.22097289); this tip records the DOI-wired metadata tag v1.0.10.
 type: software
 authors:
   - family-names: Kazuru
@@ -11,7 +12,7 @@ authors:
     email: kazuruuni@gmail.com
     affiliation: Independent Researcher
 repository-code: "https://github.com/kazuru-chidumbwe/emrtd-differential-harness"
-url: "https://doi.org/10.5281/zenodo.22097289"
+url: "https://doi.org/10.5281/zenodo.22100775"
 abstract: >-
   Differential test harness for open-source eMRTD reader libraries. Identical
   synthetic chip profiles are replayed against multiple stacks; each run captures
@@ -28,9 +29,11 @@ keywords:
   - gmrtd
   - pymrtd
 license: MIT
-version: "1.0.9"
+version: "1.0.10"
 date-released: "2026-08-25"
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22100775"
   - type: doi
     value: "10.5281/zenodo.22097289"
   - type: doi
@@ -42,8 +45,8 @@ preferred-citation:
       given-names: Seke
       orcid: "https://orcid.org/0009-0002-4099-1059"
   title: "eMRTD differential harness"
-  version: "1.0.9"
-  doi: "10.5281/zenodo.22097289"
-  url: "https://doi.org/10.5281/zenodo.22097289"
+  version: "1.0.10"
+  doi: "10.5281/zenodo.22100775"
+  url: "https://doi.org/10.5281/zenodo.22100775"
   year: 2026
   month: 8
