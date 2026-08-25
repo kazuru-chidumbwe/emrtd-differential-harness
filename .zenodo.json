@@ -1,7 +1,7 @@
 {
   "title": "eMRTD differential harness",
   "upload_type": "software",
-  "description": "Differential test harness for open-source eMRTD reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or specification-permitted downgrades reach a typical application caller (Observability Score). Synthetic APDU profiles only; not RF / silicon. Cite SemVer tag v1.0.9. Defect locked-run trees: Release v1.0.7 asset emrtd-locked-runs-v1.0.7.zip. Remeasurement (gmrtd v1.1.3): Release v1.0.9 asset emrtd-gmrtd-v1.1.3-remeasurement-v1.0.8.zip (digest 04cdd3dd…). Zenodo DOI pending.",
+  "description": "Differential test harness for open-source eMRTD reader libraries. Identical synthetic chip profiles are replayed against multiple stacks; each run captures APDU traces and classifies whether negotiation failures or specification-permitted downgrades reach a typical application caller (Observability Score). Synthetic APDU profiles only; not RF / silicon. Cite SemVer tag v1.0.9. Version DOI 10.5281/zenodo.22097289. Concept DOI 10.5281/zenodo.22095366. Defect locked-run trees: Release v1.0.7 asset emrtd-locked-runs-v1.0.7.zip. Remeasurement (gmrtd v1.1.3): Release v1.0.9 asset emrtd-gmrtd-v1.1.3-remeasurement-v1.0.8.zip (digest 04cdd3dd…).",
   "creators": [
     {
       "name": "Kazuru, Seke",
@@ -24,6 +24,12 @@
   "access_right": "open",
   "related_identifiers": [
     {
+      "identifier": "10.5281/zenodo.22097289",
+      "relation": "isIdenticalTo",
+      "resource_type": "software",
+      "scheme": "doi"
+    },
+    {
       "identifier": "https://dev.to/kazuru_73322ef9a7d6ed2b18/differential-testing-revealed-what-conformance-testing-missed-a-case-study-with-open-source-emrtd-1nie",
       "relation": "isDocumentedBy",
       "resource_type": "publication-article"
@@ -39,5 +45,5 @@
       "resource_type": "dataset"
     }
   ],
-  "notes": "When the Computers & Security (C&S / CoSe) manuscript receives a DOI, add it here as related_identifiers with relation isDocumentedBy. Mint Zenodo from emrtd-locked-runs-v1.0.7.zip (defect) and/or the remeasurement zip on Release v1.0.9; until then cite the GitHub Release URLs."
+  "notes": "GitHub→Zenodo minted version DOI 10.5281/zenodo.22097289 for tag v1.0.9 (concept 10.5281/zenodo.22095366). Locked-run trees remain on GitHub Releases v1.0.7 / v1.0.9; when the Computers & Security manuscript receives a DOI, add it as related_identifiers with relation isDocumentedBy."
 }

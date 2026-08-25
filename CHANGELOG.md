@@ -6,9 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Citation / essay pins (`blog-*`, `paper-manifest-*`) remain valid historical anchors.
-Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.9`** — see [`docs/TAGS.md`](docs/TAGS.md).
+Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.9`** · Zenodo `10.5281/zenodo.22097289` — see [`docs/TAGS.md`](docs/TAGS.md) and [`docs/ZENODO.md`](docs/ZENODO.md).
 
 ## [Unreleased]
+
+## [1.0.10] — 2026-08-25
+
+### Changed
+
+- Cite surfaces record minted Zenodo version DOI `10.5281/zenodo.22097289` (concept `10.5281/zenodo.22095366`) for tag `v1.0.9` (GitHub→Zenodo).
+- Added [`docs/ZENODO.md`](docs/ZENODO.md). Live evidence pin remains **`v1.0.9`**.
 
 ## [1.0.9] — 2026-08-25
 

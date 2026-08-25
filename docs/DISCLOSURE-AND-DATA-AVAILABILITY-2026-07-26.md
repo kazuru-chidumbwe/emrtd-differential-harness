@@ -1,6 +1,7 @@
 # Disclosure and data availability
 
 **Date:** 2026-08-25 (venue-agnostic; no fixed maintainer-facing embargo)  
+**Zenodo version DOI:** [10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289) (concept [10.5281/zenodo.22095366](https://doi.org/10.5281/zenodo.22095366))  
 **Evidence pin (live cite):** tag `v1.0.9` — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9  
 **Defect factorial deposit:** Release `v1.0.7` / asset `emrtd-locked-runs-v1.0.7.zip` (digest `e15f4b57…`)  
 **Remeasurement deposit:** Release `v1.0.9` / asset `emrtd-gmrtd-v1.1.3-remeasurement-v1.0.8.zip` (digest `04cdd3dd…`; same bytes as on Release `v1.0.8`)  
@@ -16,7 +17,7 @@ Harness **source** (profiles, generators, classifier, drivers, CI workflows, and
 - Tag `blog-b10-2026-07` / `v0.1.0` (`96fa6a4` after history scrub)
 - Repository: https://github.com/kazuru-chidumbwe/emrtd-differential-harness
 
-Regenerating suites via `make paper` (or equivalent) reproduces **Observability Scores** and suite structure. Fresh runs embed new UTC timestamps, so they do **not** reproduce an identical historical suite hash. Cite locked-run digests (below) or the GitHub Release assets for byte-identical verification. A Zenodo DOI is **pending**; until minted, the Release URLs are the canonical deposits.
+Regenerating suites via `make paper` (or equivalent) reproduces **Observability Scores** and suite structure. Fresh runs embed new UTC timestamps, so they do **not** reproduce an identical historical suite hash. Cite locked-run digests (below) or the GitHub Release assets for byte-identical verification. Zenodo version DOI **[10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289)** (concept [10.5281/zenodo.22095366](https://doi.org/10.5281/zenodo.22095366); GitHub→Zenodo on Release `v1.0.9`). Locked-run JSON trees remain on the GitHub Release assets listed below.
 
 ## Locked-run public deposit
 
@@ -34,13 +35,15 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 | gmrtd | 2026-07-19 (first effective; 8 Jul bounced; informal, no deadline stated) | **Maintainer email replies** 2026-07-29, 2026-08-03, 2026-08-17 (Oscar). Author-opened PR https://github.com/gmrtd/gmrtd/pull/446 **merged 2026-08-24** as release `v1.1.3` (merge commit `1701e74a746a260a5e1707f0c5ef34e100feb32b`; tag tip `64bd6ab`). Default fail-closed after a recorded PACE error unless `AllowBacFallbackOnPaceError` is set. **Defect factorial evaluates upstream pin `8fea245` (release 0.45.0)** — pre–merge — see [`GMRTD-PIN.md`](GMRTD-PIN.md). Remeasurement on `v1.1.3` scores 2 on 50/50 baseline cells (digest `04cdd3dd…`). |
 | pymrtd (ZeroPass) | 2026-07-26 (GitHub Security vulnerability report) | **No advisory reply** as of 2026-08-17; report on record |
 
-**Publication timing:** no fixed date was committed to maintainers. Public deposit of locked full-run trees proceeds under author judgment after a reasonable interval for this severity class (informally on the order of two to three weeks from first effective contact per library), or earlier on any maintainer reply. Zenodo DOI minting from the Release archives remains pending.
+**Publication timing:** no fixed date was committed to maintainers. Public deposit of locked full-run trees proceeds under author judgment after a reasonable interval for this severity class (informally on the order of two to three weeks from first effective contact per library), or earlier on any maintainer reply. Software archive DOI: [10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289). Locked-run trees remain on GitHub Releases (also linked from the Zenodo record).
 
 ## Research pin (do not confuse with “first public release”)
 
 | Object | Value |
 | --- | --- |
 | Annotated tag (live cite) | `v1.0.9` |
+| Zenodo version DOI | `10.5281/zenodo.22097289` |
+| Zenodo concept DOI | `10.5281/zenodo.22095366` |
 | Defect locked-run asset | `emrtd-locked-runs-v1.0.7.zip` on Release `v1.0.7` |
 | Remeasurement asset | `emrtd-gmrtd-v1.1.3-remeasurement-v1.0.8.zip` on Release `v1.0.9` |
 | gmrtd defect pin | `8fea245048d3b4e76483d048b202ff7f5269728c` (release 0.45.0; [`GMRTD-PIN.md`](GMRTD-PIN.md)) |
@@ -50,7 +53,7 @@ Regenerating suites via `make paper` (or equivalent) reproduces **Observability 
 | Success-path control | `b029a9dcefb8277b5790c19fa6b13c19cfca9a9dc6e1786e72a3be4e04fda245` |
 | Remeasurement (gmrtd `v1.1.3`) | `04cdd3dd61f983e90140cc2bc16913aa4f0f3fc5dd040cd271fd2f72387f93e3` |
 
-**Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Verify digests against the GitHub Release zips (or Zenodo DOI once minted).
+**Note:** Raw `artifact-manifest.json` trees are **not** in this git repository (`logs/` is gitignored). Verify digests against the GitHub Release zips. Software archive: [https://doi.org/10.5281/zenodo.22097289].
 
 ### Retired digests (do not cite)
 

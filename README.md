@@ -11,7 +11,7 @@ Differential test harness for open-source eMRTD (electronic passport) reader lib
 
 The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-07`** (same tree). `main` / paper branches may advance for suite work without changing what the post describes.
 
-**Disclosure (2026-08-25):** harness **source** is public. Locked full-run JSON trees for independent hash verification are on GitHub Releases (Zenodo DOI **pending**) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.9`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md).
+**Disclosure (2026-08-25):** harness **source** is public. Locked full-run JSON trees for independent hash verification are on GitHub Releases; software archive Zenodo **[10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289)** (concept [10.5281/zenodo.22095366](https://doi.org/10.5281/zenodo.22095366)) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.9`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md), and [`docs/ZENODO.md`](docs/ZENODO.md).
 
 ```bash
 git checkout v1.0.9
@@ -103,7 +103,7 @@ Independent lab reproduction (Ubuntu 24.04, July 2026): both drivers green, `obs
 
 **N=1** (AC-01 wire suite): in-process simulators are deterministic; each profile runs once. Diversity is the factorial profile grid (50 profiles × 2 libraries × 2 variants = 200 runs), not repeated identical trials.
 
-Evidence pin (live cite): **`v1.0.9`**. Defect locked-run trees: GitHub Release `v1.0.7`. Remeasurement asset: Release `v1.0.9` (see disclosure note). Zenodo DOI pending.
+Evidence pin (live cite): **`v1.0.9`**. Defect locked-run trees: GitHub Release `v1.0.7`. Remeasurement asset: Release `v1.0.9` (see disclosure note). Zenodo: [10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289).
 
 ---
 
@@ -125,9 +125,9 @@ This harness replays **synthetic chip profiles** through in-process APDU transce
 
 - **N=1 per profile:** Deterministic APDU replay; multi-profile cells establish cross-profile consistency, not repeated-trial variance.
 - **Blog scope:** `make smoke` / TC-AC-01 single-profile.
-- **Paper scope:** full arm set above (`make suite-paper` / tagged evidence + GitHub Release locked trees; Zenodo DOI pending).
+- **Paper scope:** full arm set above (`make suite-paper` / tagged evidence + GitHub Release locked trees; Zenodo [10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289)).
 
-See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAGS.md`](docs/TAGS.md).
+See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAGS.md`](docs/TAGS.md), and [`docs/ZENODO.md`](docs/ZENODO.md).
 
 ---
 
@@ -153,7 +153,7 @@ Lab-verified 2026-07-09 on `test-server` (64 s). Score table above is stable und
 
 [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)
 
-Do not cite older draft digests from blog-era notes. Locked raw run-trees are on GitHub Releases for independent hash verification (Zenodo DOI pending; see disclosure note). Details of the Jul-9 lab pass: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
+Do not cite older draft digests from blog-era notes. Locked raw run-trees are on GitHub Releases for independent hash verification; software archive [10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289) (see disclosure note). Details of the Jul-9 lab pass: [`docs/SWEEP-RESULTS-2026-07-09.md`](docs/SWEEP-RESULTS-2026-07-09.md).
 
 ```bash
 python3 classifier/run_suite.py --manifest suites/ac-01-sweep-full.json

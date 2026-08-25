@@ -5,6 +5,8 @@ Annotated tags mark reproducible anchors. **`main` may advance** after a tag —
 **Paper / package cite (live):** tag **`v1.0.9`** · permanent link  
 https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9
 
+**Zenodo:** [10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289) · concept [10.5281/zenodo.22095366](https://doi.org/10.5281/zenodo.22095366) — [`ZENODO.md`](ZENODO.md)
+
 Prefer citing the **tag name**. Defect deposit zip: **`emrtd-locked-runs-v1.0.7.zip`**. Remeasurement: Release `v1.0.9` asset `emrtd-gmrtd-v1.1.3-remeasurement-v1.0.8.zip` / digest `04cdd3dd…`.
 
 | Tag | Purpose |
@@ -40,4 +42,4 @@ python3 classifier/run_suite.py --manifest suites/ac-01-sweep-gmrtd-only.json
 - **Live paper citation** → **`v1.0.9`**; cite **`v1.0.7`** digests for the original 200-run defect claim; cite remeasurement digest `04cdd3dd…` from Release `v1.0.9`.
 - Digests: primary defect `e15f4b57…`, success-path `b029a9dc…`, remeasurement `04cdd3dd…`.
 - Release packaging **must** use `make package-locked-runs STAGING=… VERSION=…` (hard schema + banned-term gate) when refreshing full locked-run deposit zips.
-- Zenodo DOI **pending**; GitHub Release URLs are the canonical deposits until a DOI is minted.
+- Zenodo version DOI **[10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289)** · concept [10.5281/zenodo.22095366](https://doi.org/10.5281/zenodo.22095366) — see [`ZENODO.md`](ZENODO.md).
