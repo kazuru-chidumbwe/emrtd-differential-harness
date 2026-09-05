@@ -13,7 +13,7 @@ The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-
 
 **Disclosure (2026-08-25):** harness **source** is public. Locked full-run JSON trees for independent hash verification are on GitHub Releases; software archive Zenodo **[10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289)** (concept [10.5281/zenodo.22095366](https://doi.org/10.5281/zenodo.22095366)) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.9`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md), and [`docs/ZENODO.md`](docs/ZENODO.md).
 
-Evidence archive DOI: `10.5281/zenodo.22097289` (tag `v1.0.9`). Tip metadata tag `v1.0.10` / DOI `10.5281/zenodo.22100775` is citation wiring only; do not substitute it for the evidence pin.
+Evidence archive DOI: `10.5281/zenodo.22097289` (tag `v1.0.9`). Tip metadata tag `v1.0.11` / DOI `10.5281/zenodo.22314067` is citation wiring only; do not substitute it for the evidence pin.
 
 This public tree does not name target journals or publishers. Cite SemVer tags and Zenodo DOIs only.
 

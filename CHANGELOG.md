@@ -17,6 +17,7 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 - Tip metadata hygiene: `.zenodo.json` notes and README cite surfaces are venue-neutral (no target journal names on the public tree).
 - Added [`scripts/wire_zenodo_doi.py`](scripts/wire_zenodo_doi.py) with venue-neutral notes template for future DOI wires.
 - Live **evidence** pin remains **`v1.0.9`** / Zenodo `10.5281/zenodo.22097289`. This tag archives tip metadata only.
+- Tip Zenodo version DOI `10.5281/zenodo.22314067` (concept `10.5281/zenodo.22095366`) minted via GitHub→Zenodo for tag `v1.0.11`.
 
 ## [1.0.10] — 2026-08-25
 
