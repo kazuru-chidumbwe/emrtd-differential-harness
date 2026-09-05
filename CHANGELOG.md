@@ -10,6 +10,14 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 
 ## [Unreleased]
 
+## [1.0.11] — 2026-09-05
+
+### Changed
+
+- Tip metadata hygiene: `.zenodo.json` notes and README cite surfaces are venue-neutral (no target journal names on the public tree).
+- Added [`scripts/wire_zenodo_doi.py`](scripts/wire_zenodo_doi.py) with venue-neutral notes template for future DOI wires.
+- Live **evidence** pin remains **`v1.0.9`** / Zenodo `10.5281/zenodo.22097289`. This tag archives tip metadata only.
+
 ## [1.0.10] — 2026-08-25
 
 ### Changed
@@ -47,7 +55,7 @@ Prefer **SemVer** (`vX.Y.Z`) for package / paper citations; live pin is **`v1.0.
 
 ## [1.0.7] — 2026-08-10
 
-### Fixed (C&S / CoSe artifact review)
+### Fixed (artifact / baseline review)
 
 - Baseline gmrtd arm drives shipped `reader.ReadDocument` (not hand-composed DoPACE/DoBAC); `PaceSurfacedToCaller` measured from return error.
 - Pin gmrtd to `8fea245` (release 0.45.0); bootstrap/paper verify; provenance `gmrtd_commit`.

@@ -45,5 +45,5 @@
       "resource_type": "dataset"
     }
   ],
-  "notes": "GitHub→Zenodo minted version DOI 10.5281/zenodo.22097289 for tag v1.0.9 (concept 10.5281/zenodo.22095366). Locked-run trees remain on GitHub Releases v1.0.7 / v1.0.9; when the Computers & Security manuscript receives a DOI, add it as related_identifiers with relation isDocumentedBy."
+  "notes": "GitHub→Zenodo minted version DOI 10.5281/zenodo.22097289 for tag v1.0.9 (concept 10.5281/zenodo.22095366). Locked-run trees remain on GitHub Releases v1.0.7 (defect factorial) and v1.0.9 (gmrtd v1.1.3 remeasurement). If a peer-reviewed article receives a DOI later, add it as related_identifiers with relation isDocumentedBy."
 }

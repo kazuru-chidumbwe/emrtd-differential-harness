@@ -13,6 +13,10 @@ The essay’s reproducibility claims match tags **`v0.1.0`** / **`blog-b10-2026-
 
 **Disclosure (2026-08-25):** harness **source** is public. Locked full-run JSON trees for independent hash verification are on GitHub Releases; software archive Zenodo **[10.5281/zenodo.22097289](https://doi.org/10.5281/zenodo.22097289)** (concept [10.5281/zenodo.22095366](https://doi.org/10.5281/zenodo.22095366)) — see [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md). **Paper cite pin:** **`v1.0.9`** — https://github.com/kazuru-chidumbwe/emrtd-differential-harness/tree/v1.0.9 · See [`CHANGELOG.md`](CHANGELOG.md), [`CITATION.cff`](CITATION.cff), and [`docs/TAGS.md`](docs/TAGS.md), and [`docs/ZENODO.md`](docs/ZENODO.md).
 
+Evidence archive DOI: `10.5281/zenodo.22097289` (tag `v1.0.9`). Tip metadata tag `v1.0.10` / DOI `10.5281/zenodo.22100775` is citation wiring only; do not substitute it for the evidence pin.
+
+This public tree does not name target journals or publishers. Cite SemVer tags and Zenodo DOIs only.
+
 ```bash
 git checkout v1.0.9
 ```
@@ -147,9 +151,9 @@ See `docs/PROVENANCE.md` and `docs/ARCHITECTURE.md`. Release anchors: [`docs/TAG
 | **gmrtd** | Reference client / driver path records `PaceErr` at the session layer but does not branch on it before BAC — close to an unchecked-error omission in ordinary use | Demonstrated property of the shipped usage pattern |
 | **JMRTD** | `PassportService.doPACE` **throws**; the baseline harness `catch`es and continues to BAC (the API permits unconstrained catch). Mitigated runners do **not** catch-and-continue | API-permitted integrator pattern; attested in public third-party clients ([survey](docs/JMRTD-PUBLIC-CATCH-CONTINUE-SURVEY-2026-07-26.md)), not a shipped JMRTD demo defect |
 
-Do not read the 50/50 table as “both libraries behave identically.” Manuscript §5.3.1 spells out the same split.
+Do not read the 50/50 table as “both libraries behave identically.” The gmrtd vs JMRTD silence mechanisms differ (see table above and [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)).
 
-Lab-verified 2026-07-09 on `test-server` (64 s). Score table above is stable under regenerate; the **canonical suite pin** (SHA-256 of the locked Jul-9 `artifact-manifest.json`) lives only in:
+Lab-verified 2026-07-09 on a pinned Ubuntu lab host (64 s). Score table above is stable under regenerate; the **canonical suite pin** (SHA-256 of the locked Jul-9 `artifact-manifest.json`) lives only in:
 
 [`docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md`](docs/DISCLOSURE-AND-DATA-AVAILABILITY-2026-07-26.md)
 
